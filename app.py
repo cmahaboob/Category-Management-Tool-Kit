@@ -82,19 +82,19 @@ ANALYSIS_TYPES = [
 ]
 
 # ---------------------------------------------------------
-# SIDEBAR
+# SIDEBAR WITH AUTO-SECRETS DETECTION
 # ---------------------------------------------------------
 st.sidebar.title("🏭 Category Management ToolKit Engine")
 st.sidebar.caption("Jubail Industrial City | Services & Projects")
 
-if "api_key" not in st.session_state:
-    st.session_state["api_key"] = ""
+# Automatically check Streamlit Secrets first
+secret_key = st.secrets.get("GEMINI_API_KEY", "")
 
 api_key_input = st.sidebar.text_input(
     "Google AI Studio API Key",
     type="password",
-    value=st.session_state["api_key"],
-    help="Enter your Gemini key from aistudio.google.com"
+    value=secret_key if secret_key else st.session_state.get("api_key", ""),
+    help="Pre-loaded from server secrets, or enter a custom key"
 )
 if api_key_input:
     st.session_state["api_key"] = api_key_input
