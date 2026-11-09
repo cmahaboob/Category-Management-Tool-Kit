@@ -162,7 +162,7 @@ DEFAULT_DATABASE = {
 }
 
 # ---------------------------------------------------------
-# GEMINI 3.8 FLASH DIRECT TARGET (FAST 'LOW' THINKING & 120S TIMEOUT)
+# GEMINI 3.8 FLASH DIRECT TARGET (FAST 'MINIMAL' THINKING)
 # ---------------------------------------------------------
 def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key):
     import urllib3
@@ -172,19 +172,20 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
 
     prompt = (
         "You are the Principal Strategic Sourcing & Cost Engineer in Jubail Industrial City, Saudi Arabia for a world-scale Petrochemical Complex.\n"
-        f"Perform an in-depth professional analysis for:\n"
+        f"Perform an in-depth professional category analysis for:\n"
         f"- Parent Category: {parent}\n"
         f"- Subcategory: {sub}\n"
         f"- Analysis Tool: {analysis_type}\n"
         f"- Scope Context: {context}\n\n"
+        "CRITICAL INSTRUCTION: Be direct, concise, and generate the final JSON immediately without long reasoning or delay.\n\n"
         "ADAPT YOUR OUTPUT SPECIFICALLY TO THE REQUESTED ANALYSIS TOOL:\n"
-        "1. Should-Cost (CBS): Detailed cost breakdown (Direct Labor, KSA Statutory Burden, Overheads, Consumables, Profit) in SAR or USD.\n"
-        "2. TCO Lifecycle Model: Cost breakdown across lifecycle stages (Acquisition, Mobilization, O&M, Risk/Downtime Buffer, Demobilization) in SAR or USD.\n"
-        "3. Kraljic Matrix: Position in 2x2 matrix (Strategic, Leverage, Bottleneck, Routine). Provide profit_impact (1-10), supply_risk (1-10), and strategic governance.\n"
-        "4. Risk Assessment & Heatmap: 5 specific risks with probability (1-5), impact (1-5), score (prob x impact), severity (Critical/High/Medium/Low), concrete mitigation action, and named owner.\n"
-        "5. Porter's 5 Forces: Score each force from 0 to 100 with unit 'Index (0-100)'.\n"
-        "6. Kearney Chessboard: Quantify value potential across strategic levers in SAR or USD.\n\n"
-        "RETURN ONLY A VALID JSON OBJECT MATCHING THIS EXACT SCHEMA (no markdown fences, no raw text):\n"
+        "1. If Should-Cost (CBS): Detailed cost breakdown (Direct Labor, KSA Statutory Burden, Overheads, Consumables, Profit) in SAR or USD.\n"
+        "2. If TCO Lifecycle Model: Cost breakdown across lifecycle stages (Acquisition, Mobilization, O&M, Risk Buffer, Demobilization) in SAR or USD.\n"
+        "3. If Kraljic Matrix: Position in 2x2 matrix (Strategic, Leverage, Bottleneck, Routine). Provide profit_impact (1-10), supply_risk (1-10), contract_horizon, and supplier_relationship.\n"
+        "4. If Risk Assessment: 5 specific risks with probability (1-5), impact (1-5), score (prob x impact), severity (Critical/High/Medium/Low), concrete mitigation action, and named owner.\n"
+        "5. If Porter's 5 Forces: Score each force from 0 to 100 with unit 'Index (0-100)'.\n"
+        "6. If Kearney Chessboard: Quantify value potential across strategic levers in SAR or USD.\n\n"
+        "RETURN ONLY A VALID JSON OBJECT MATCHING THIS EXACT SCHEMA (no markdown fences, no commentary):\n"
         """{
   "analysis_title": "string",
   "currency_or_unit": "SAR or USD or Score (1-10) or Score (1-25) or Index (0-100)",
@@ -233,22 +234,23 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
         "x-goog-api-key": clean_key
     }
 
-    # Low thinking level speeds up generation by bypassing long reasoning traces
+    # 'minimal' thinking ensures the model returns immediately
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
             "response_mime_type": "application/json",
+            "temperature": 0.1,
+            "maxOutputTokens": 2500,
             "thinkingConfig": {
-                "thinkingLevel": "LOW"
+                "thinkingLevel": "minimal"
             }
         }
     }
 
-    # Direct target endpoint for gemini-3.8-flash
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent"
 
     try:
-        r = requests.post(url, headers=headers, json=payload, timeout=120)
+        r = requests.post(url, headers=headers, json=payload, timeout=180)
         if r.status_code == 200:
             resp_json = r.json()
             text_out = resp_json["candidates"][0]["content"]["parts"][0]["text"]
