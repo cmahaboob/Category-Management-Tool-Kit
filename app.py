@@ -8,7 +8,7 @@ import requests
 import time
 
 # ---------------------------------------------------------
-# PAGE CONFIGURATION & EXECUTIVE THEME
+# PAGE CONFIGURATION & CONSULTING-TIER THEME
 # ---------------------------------------------------------
 st.set_page_config(
     page_title="Category Management ToolKit Engine | Petrochemical",
@@ -16,61 +16,147 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom Executive CSS Injection
+# McKinsey / Kearney Consulting Firm Style Injection
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    
+    html, body, [class*="css"] {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* Background tone */
+    .stApp {
+        background-color: #F8FAFC;
+    }
+
+    /* Executive Top Banner */
+    .consulting-banner {
+        background: linear-gradient(135deg, #0A192F 0%, #112240 60%, #1E3A8A 100%);
+        color: #FFFFFF;
+        padding: 22px 28px;
+        border-radius: 12px;
+        margin-bottom: 22px;
+        border-left: 6px solid #D97706;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    }
+    .consulting-banner h1 {
+        color: #F8FAFC;
+        margin: 0;
+        font-size: 1.85rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+    .consulting-banner p {
+        color: #94A3B8;
+        margin: 6px 0 0 0;
+        font-size: 0.95rem;
+    }
+    .badge-pill {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-right: 6px;
+    }
+    .badge-amber { background-color: rgba(217, 119, 6, 0.2); color: #FBBF24; border: 1px solid rgba(217, 119, 6, 0.4); }
+    .badge-blue { background-color: rgba(37, 99, 235, 0.2); color: #60A5FA; border: 1px solid rgba(37, 99, 235, 0.4); }
+
+    /* Executive Metric Cards */
     div[data-testid="stMetric"] {
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        border: 1px solid #e2e8f0;
-        border-left: 5px solid #0284c7;
-        border-radius: 8px;
-        padding: 14px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 10px;
+        padding: 16px 20px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    div[data-testid="stMetric"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
     }
     div[data-testid="stMetric"] label {
-        font-weight: 600;
-        color: #475569;
-        font-size: 0.85rem;
+        font-weight: 700;
+        color: #64748B;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
     }
     div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
-        color: #0f172a;
-        font-weight: 700;
-        font-size: 1.55rem;
+        color: #0F172A;
+        font-weight: 800;
+        font-size: 1.65rem;
+        letter-spacing: -0.02em;
     }
+
+    /* Tab Styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
+        gap: 10px;
+        border-bottom: 2px solid #E2E8F0;
+        padding-bottom: 4px;
     }
     .stTabs [data-baseweb="tab"] {
-        padding: 10px 18px;
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        background-color: #f8fafc;
-        border: 1px solid #e2e8f0;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.92rem;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        color: #475569;
+        transition: all 0.2s ease;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #0f172a !important;
-        color: #ffffff !important;
-        border-color: #0f172a !important;
+        background-color: #0F172A !important;
+        color: #FFFFFF !important;
+        border-color: #0F172A !important;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
     }
-    .exec-banner {
-        background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
-        color: white;
-        padding: 16px 20px;
+
+    /* Risk Table Consulting Theme */
+    .consulting-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid #E2E8F0;
         border-radius: 8px;
-        margin-bottom: 18px;
+        overflow: hidden;
+        background: #FFFFFF;
     }
-    .exec-banner h2 {
-        color: white;
-        margin: 0;
-        padding: 0;
-        font-size: 1.6rem;
+    .consulting-table th {
+        background-color: #0F172A;
+        color: #FFFFFF;
+        font-weight: 700;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding: 12px 14px;
+        text-align: left;
     }
-    .exec-banner p {
-        color: #94a3b8;
-        margin: 4px 0 0 0;
-        font-size: 0.9rem;
+    .consulting-table td {
+        padding: 12px 14px;
+        font-size: 0.88rem;
+        border-bottom: 1px solid #F1F5F9;
+        color: #334155;
     }
+    .consulting-table tr:last-child td {
+        border-bottom: none;
+    }
+    .consulting-table tr:hover {
+        background-color: #F8FAFC;
+    }
+    .sev-badge {
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+    .sev-critical { background-color: #FEE2E2; color: #DC2626; border: 1px solid #FCA5A5; }
+    .sev-high { background-color: #FFEDD5; color: #EA580C; border: 1px solid #FDBA74; }
+    .sev-medium { background-color: #FEF9C3; color: #CA8A04; border: 1px solid #FDE047; }
+    .sev-low { background-color: #DCFCE7; color: #16A34A; border: 1px solid #86EFAC; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -308,13 +394,11 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
     impact_score = 9.0 if "Crane" in sub or "Rotating" in sub or "Shutdown" in sub else 7.5
     quadrant = "Strategic" if risk_score > 7 else "Leverage"
 
-    # RENTAL SERVICES ENGINE (CALCULATES BASED ON CHOSEN ASSET)
     if params.get("type") == "rental":
         asset_name = params.get("asset", sub)
         qty = params.get("qty", 2)
         is_wet = "Wet" in params.get("model", "")
         
-        # Exact Jubail Petrochemical monthly market rate benchmarks per asset
         if "1200T" in asset_name or "Crawler" in asset_name:
             base_monthly = 340000
             op_cost_unit = 22000
@@ -402,9 +486,11 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             "secondary_chart_values": [round(subtotal, 2), round(margin, 2)],
             "kraljic_data": {"quadrant": quadrant, "profit_impact": impact_score, "supply_risk": risk_score, "contract_horizon": "1 to 3 Years Master Agreement", "supplier_relationship": "Preferred Supplier Alliance"},
             "risk_items": [
-                {"risk_name": "Crane / Asset Breakdown during TAM Lift", "prob": 2, "impact": 5.0, "score": 10, "severity": "High", "mitigation": "Mandate mandatory 48-hour pre-lift load test and on-site standby mechanic.", "owner": "Heavy Lift Engineer"},
-                {"risk_name": "RCJY / Aramco Inspection Sticker Expiry", "prob": 3, "impact": 4.0, "score": 12, "severity": "Medium", "mitigation": "Audit third-party inspection certificates 14 days prior to site gate entry.", "owner": "Logistics & Site Access Lead"},
-                {"risk_name": "Operator Absenteeism or Certification Lapses", "prob": 3, "impact": 4.0, "score": 12, "severity": "Medium", "mitigation": "Contractual clause requiring pre-badged backup operator within 4 hours.", "owner": "Contract Administrator"}
+                {"risk_name": "Crane / Heavy Asset Breakdown during Critical TAM Lift", "prob": 2, "impact": 5.0, "score": 10, "severity": "High", "mitigation": "Mandate mandatory 48-hour pre-lift load test and dedicated on-site standby mechanic.", "owner": "Heavy Lift & Rigging Engineer"},
+                {"risk_name": "RCJY / Aramco Gate Inspection Sticker Expiry", "prob": 3, "impact": 4.0, "score": 12, "severity": "Medium", "mitigation": "Audit third-party inspection certificates 14 days prior to site mobilization.", "owner": "Logistics & Site Access Lead"},
+                {"risk_name": "Operator Absenteeism or Safety Credential Lapses", "prob": 3, "impact": 4.0, "score": 12, "severity": "Medium", "mitigation": "Contractual SLA requiring pre-badged backup certified operator on site within 4 hours.", "owner": "Contract Administrator"},
+                {"risk_name": "Mobilization Float Permit Delays (TGA / High Haulage)", "prob": 3, "impact": 3.0, "score": 9, "severity": "Medium", "mitigation": "Route planning and transport permits secured 21 days prior to plant turnaround window.", "owner": "Transport Logistics Coordinator"},
+                {"risk_name": "Hydraulic Oil Contamination / Hose Burst Event", "prob": 2, "impact": 3.5, "score": 7, "severity": "Low", "mitigation": "Pre-shift daily hydraulic integrity check and spill containment kit on board.", "owner": "Plant Safety Inspector"}
             ],
             "vendor_matrix": {
                 "tier_1_local": ["Al Faris Equipment Rental", "Bin Quraya Heavy Machinery", "ACT (Arabian Consolidated Trading)", "Expertise Contracting"],
@@ -419,7 +505,6 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             }
         }
 
-    # MANPOWER SUPPLY ENGINE
     elif params.get("type") == "manpower":
         trade_name = params.get("trade", sub)
         n_workers = params.get("headcount", 20)
@@ -481,7 +566,9 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             "risk_items": [
                 {"risk_name": "Craft Labor Scarcity / Schedule Delay", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Early reservation agreements 9 months ahead with slot guarantee penalties.", "owner": "Turnaround Procurement Lead"},
                 {"risk_name": "HCIS / RCJY Security Gate Pass Bottleneck", "prob": 4, "impact": 3.5, "score": 14, "severity": "High", "mitigation": "Submit digital dossiers 45 days prior via security portal.", "owner": "Security Liaison"},
-                {"risk_name": "Qiwa / Nitaqat Quota Freeze", "prob": 3, "impact": 3.0, "score": 9, "severity": "Medium", "mitigation": "Monthly audit of contractor green-zone status in Qiwa.", "owner": "Contract Compliance"}
+                {"risk_name": "Qiwa / Nitaqat Quota Freeze", "prob": 3, "impact": 3.0, "score": 9, "severity": "Medium", "mitigation": "Monthly audit of contractor green-zone status in Qiwa.", "owner": "Contract Compliance"},
+                {"risk_name": "Unskilled Craft Substitution by Supplier", "prob": 3, "impact": 4.0, "score": 12, "severity": "High", "mitigation": "Mandatory on-site technical trade tests before site access badging.", "owner": "Maintenance Superintendent"},
+                {"risk_name": "Worker Heat Stress / Summer Working Hour Violations", "prob": 2, "impact": 3.5, "score": 7, "severity": "Low", "mitigation": "Strict enforcement of MHRSD midday work ban and shaded hydration stations.", "owner": "Plant Safety Inspector"}
             ],
             "vendor_matrix": {
                 "tier_1_local": ["Al-Yusr Industrial (AYTB)", "Sendan International", "Nesma & Partners", "Nasser S. Al-Hajri (NSH)"],
@@ -497,7 +584,6 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
         }
 
     else:
-        # LOGISTICS & DEFAULT
         base, baf, ecs, othc, dthc, eis, lss, wrs, bl, customs, demurrage = 1200, 420, (0 if "India" in params.get("dest", "") else 850), 120, 150, 80, 60, 40, 40, 60, 50
         subtotal = base + baf + ecs + othc + dthc + eis + lss + wrs + bl + customs + demurrage
         margin = subtotal * 0.11
@@ -535,7 +621,8 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             "kraljic_data": {"quadrant": quadrant, "profit_impact": impact_score, "supply_risk": risk_score, "contract_horizon": "3 to 5 Years Alliance", "supplier_relationship": "Collaborative Partnership"},
             "risk_items": [
                 {"risk_name": "Port Congestion & Demurrage Spike", "prob": 4, "impact": 4.0, "score": 16, "severity": "Critical", "mitigation": "Negotiate 21 days free detention time at discharge ports.", "owner": "Logistics Category Manager"},
-                {"risk_name": "Container Equipment Shortage at KFIP", "prob": 3, "impact": 4.5, "score": 14, "severity": "High", "mitigation": "Establish multi-carrier volume allocation (40/30/30).", "owner": "Shipping Lead"}
+                {"risk_name": "Container Equipment Shortage at KFIP", "prob": 3, "impact": 4.5, "score": 14, "severity": "High", "mitigation": "Establish multi-carrier volume allocation (40/30/30).", "owner": "Shipping Lead"},
+                {"risk_name": "Customs Export Clearance Bottleneck", "prob": 2, "impact": 3.0, "score": 6, "severity": "Low", "mitigation": "Pre-clearance documentation filing on Fasah platform 48h prior.", "owner": "Customs Broker Coordinator"}
             ],
             "vendor_matrix": {
                 "tier_1_local": ["Bahri (National Shipping Company of Saudi Arabia)", "Almajdouie Logistics", "Kanoo Logistics"],
@@ -599,7 +686,7 @@ if "active_data" not in st.session_state:
 
 if run_btn:
     active_key = st.session_state.get("api_key", "").strip()
-    with st.spinner("Calculating synchronized petrochemical model..."):
+    with st.spinner("Executing consulting-grade petrochemical model..."):
         st.session_state["active_data"] = fetch_analysis_hybrid(
             selected_parent, selected_sub, scope_context, selected_analysis, active_key, param_data
         )
@@ -607,19 +694,24 @@ if run_btn:
 data = st.session_state["active_data"]
 
 # ---------------------------------------------------------
-# EXECUTIVE HEADER BANNER
+# CONSULTING-GRADE EXECUTIVE HEADER BANNER
 # ---------------------------------------------------------
 st.markdown(f"""
-<div class="exec-banner">
-    <h2>🏭 Category Management ToolKit Engine</h2>
-    <p>Strategic Sourcing & Cost Engineering | Operating Hub: <b>Jubail Industrial City (KSA)</b> | Scope: <b>{selected_parent} ➔ {selected_sub}</b></p>
+<div class="consulting-banner">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+            <span class="badge-pill badge-amber">Jubail Industrial Complex</span>
+            <span class="badge-pill badge-blue">CIPS & Kearney Methodology</span>
+            <h1 style="margin-top: 8px;">🏭 Category Management ToolKit Engine</h1>
+            <p>Petrochemical Strategic Sourcing & Cost Engineering | Active Scope: <b>{selected_parent} ➔ {selected_sub}</b></p>
+        </div>
+        <div style="text-align: right;">
+            <span style="font-size: 0.85rem; color: #94A3B8;">Status:</span><br>
+            <span style="font-weight: 700; color: #10B981;">● {'Live AI Model' if data.get('source') == 'AI' else 'Instant Petrochemical Engine'}</span>
+        </div>
+    </div>
 </div>
 """, unsafe_allow_html=True)
-
-if data.get("source") == "Petrochemical Engine":
-    st.caption("⚡ **Instant Petrochemical Calculation Engine Active:** Synchronized calculations generated based on your exact selected inputs.")
-else:
-    st.caption("✅ **Live AI Analysis Active:** Delivered directly via Gemini 3.8 Flash.")
 
 unit = data.get("currency_or_unit", "SAR")
 total_val = data.get("total_metric_value", 0)
@@ -639,15 +731,15 @@ if not df_chart.empty and "value" in df_chart.columns:
 col1, col2, col3, col4 = st.columns(4)
 with col1:
     val_disp = f"{unit} {total_val:,.2f}" if unit in ["SAR", "USD"] else f"{total_val}"
-    st.metric(label=data.get("total_metric_label", "Overall Metric"), value=val_disp)
+    st.metric(label=data.get("total_metric_label", "Overall Baseline"), value=val_disp)
 with col2:
-    st.metric(label=data.get("metric_card_2_label", "Direct Cost / Impact"), value=data.get("metric_card_2_value", "-"))
+    st.metric(label=data.get("metric_card_2_label", "Direct Cost"), value=data.get("metric_card_2_value", "-"))
 with col3:
-    st.metric(label=data.get("metric_card_3_label", "Supplier Margin / Risk"), value=data.get("metric_card_3_value", "-"), delta_color="inverse")
+    st.metric(label=data.get("metric_card_3_label", "Supplier Margin"), value=data.get("metric_card_3_value", "-"), delta_color="inverse")
 with col4:
     st.metric(label=data.get("metric_card_4_label", "Target Benchmark"), value=data.get("metric_card_4_value", "-"), delta_color="off")
 
-st.markdown("---")
+st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # TABBED EXECUTIVE INTERFACE
@@ -674,7 +766,9 @@ with tab_cost:
                     lambda r: f"{unit} {r['value']:,.0f} ({r['Percentage']:.1f}%)" if unit in ["SAR", "USD"] else f"{r['value']} pts",
                     axis=1
                 ),
-                color="value", color_continuous_scale="Tealgrn"
+                color="value",
+                color_continuous_scale=[[0.0, "#0284C7"], [0.5, "#0EA5E9"], [1.0, "#0369A1"]],
+                template="plotly_white"
             )
             fig.update_layout(showlegend=False, yaxis=dict(autorange="reversed"), height=450, margin=dict(l=10, r=10, t=20, b=20))
             st.plotly_chart(fig, use_container_width=True)
@@ -697,8 +791,8 @@ with tab_cost:
         st.subheader(f"💼 {data.get('secondary_chart_title', 'Cost Allocation')}")
         pie_labels = data.get("secondary_chart_labels", ["Direct Costs", "Overhead & Margin"])
         pie_vals = data.get("secondary_chart_values", [85, 15])
-        donut_fig = go.Figure(data=[go.Pie(labels=pie_labels, values=pie_vals, hole=.55, marker_colors=["#0284c7", "#10b981", "#f59e0b", "#ef4444"])])
-        donut_fig.update_layout(height=260, margin=dict(l=10, r=10, t=10, b=10), legend=dict(orientation="h", y=-0.2))
+        donut_fig = go.Figure(data=[go.Pie(labels=pie_labels, values=pie_vals, hole=.60, marker_colors=["#0284C7", "#10B981", "#F59E0B", "#EF4444"])])
+        donut_fig.update_layout(height=260, margin=dict(l=10, r=10, t=10, b=10), legend=dict(orientation="h", y=-0.2), template="plotly_white")
         st.plotly_chart(donut_fig, use_container_width=True)
 
     with col_ins:
@@ -734,33 +828,41 @@ with tab_kraljic:
         st.subheader("🎯 Kraljic Portfolio Matrix (2x2)")
         fig_k = go.Figure()
         
-        fig_k.add_shape(type="rect", x0=0, y0=0, x1=5, y1=5, fillcolor="#ECEFF1", opacity=0.4, line_width=0)
-        fig_k.add_shape(type="rect", x0=5, y0=0, x1=10, y1=5, fillcolor="#FFF3E0", opacity=0.4, line_width=0)
-        fig_k.add_shape(type="rect", x0=0, y0=5, x1=5, y1=10, fillcolor="#E0F2F1", opacity=0.4, line_width=0)
-        fig_k.add_shape(type="rect", x0=5, y0=5, x1=10, y1=10, fillcolor="#FFEBEE", opacity=0.5, line_width=0)
+        # McKinsey Quadrant Backgrounds
+        fig_k.add_shape(type="rect", x0=0, y0=0, x1=5, y1=5, fillcolor="#F1F5F9", opacity=0.7, line_width=1, line_color="#CBD5E1")
+        fig_k.add_shape(type="rect", x0=5, y0=0, x1=10, y1=5, fillcolor="#FEF3C7", opacity=0.7, line_width=1, line_color="#FDE68A")
+        fig_k.add_shape(type="rect", x0=0, y0=5, x1=5, y1=10, fillcolor="#E0F2FE", opacity=0.7, line_width=1, line_color="#BAE6FD")
+        fig_k.add_shape(type="rect", x0=5, y0=5, x1=10, y1=10, fillcolor="#FEE2E2", opacity=0.7, line_width=1, line_color="#FECACA")
         
-        fig_k.add_annotation(x=2.5, y=2.5, text="<b>ROUTINE / NON-CRITICAL</b><br>(Simplify & Automate)", showarrow=False, font=dict(color="#546E7A", size=11))
-        fig_k.add_annotation(x=7.5, y=2.5, text="<b>BOTTLENECK</b><br>(Secure Volume / Buffer)", showarrow=False, font=dict(color="#E65100", size=11))
-        fig_k.add_annotation(x=2.5, y=7.5, text="<b>LEVERAGE</b><br>(Competitive Bidding)", showarrow=False, font=dict(color="#00695C", size=11))
-        fig_k.add_annotation(x=7.5, y=7.5, text="<b>STRATEGIC</b><br>(Long-Term Partnership)", showarrow=False, font=dict(color="#C62828", size=11))
+        # Center Dividers
+        fig_k.add_shape(type="line", x0=5, y0=0, x1=5, y1=10, line=dict(color="#64748B", width=2, dash="dash"))
+        fig_k.add_shape(type="line", x0=0, y0=5, x1=10, y1=5, line=dict(color="#64748B", width=2, dash="dash"))
+        
+        fig_k.add_annotation(x=2.5, y=2.5, text="<b>ROUTINE / NON-CRITICAL</b><br><span style='font-size:10px;color:#64748B'>Simplify & Digitalize</span>", showarrow=False, font=dict(color="#475569", size=12))
+        fig_k.add_annotation(x=7.5, y=2.5, text="<b>BOTTLENECK</b><br><span style='font-size:10px;color:#D97706'>Secure Volume & Buffer</span>", showarrow=False, font=dict(color="#B45309", size=12))
+        fig_k.add_annotation(x=2.5, y=7.5, text="<b>LEVERAGE</b><br><span style='font-size:10px;color:#0284C7'>Competitive Sourcing</span>", showarrow=False, font=dict(color="#0369A1", size=12))
+        fig_k.add_annotation(x=7.5, y=7.5, text="<b>STRATEGIC</b><br><span style='font-size:10px;color:#DC2626'>Long-Term Partnership</span>", showarrow=False, font=dict(color="#B91C1C", size=12))
         
         p_x = k_data.get("supply_risk", 7.5)
         p_y = k_data.get("profit_impact", 8.5)
+        
         fig_k.add_trace(go.Scatter(
             x=[p_x], y=[p_y],
             mode="markers+text",
-            marker=dict(size=28, color="#D32F2F", line=dict(width=3, color="#FFFFFF")),
+            marker=dict(size=32, color="#0A192F", line=dict(width=3, color="#D97706")),
             text=[f"<b>{selected_sub}</b>"],
             textposition="top center",
+            textfont=dict(size=12, color="#0F172A", family="Plus Jakarta Sans"),
             name="Category Position"
         ))
         
         fig_k.update_layout(
-            xaxis=dict(title="<b>Supply Market Risk (Complexity / Scarcity) →</b>", range=[0, 10], showgrid=True),
-            yaxis=dict(title="<b>Profit & Business Impact (Downtime Risk) →</b>", range=[0, 10], showgrid=True),
-            height=420,
+            xaxis=dict(title="<b>Supply Market Risk (Complexity / Scarcity) →</b>", range=[0, 10], showgrid=False, zeroline=False),
+            yaxis=dict(title="<b>Profit & Business Impact (Downtime Risk) →</b>", range=[0, 10], showgrid=False, zeroline=False),
+            height=430,
             margin=dict(l=20, r=20, t=20, b=20),
-            showlegend=False
+            showlegend=False,
+            template="plotly_white"
         )
         st.plotly_chart(fig_k, use_container_width=True)
         
@@ -773,9 +875,10 @@ with tab_kraljic:
         st.markdown("**Core Kraljic Dimensions:**")
         st.write(f"- **Profit Impact:** {k_data.get('profit_impact', 8.5)} / 10")
         st.write(f"- **Supply Risk:** {k_data.get('supply_risk', 7.5)} / 10")
+        st.caption("📌 **Buyer Directive:** Align commercial term commitments with quadrant boundaries to prevent supplier lock-in or unearned margins.")
 
 # ---------------------------------------------------------
-# TAB 3: RISK HEATMAP & MITIGATION
+# TAB 3: RISK HEATMAP & MITIGATION (PERFECTLY ALIGNED)
 # ---------------------------------------------------------
 with tab_risk:
     col_map, col_score = st.columns([1.1, 0.9])
@@ -783,57 +886,123 @@ with tab_risk:
     
     with col_map:
         st.subheader("🔥 5x5 Category Risk Heatmap")
-        z_colors = [
-            [1, 2, 3, 4, 5],
-            [2, 4, 6, 8, 10],
-            [3, 6, 9, 12, 15],
-            [4, 8, 12, 16, 20],
-            [5, 10, 15, 20, 25]
+        
+        # Categorical labels for exact matching
+        impact_labels = ["1. Negligible", "2. Minor", "3. Moderate", "4. Major", "5. Catastrophic"]
+        prob_labels = ["1. Rare", "2. Unlikely", "3. Possible", "4. Likely", "5. Almost Certain"]
+        
+        # McKinsey / CIPS Standard Risk Matrix Colors
+        z_matrix = [
+            [1, 2, 3, 4, 5],     # Rare
+            [2, 4, 6, 8, 10],    # Unlikely
+            [3, 6, 9, 12, 15],   # Possible
+            [4, 8, 12, 16, 20],  # Likely
+            [5, 10, 15, 20, 25]  # Almost Certain
         ]
         
         fig_h = go.Figure(data=go.Heatmap(
-            z=z_colors,
-            x=["1. Negligible", "2. Minor", "3. Moderate", "4. Major", "5. Catastrophic"],
-            y=["1. Rare", "2. Unlikely", "3. Possible", "4. Likely", "5. Almost Certain"],
-            colorscale=[[0.0, "#A5D6A7"], [0.3, "#FFF59D"], [0.6, "#FFB74D"], [1.0, "#EF5350"]],
-            showscale=False
+            z=z_matrix,
+            x=impact_labels,
+            y=prob_labels,
+            colorscale=[
+                [0.0, "#A7F3D0"],  # Low: Muted Soft Green
+                [0.2, "#D1FAE5"],
+                [0.4, "#FEF3C7"],  # Moderate: Soft Amber
+                [0.6, "#FED7AA"],  # High: Warm Orange
+                [1.0, "#FCA5A5"]   # Critical: Crimson Red
+            ],
+            showscale=False,
+            hoverinfo="none"
         ))
         
         if risk_list:
             df_r = pd.DataFrame(risk_list)
+            
+            # Helper to map numeric 1..5 to exact string category
+            def clamp_label(val, label_list):
+                idx = max(0, min(4, int(round(val)) - 1))
+                return label_list[idx]
+            
+            # PERFECT ALIGNMENT: x and y use the EXACT same categorical strings as the heatmap!
+            scatter_x = [clamp_label(r.get("impact", 3), impact_labels) for _, r in df_r.iterrows()]
+            scatter_y = [clamp_label(r.get("prob", 3), prob_labels) for _, r in df_r.iterrows()]
+            
             fig_h.add_trace(go.Scatter(
-                x=[p - 1 for p in df_r["impact"]],
-                y=[p - 1 for p in df_r["prob"]],
+                x=scatter_x,
+                y=scatter_y,
                 mode="markers+text",
-                marker=dict(size=20, color="#1A237E", line=dict(width=2, color="#FFFFFF")),
+                marker=dict(
+                    size=28,
+                    color="#0A192F",
+                    line=dict(width=2.5, color="#FFFFFF")
+                ),
                 text=[f"<b>R{i+1}</b>" for i in range(len(df_r))],
-                textposition="top center",
-                hovertext=[f"{r['risk_name']} (Score: {r['score']})" for _, r in df_r.iterrows()],
-                name="Identified Risks"
+                textposition="middle center",
+                textfont=dict(color="#FFFFFF", size=11, family="Plus Jakarta Sans"),
+                hovertext=[
+                    f"<b>R{i+1}: {r['risk_name']}</b><br>Score: {r['score']}/25 | Severity: {r['severity']}<br>Mitigation: {r['mitigation']}"
+                    for i, r in df_r.iterrows()
+                ],
+                hoverinfo="text",
+                name="Category Risks"
             ))
             
         fig_h.update_layout(
-            xaxis=dict(title="<b>Impact Severity (Asset / Compliance / Cost) →</b>"),
-            yaxis=dict(title="<b>Probability (Likelihood) →</b>"),
-            height=400,
+            xaxis=dict(
+                title="<b>Impact Severity (Asset / Safety / Cost) →</b>",
+                tickfont=dict(size=10, family="Plus Jakarta Sans"),
+                categoryorder="array",
+                categoryarray=impact_labels
+            ),
+            yaxis=dict(
+                title="<b>Probability (Likelihood) →</b>",
+                tickfont=dict(size=10, family="Plus Jakarta Sans"),
+                categoryorder="array",
+                categoryarray=prob_labels
+            ),
+            height=430,
             margin=dict(l=20, r=20, t=20, b=20),
-            showlegend=False
+            showlegend=False,
+            template="plotly_white"
         )
         st.plotly_chart(fig_h, use_container_width=True)
         
     with col_score:
-        st.subheader("📊 Risk Severity Ranking")
+        st.subheader("📊 Risk Severity Register")
         if risk_list:
-            df_r = pd.DataFrame(risk_list)
-            st_table = df_r[["risk_name", "prob", "impact", "score", "severity"]].copy()
-            st_table.columns = ["Risk Factor", "Prob (1-5)", "Impact (1-5)", "Score (1-25)", "Severity"]
-            st.dataframe(st_table, use_container_width=True, height=350)
+            # Consulting Styled HTML Table
+            table_html = """
+            <table class="consulting-table">
+                <thead>
+                    <tr>
+                        <th style="width: 12%;">ID</th>
+                        <th style="width: 58%;">Risk Factor</th>
+                        <th style="width: 15%;">Score</th>
+                        <th style="width: 15%;">Severity</th>
+                    </tr>
+                </thead>
+                <tbody>
+            """
+            for i, r in enumerate(risk_list):
+                sev = r.get("severity", "Medium")
+                badge_class = f"sev-{sev.lower()}"
+                table_html += f"""
+                    <tr>
+                        <td><b>R{i+1}</b></td>
+                        <td>{r['risk_name']}</td>
+                        <td><b>{r['score']}</b>/25</td>
+                        <td><span class="sev-badge {badge_class}">{sev}</span></td>
+                    </tr>
+                """
+            table_html += "</tbody></table>"
+            st.markdown(table_html, unsafe_allow_html=True)
             
     st.markdown("---")
     st.subheader("🛡️ Category Risk Mitigation Plan & Governance")
     if risk_list:
         for idx, r in enumerate(risk_list):
-            with st.expander(f"⚠️ **R{idx+1}: {r['risk_name']}** — Score: `{r['score']}/25` | Severity: `{r['severity']}` | Accountable Owner: `{r['owner']}`", expanded=False):
+            sev = r.get("severity", "Medium")
+            with st.expander(f"⚠️ **R{idx+1}: {r['risk_name']}** — Severity: `{sev}` | Score: `{r['score']}/25` | Owner: `{r['owner']}`", expanded=False):
                 st.markdown(f"**Actionable Mitigation Strategy:** {r['mitigation']}")
 
 # ---------------------------------------------------------
@@ -948,7 +1117,7 @@ with tab_report:
                 <th>Accountable Owner</th>
             </tr>
     """
-    for r in risk_list[:4]:
+    for r in risk_list[:5]:
         memo_text += f"""
             <tr>
                 <td><b>{r['risk_name']}</b></td>
