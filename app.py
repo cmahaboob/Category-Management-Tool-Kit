@@ -16,7 +16,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# McKinsey / Kearney Consulting Firm Style Injection
+# McKinsey / Kearney Visual Styling & Custom Palette Injection
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -25,25 +25,24 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    /* Background tone */
     .stApp {
         background-color: #F8FAFC;
     }
 
     /* Executive Top Banner */
     .consulting-banner {
-        background: linear-gradient(135deg, #0A192F 0%, #112240 60%, #1E3A8A 100%);
+        background: linear-gradient(135deg, #0A192F 0%, #0F2A4A 55%, #1E3A8A 100%);
         color: #FFFFFF;
-        padding: 22px 28px;
+        padding: 24px 30px;
         border-radius: 12px;
         margin-bottom: 22px;
         border-left: 6px solid #D97706;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.12), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
     }
     .consulting-banner h1 {
         color: #F8FAFC;
         margin: 0;
-        font-size: 1.85rem;
+        font-size: 1.9rem;
         font-weight: 800;
         letter-spacing: -0.02em;
     }
@@ -54,33 +53,53 @@ st.markdown("""
     }
     .badge-pill {
         display: inline-block;
-        padding: 3px 10px;
+        padding: 4px 12px;
         border-radius: 9999px;
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
-        margin-right: 6px;
+        margin-right: 8px;
     }
-    .badge-amber { background-color: rgba(217, 119, 6, 0.2); color: #FBBF24; border: 1px solid rgba(217, 119, 6, 0.4); }
-    .badge-blue { background-color: rgba(37, 99, 235, 0.2); color: #60A5FA; border: 1px solid rgba(37, 99, 235, 0.4); }
+    .badge-amber { background-color: rgba(217, 119, 6, 0.25); color: #FBBF24; border: 1px solid rgba(217, 119, 6, 0.5); }
+    .badge-blue { background-color: rgba(37, 99, 235, 0.25); color: #93C5FD; border: 1px solid rgba(37, 99, 235, 0.5); }
 
-    /* Executive Metric Cards */
-    div[data-testid="stMetric"] {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
+    /* 4-Color Distinct Metric Cards */
+    div[data-testid="column"]:nth-of-type(1) div[data-testid="stMetric"] {
+        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+        border: 1px solid #BFDBFE;
+        border-left: 5px solid #2563EB;
         border-radius: 10px;
         padding: 16px 20px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.08);
     }
-    div[data-testid="stMetric"]:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    div[data-testid="column"]:nth-of-type(2) div[data-testid="stMetric"] {
+        background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+        border: 1px solid #CBD5E1;
+        border-left: 5px solid #475569;
+        border-radius: 10px;
+        padding: 16px 20px;
+        box-shadow: 0 4px 6px -1px rgba(71, 85, 105, 0.08);
+    }
+    div[data-testid="column"]:nth-of-type(3) div[data-testid="stMetric"] {
+        background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+        border: 1px solid #FDE68A;
+        border-left: 5px solid #D97706;
+        border-radius: 10px;
+        padding: 16px 20px;
+        box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.08);
+    }
+    div[data-testid="column"]:nth-of-type(4) div[data-testid="stMetric"] {
+        background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+        border: 1px solid #A7F3D0;
+        border-left: 5px solid #059669;
+        border-radius: 10px;
+        padding: 16px 20px;
+        box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.08);
     }
     div[data-testid="stMetric"] label {
         font-weight: 700;
-        color: #64748B;
-        font-size: 0.8rem;
+        color: #334155;
+        font-size: 0.82rem;
         text-transform: uppercase;
         letter-spacing: 0.04em;
     }
@@ -91,17 +110,78 @@ st.markdown("""
         letter-spacing: -0.02em;
     }
 
+    /* Section Cards with Color Framing */
+    .card-container {
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+        margin-bottom: 20px;
+    }
+    .card-insight {
+        background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+        border: 1px solid #BAE6FD;
+        border-left: 6px solid #0284C7;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.08);
+    }
+    .card-kraljic-info {
+        background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+        border: 1px solid #FDE68A;
+        border-left: 6px solid #D97706;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.08);
+    }
+    .vendor-card-tier1 {
+        background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+        border: 1px solid #BBF7D0;
+        border-top: 5px solid #16A34A;
+        border-radius: 10px;
+        padding: 18px 20px;
+        height: 100%;
+        box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.08);
+    }
+    .vendor-card-tier2 {
+        background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+        border: 1px solid #FDE68A;
+        border-top: 5px solid #D97706;
+        border-radius: 10px;
+        padding: 18px 20px;
+        height: 100%;
+        box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.08);
+    }
+    .vendor-card-oem {
+        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+        border: 1px solid #BFDBFE;
+        border-top: 5px solid #2563EB;
+        border-radius: 10px;
+        padding: 18px 20px;
+        height: 100%;
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.08);
+    }
+    .card-memo-preview {
+        background: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-top: 6px solid #0F172A;
+        border-radius: 10px;
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06);
+    }
+
     /* Tab Styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 10px;
         border-bottom: 2px solid #E2E8F0;
-        padding-bottom: 4px;
+        padding-bottom: 6px;
     }
     .stTabs [data-baseweb="tab"] {
-        padding: 10px 20px;
+        padding: 12px 22px;
         border-radius: 8px;
         font-weight: 700;
-        font-size: 0.92rem;
+        font-size: 0.95rem;
         background-color: #FFFFFF;
         border: 1px solid #E2E8F0;
         color: #475569;
@@ -111,18 +191,18 @@ st.markdown("""
         background-color: #0F172A !important;
         color: #FFFFFF !important;
         border-color: #0F172A !important;
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.25);
     }
 
     /* Risk Table Consulting Theme */
     .consulting-table {
         width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        border: 1px solid #E2E8F0;
+        border-collapse: collapse;
+        border: 1px solid #CBD5E1;
         border-radius: 8px;
         overflow: hidden;
         background: #FFFFFF;
+        margin-top: 8px;
     }
     .consulting-table th {
         background-color: #0F172A;
@@ -137,21 +217,19 @@ st.markdown("""
     .consulting-table td {
         padding: 12px 14px;
         font-size: 0.88rem;
-        border-bottom: 1px solid #F1F5F9;
+        border-bottom: 1px solid #E2E8F0;
         color: #334155;
-    }
-    .consulting-table tr:last-child td {
-        border-bottom: none;
     }
     .consulting-table tr:hover {
         background-color: #F8FAFC;
     }
     .sev-badge {
-        padding: 3px 8px;
+        padding: 4px 10px;
         border-radius: 4px;
         font-size: 0.75rem;
         font-weight: 800;
         text-transform: uppercase;
+        display: inline-block;
     }
     .sev-critical { background-color: #FEE2E2; color: #DC2626; border: 1px solid #FCA5A5; }
     .sev-high { background-color: #FFEDD5; color: #EA580C; border: 1px solid #FDBA74; }
@@ -726,7 +804,7 @@ if not df_chart.empty and "value" in df_chart.columns:
         df_chart["Percentage"] = (df_chart["value"] / df_chart["value"].sum()) * 100
 
 # ---------------------------------------------------------
-# ROW 1: 4 EXECUTIVE METRIC CARDS
+# ROW 1: 4 DISTINCT COLORED METRIC CARDS
 # ---------------------------------------------------------
 col1, col2, col3, col4 = st.columns(4)
 with col1:
@@ -798,14 +876,23 @@ with tab_cost:
     with col_ins:
         st.subheader("💡 Strategic Insights & Buyer Action Plan")
         insights = data.get("strategic_insights", {})
+        
+        # Color-accented Insight Card
+        insight_html = '<div class="card-insight">'
         if "market_benchmark_range" in insights:
-            st.info(f"**Benchmark / Market Reality:** {insights['market_benchmark_range']}")
-        st.markdown("**🔍 Primary Drivers & Risk Triggers:**")
+            insight_html += f"<p style='color:#0369A1; font-weight:800; margin-bottom:8px;'><b>📌 Market Reality:</b> {insights['market_benchmark_range']}</p>"
+        
+        insight_html += "<p style='color:#0F172A; font-weight:700; margin:10px 0 4px 0;'>🔍 Primary Drivers & Risk Triggers:</p><ul style='margin-top:4px; padding-left:20px; color:#334155;'>"
         for d in insights.get("key_drivers_or_forces", []):
-            st.markdown(f"- {d}")
-        st.markdown("**🎯 Recommended Buyer Counter-Measures:**")
+            insight_html += f"<li>{d}</li>"
+        insight_html += "</ul>"
+        
+        insight_html += "<p style='color:#0F172A; font-weight:700; margin:10px 0 4px 0;'>🎯 Recommended Negotiation Levers:</p><ul style='margin-top:4px; padding-left:20px; color:#334155;'>"
         for l in insights.get("buyer_actionable_levers", []):
-            st.markdown(f"- {l}")
+            insight_html += f"<li><b>{l}</b></li>"
+        insight_html += "</ul></div>"
+        
+        st.markdown(insight_html, unsafe_allow_html=True)
 
     st.markdown("---")
     st.subheader("📚 Micro-Cost Factor Technical Basis & Engineering Definitions")
@@ -828,13 +915,11 @@ with tab_kraljic:
         st.subheader("🎯 Kraljic Portfolio Matrix (2x2)")
         fig_k = go.Figure()
         
-        # McKinsey Quadrant Backgrounds
         fig_k.add_shape(type="rect", x0=0, y0=0, x1=5, y1=5, fillcolor="#F1F5F9", opacity=0.7, line_width=1, line_color="#CBD5E1")
         fig_k.add_shape(type="rect", x0=5, y0=0, x1=10, y1=5, fillcolor="#FEF3C7", opacity=0.7, line_width=1, line_color="#FDE68A")
         fig_k.add_shape(type="rect", x0=0, y0=5, x1=5, y1=10, fillcolor="#E0F2FE", opacity=0.7, line_width=1, line_color="#BAE6FD")
         fig_k.add_shape(type="rect", x0=5, y0=5, x1=10, y1=10, fillcolor="#FEE2E2", opacity=0.7, line_width=1, line_color="#FECACA")
         
-        # Center Dividers
         fig_k.add_shape(type="line", x0=5, y0=0, x1=5, y1=10, line=dict(color="#64748B", width=2, dash="dash"))
         fig_k.add_shape(type="line", x0=0, y0=5, x1=10, y1=5, line=dict(color="#64748B", width=2, dash="dash"))
         
@@ -868,17 +953,25 @@ with tab_kraljic:
         
     with col_ktable:
         st.subheader("📋 Kraljic Strategy Positioning Card")
-        st.info(f"**Identified Quadrant:** `{k_data.get('quadrant', 'Strategic')}`")
-        st.markdown(f"**Recommended Horizon:** {k_data.get('contract_horizon', '3-5 Years Alliance')}")
-        st.markdown(f"**Relationship Model:** {k_data.get('supplier_relationship', 'Collaborative Gainshare')}")
-        st.markdown("---")
-        st.markdown("**Core Kraljic Dimensions:**")
-        st.write(f"- **Profit Impact:** {k_data.get('profit_impact', 8.5)} / 10")
-        st.write(f"- **Supply Risk:** {k_data.get('supply_risk', 7.5)} / 10")
-        st.caption("📌 **Buyer Directive:** Align commercial term commitments with quadrant boundaries to prevent supplier lock-in or unearned margins.")
+        
+        # Color-accented Kraljic strategy card
+        k_card_html = f"""
+        <div class="card-kraljic-info">
+            <h3 style="color:#B45309; margin-top:0; font-size:1.3rem;">🎯 Quadrant: {k_data.get('quadrant', 'Strategic')}</h3>
+            <p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Contract Horizon:</b></p>
+            <p style="color:#475569; margin-top:2px;">{k_data.get('contract_horizon', '3-5 Years Alliance')}</p>
+            <p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Supplier Governance Model:</b></p>
+            <p style="color:#475569; margin-top:2px;">{k_data.get('supplier_relationship', 'Collaborative Gainshare')}</p>
+            <hr style="border: 0; border-top: 1px solid #FDE68A; margin: 14px 0;">
+            <p style="color:#334155; margin:0;"><b>Profit Impact Score:</b> {k_data.get('profit_impact', 8.5)} / 10<br>
+            <b>Supply Risk Score:</b> {k_data.get('supply_risk', 7.5)} / 10</p>
+            <p style="color:#92400E; font-size:0.8rem; margin-top:12px;">📌 <i>Buyer Directive: Align contract horizons to avoid margin capture or vendor lock-in.</i></p>
+        </div>
+        """
+        st.markdown(k_card_html, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# TAB 3: RISK HEATMAP & MITIGATION (PERFECTLY ALIGNED)
+# TAB 3: RISK HEATMAP & MITIGATION (ALIGNED & CLUSTERED)
 # ---------------------------------------------------------
 with tab_risk:
     col_map, col_score = st.columns([1.1, 0.9])
@@ -887,17 +980,15 @@ with tab_risk:
     with col_map:
         st.subheader("🔥 5x5 Category Risk Heatmap")
         
-        # Categorical labels for exact matching
         impact_labels = ["1. Negligible", "2. Minor", "3. Moderate", "4. Major", "5. Catastrophic"]
         prob_labels = ["1. Rare", "2. Unlikely", "3. Possible", "4. Likely", "5. Almost Certain"]
         
-        # McKinsey / CIPS Standard Risk Matrix Colors
         z_matrix = [
-            [1, 2, 3, 4, 5],     # Rare
-            [2, 4, 6, 8, 10],    # Unlikely
-            [3, 6, 9, 12, 15],   # Possible
-            [4, 8, 12, 16, 20],  # Likely
-            [5, 10, 15, 20, 25]  # Almost Certain
+            [1, 2, 3, 4, 5],
+            [2, 4, 6, 8, 10],
+            [3, 6, 9, 12, 15],
+            [4, 8, 12, 16, 20],
+            [5, 10, 15, 20, 25]
         ]
         
         fig_h = go.Figure(data=go.Heatmap(
@@ -905,44 +996,58 @@ with tab_risk:
             x=impact_labels,
             y=prob_labels,
             colorscale=[
-                [0.0, "#A7F3D0"],  # Low: Muted Soft Green
+                [0.0, "#A7F3D0"],
                 [0.2, "#D1FAE5"],
-                [0.4, "#FEF3C7"],  # Moderate: Soft Amber
-                [0.6, "#FED7AA"],  # High: Warm Orange
-                [1.0, "#FCA5A5"]   # Critical: Crimson Red
+                [0.4, "#FEF3C7"],
+                [0.6, "#FED7AA"],
+                [1.0, "#FCA5A5"]
             ],
             showscale=False,
             hoverinfo="none"
         ))
         
         if risk_list:
-            df_r = pd.DataFrame(risk_list)
-            
-            # Helper to map numeric 1..5 to exact string category
             def clamp_label(val, label_list):
                 idx = max(0, min(4, int(round(val)) - 1))
                 return label_list[idx]
-            
-            # PERFECT ALIGNMENT: x and y use the EXACT same categorical strings as the heatmap!
-            scatter_x = [clamp_label(r.get("impact", 3), impact_labels) for _, r in df_r.iterrows()]
-            scatter_y = [clamp_label(r.get("prob", 3), prob_labels) for _, r in df_r.iterrows()]
-            
+
+            # SMART CELL GROUPING: Combines overlapping risks into a single badge (e.g. 'R2, R3')
+            cell_groups = {}
+            for i, r in enumerate(risk_list):
+                coord = (clamp_label(r.get("impact", 3), impact_labels), clamp_label(r.get("prob", 3), prob_labels))
+                if coord not in cell_groups:
+                    cell_groups[coord] = []
+                cell_groups[coord].append((f"R{i+1}", r))
+
+            scatter_x = []
+            scatter_y = []
+            scatter_text = []
+            scatter_hover = []
+
+            for (x_val, y_val), items in cell_groups.items():
+                scatter_x.append(x_val)
+                scatter_y.append(y_val)
+                badge_label = ", ".join([it[0] for it in items])
+                scatter_text.append(f"<b>{badge_label}</b>")
+                
+                hover_entries = []
+                for it in items:
+                    hover_entries.append(f"<b>{it[0]}: {it[1]['risk_name']}</b><br>Score: {it[1]['score']}/25 | Severity: {it[1]['severity']}<br>Mitigation: {it[1]['mitigation']}")
+                scatter_hover.append("<br><br>".join(hover_entries))
+
             fig_h.add_trace(go.Scatter(
                 x=scatter_x,
                 y=scatter_y,
                 mode="markers+text",
                 marker=dict(
-                    size=28,
+                    size=34 if any("," in t for t in scatter_text) else 28,
                     color="#0A192F",
                     line=dict(width=2.5, color="#FFFFFF")
                 ),
-                text=[f"<b>R{i+1}</b>" for i in range(len(df_r))],
+                text=scatter_text,
                 textposition="middle center",
-                textfont=dict(color="#FFFFFF", size=11, family="Plus Jakarta Sans"),
-                hovertext=[
-                    f"<b>R{i+1}: {r['risk_name']}</b><br>Score: {r['score']}/25 | Severity: {r['severity']}<br>Mitigation: {r['mitigation']}"
-                    for i, r in df_r.iterrows()
-                ],
+                textfont=dict(color="#FFFFFF", size=10, family="Plus Jakarta Sans"),
+                hovertext=scatter_hover,
                 hoverinfo="text",
                 name="Category Risks"
             ))
@@ -970,31 +1075,12 @@ with tab_risk:
     with col_score:
         st.subheader("📊 Risk Severity Register")
         if risk_list:
-            # Consulting Styled HTML Table
-            table_html = """
-            <table class="consulting-table">
-                <thead>
-                    <tr>
-                        <th style="width: 12%;">ID</th>
-                        <th style="width: 58%;">Risk Factor</th>
-                        <th style="width: 15%;">Score</th>
-                        <th style="width: 15%;">Severity</th>
-                    </tr>
-                </thead>
-                <tbody>
-            """
-            for i, r in enumerate(risk_list):
-                sev = r.get("severity", "Medium")
-                badge_class = f"sev-{sev.lower()}"
-                table_html += f"""
-                    <tr>
-                        <td><b>R{i+1}</b></td>
-                        <td>{r['risk_name']}</td>
-                        <td><b>{r['score']}</b>/25</td>
-                        <td><span class="sev-badge {badge_class}">{sev}</span></td>
-                    </tr>
-                """
-            table_html += "</tbody></table>"
+            # Build zero-indentation HTML table to guarantee clean rendering
+            rows_html = "".join([
+                f'<tr><td><b>R{i+1}</b></td><td>{r["risk_name"]}</td><td><b>{r["score"]}</b>/25</td><td><span class="sev-badge sev-{r.get("severity", "Medium").lower()}">{r.get("severity", "Medium")}</span></td></tr>'
+                for i, r in enumerate(risk_list)
+            ])
+            table_html = f'<table class="consulting-table"><thead><tr><th style="width: 12%;">ID</th><th style="width: 58%;">Risk Factor</th><th style="width: 15%;">Score</th><th style="width: 15%;">Severity</th></tr></thead><tbody>{rows_html}</tbody></table>'
             st.markdown(table_html, unsafe_allow_html=True)
             
     st.markdown("---")
@@ -1006,7 +1092,7 @@ with tab_risk:
                 st.markdown(f"**Actionable Mitigation Strategy:** {r['mitigation']}")
 
 # ---------------------------------------------------------
-# TAB 4: VENDOR & OEM ECOSYSTEM
+# TAB 4: VENDOR & OEM ECOSYSTEM (3 DISTINCT COLORED CARDS)
 # ---------------------------------------------------------
 with tab_vendors:
     st.subheader("🏢 Preferred Supplier & OEM Ecosystem (Jubail & Eastern Province)")
@@ -1019,20 +1105,33 @@ with tab_vendors:
     })
     
     v_col1, v_col2, v_col3 = st.columns(3)
+    
     with v_col1:
-        st.success("🟢 **Tier-1 Local KSA (High IKTVA Champions)**")
+        v1_html = "<div class='vendor-card-tier1'>"
+        v1_html += "<h4 style='color:#15803D; margin-top:0; font-weight:800;'>🟢 Tier-1 Local KSA</h4>"
+        v1_html += "<p style='color:#166534; font-size:0.8rem; margin-top:-6px;'>High IKTVA Champions & Prime Contractors</p><hr style='border:0; border-top:1px solid #BBF7D0; margin:10px 0;'><ul style='padding-left:18px; color:#14532D; margin:0;'>"
         for v in vm.get("tier_1_local", []):
-            st.markdown(f"- **{v}**")
+            v1_html += f"<li style='margin-bottom:6px;'><b>{v}</b></li>"
+        v1_html += "</ul></div>"
+        st.markdown(v1_html, unsafe_allow_html=True)
             
     with v_col2:
-        st.warning("🟡 **Tier-2 Regional Specialized Contractors**")
+        v2_html = "<div class='vendor-card-tier2'>"
+        v2_html += "<h4 style='color:#B45309; margin-top:0; font-weight:800;'>🟡 Tier-2 Regional</h4>"
+        v2_html += "<p style='color:#92400E; font-size:0.8rem; margin-top:-6px;'>Specialized Fleet & Workforce Providers</p><hr style='border:0; border-top:1px solid #FDE68A; margin:10px 0;'><ul style='padding-left:18px; color:#78350F; margin:0;'>"
         for v in vm.get("tier_2_regional", []):
-            st.markdown(f"- **{v}**")
+            v2_html += f"<li style='margin-bottom:6px;'><b>{v}</b></li>"
+        v2_html += "</ul></div>"
+        st.markdown(v2_html, unsafe_allow_html=True)
             
     with v_col3:
-        st.info("🌐 **Global OEMs & Technology Licensors**")
+        v3_html = "<div class='vendor-card-oem'>"
+        v3_html += "<h4 style='color:#1D4ED8; margin-top:0; font-weight:800;'>🌐 Global OEMs</h4>"
+        v3_html += "<p style='color:#1E40AF; font-size:0.8rem; margin-top:-6px;'>Technology Licensors & Turbomachinery</p><hr style='border:0; border-top:1px solid #BFDBFE; margin:10px 0;'><ul style='padding-left:18px; color:#1E3A8A; margin:0;'>"
         for v in vm.get("global_oems", []):
-            st.markdown(f"- **{v}**")
+            v3_html += f"<li style='margin-bottom:6px;'><b>{v}</b></li>"
+        v3_html += "</ul></div>"
+        st.markdown(v3_html, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # TAB 5: CPO & C-SUITE EXECUTIVE MEMO & DOWNLOADS
@@ -1148,17 +1247,26 @@ with tab_report:
     </html>
     """
 
+    # Executive memo summary preview in a slate card
     st.markdown(f"""
-    **Executive Summary:**  
-    Category analysis for **{selected_sub}** in Jubail complex establishes a Should-Cost target of **{unit} {total_val:,.2f}**.  
-    The contractor break-even operating floor is **{data.get('metric_card_2_value', '-')}**, with a fair supplier profit margin of **{data.get('metric_card_3_value', '-')}**.
+    <div class="card-memo-preview">
+        <h3 style="color:#0F172A; margin-top:0;">📋 CPO Executive Decision Briefing Preview</h3>
+        <p style="color:#334155; font-size:0.95rem; line-height:1.6;">
+            Category review for <b>{selected_sub}</b> establishes an audited contract Should-Cost baseline of <b>{unit} {total_val:,.2f}</b>.<br>
+            The contractor break-even operating floor is <b>{data.get('metric_card_2_value', '-')}</b>, with a fair supplier net profit margin of <b>{data.get('metric_card_3_value', '-')}</b>.
+        </p>
+        <div style="margin: 12px 0;">
+            <span class="badge-pill badge-amber">Kraljic: {k_data.get('quadrant', 'Strategic')}</span>
+            <span class="badge-pill badge-blue">Horizon: {k_data.get('contract_horizon', '3-5 Years Alliance')}</span>
+            <span class="badge-pill badge-amber">Max Risk Score: {data.get('total_metric_value', 18)}/25</span>
+        </div>
+        <p style="color:#64748B; font-size:0.85rem; margin-bottom:0;">
+            <b>Local Content Route:</b> Priority allocation to Eastern Province Tier-1 leaders (<i>{', '.join(vm.get('tier_1_local', [])[:2])}</i>).
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    * **Kraljic Quadrant:** `{k_data.get('quadrant', 'Strategic')}` ({k_data.get('contract_horizon', '3-5 Years Alliance')})
-    * **Highest Risk Exposure:** Score `{data.get('total_metric_value', 18)}/25` (Mitigation assigned to turnaround and security leads)
-    * **Local Content Impact:** Priority routing through Tier-1 Jubail contractors (*{', '.join(vm.get('tier_1_local', [])[:2])}*).
-    """)
-    
-    st.markdown("---")
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
     st.subheader("📥 Export C-Suite Deliverables")
     
     dcol1, dcol2 = st.columns(2)
