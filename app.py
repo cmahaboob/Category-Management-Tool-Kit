@@ -162,11 +162,14 @@ DEFAULT_DATABASE = {
 }
 
 # ---------------------------------------------------------
-# GEMINI 3.8 FLASH OPTIMIZED CALL (FAST RESPONSE & 90S TIMEOUT)
+# DIRECT REST API (401-PROOF FOR NEW 'AQ.' GOOGLE KEYS)
 # ---------------------------------------------------------
 def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key):
     import urllib3
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+    # Clean key: strips accidental quotes, spaces, or newlines
+    clean_key = str(user_key).strip().strip('"').strip("'")
 
     prompt = (
         "You are the Principal Strategic Sourcing & Cost Engineer in Jubail Industrial City, Saudi Arabia for a world-scale Petrochemical Complex.\n"
@@ -226,63 +229,44 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
             return json.loads(match.group(0))
         return None
 
-    def extract_text(data):
-        if isinstance(data, dict):
-            if "text" in data and isinstance(data["text"], str) and data["text"].strip():
-                return data["text"]
-            for v in data.values():
-                t = extract_text(v)
-                if t:
-                    return t
-        elif isinstance(data, list):
-            for item in reversed(data):
-                t = extract_text(item)
-                if t:
-                    return t
-        return ""
-
     error_log = []
 
-    # 1. Primary: Google Interactions API with gemini-3.8-flash & low thinking level for fast response
-    try:
-        interactions_url = f"https://generativelanguage.googleapis.com/v1beta/interactions?key={user_key}"
-        headers = {"Content-Type": "application/json", "x-goog-api-key": user_key}
-        payload = {
-            "model": "gemini-3.8-flash",
-            "input": prompt,
-            "generation_config": {"thinking_level": "low"}
-        }
-        r1 = requests.post(interactions_url, headers=headers, json=payload, timeout=90, verify=False)
-        if r1.status_code == 200:
-            txt = extract_text(r1.json())
-            parsed = parse_json_from_text(txt)
-            if parsed:
-                return parsed
-        else:
-            error_log.append(f"Interactions API: HTTP {r1.status_code}")
-    except Exception as e:
-        error_log.append(f"Interactions API: {str(e)}")
-
-    # 2. Secondary: Direct generateContent endpoint with gemini-3.8-flash & gemini-3.5-flash
-    modern_models = ["gemini-3.8-flash", "gemini-3.5-flash"]
-    gen_payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"response_mime_type": "application/json", "temperature": 0.2}
+    # Clean header: only x-goog-api-key, avoiding duplicate query string conflicts
+    headers = {
+        "Content-Type": "application/json",
+        "x-goog-api-key": clean_key
     }
-    for m in modern_models:
+
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "response_mime_type": "application/json",
+            "temperature": 0.2
+        }
+    }
+
+    # Models officially supported for new AQ auth keys
+    models_to_call = [
+        "gemini-2.5-flash-lite",
+        "gemini-2.5-flash",
+        "gemini-2.0-flash",
+        "gemini-3.8-flash"
+    ]
+
+    for model_name in models_to_call:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
         try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={user_key}"
-            r2 = requests.post(url, headers={"Content-Type": "application/json"}, json=gen_payload, timeout=90, verify=False)
-            if r2.status_code == 200:
-                rj = r2.json()
-                txt = rj["candidates"][0]["content"]["parts"][0]["text"]
-                parsed = parse_json_from_text(txt)
+            r = requests.post(url, headers=headers, json=payload, timeout=45, verify=False)
+            if r.status_code == 200:
+                resp_json = r.json()
+                text_out = resp_json["candidates"][0]["content"]["parts"][0]["text"]
+                parsed = parse_json_from_text(text_out)
                 if parsed:
                     return parsed
             else:
-                error_log.append(f"{m}: HTTP {r2.status_code}")
+                error_log.append(f"{model_name}: HTTP {r.status_code}")
         except Exception as e:
-            error_log.append(f"{m}: {str(e)}")
+            error_log.append(f"{model_name}: {str(e)}")
 
     raise Exception(" | ".join(error_log))
 # ---------------------------------------------------------
