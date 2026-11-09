@@ -4,7 +4,6 @@ import plotly.graph_objects as go
 import pandas as pd
 import json
 import re
-import time
 import requests
 
 # ---------------------------------------------------------
@@ -20,19 +19,19 @@ st.set_page_config(
 # TAXONOMY REPOSITORY (Jubail Petrochemical Complex)
 # ---------------------------------------------------------
 CATEGORY_TAXONOMY = {
-    "Industrial O&M Services": [
-        "Mechanical Maintenance (Piping, Static, Valves)", "Rotating Equipment Overhaul (Turbines/Compressors)",
-        "Electrical Maintenance (Motors, VFDs, Switchgear)", "Instrumentation & Control (Analyzers, DCS)",
-        "Inspection & Testing (NDT, RBI, Lifting)", "Industrial Cleaning (Hydrojetting 10k-40k PSI)",
-        "Catalyst Handling under Inert Atmosphere", "Building & Civil Maintenance",
-        "Material Handling Equipment Maintenance", "Safety & Fire Protection Systems Maintenance"
-    ],
     "Logistics Services": [
         "Ocean Freight", "Export Freight Forwarding", "KSA Inland Transportation",
         "Cross-Border Inland (GCC)", "Air Freight & Courier", "Warehousing & Open Yard",
         "Terminal, Port & Hub (KFIP/Dammam)", "Container / ISO Tank", "Bagging & Packing",
         "Container Operations", "Loading & Unloading", "Product Shuttling (Plant to Port)",
         "Import Freight Forwarding", "Customs Clearance"
+    ],
+    "Industrial O&M Services": [
+        "Mechanical Maintenance (Piping, Static, Valves)", "Rotating Equipment Overhaul (Turbines/Compressors)",
+        "Electrical Maintenance (Motors, VFDs, Switchgear)", "Instrumentation & Control (Analyzers, DCS)",
+        "Inspection & Testing (NDT, RBI, Lifting)", "Industrial Cleaning (Hydrojetting 10k-40k PSI)",
+        "Catalyst Handling under Inert Atmosphere", "Building & Civil Maintenance",
+        "Material Handling Equipment Maintenance", "Safety & Fire Protection Systems Maintenance"
     ],
     "Soft / Facility Management": [
         "Workplace Operations (Cleaning & Janitorial)", "Industrial & Camp Catering Services",
@@ -82,19 +81,19 @@ ANALYSIS_TYPES = [
 ]
 
 # ---------------------------------------------------------
-# SIDEBAR WITH AUTO-SECRETS DETECTION
+# SIDEBAR
 # ---------------------------------------------------------
 st.sidebar.title("🏭 Category Management ToolKit Engine")
 st.sidebar.caption("Jubail Industrial City | Services & Projects")
 
-# Automatically check Streamlit Secrets first
+# Read API Key from Streamlit Secrets automatically
 secret_key = st.secrets.get("GEMINI_API_KEY", "")
 
 api_key_input = st.sidebar.text_input(
     "Google AI Studio API Key",
     type="password",
     value=secret_key if secret_key else st.session_state.get("api_key", ""),
-    help="Pre-loaded from server secrets, or enter a custom key"
+    help="Loaded automatically from server Secrets"
 )
 if api_key_input:
     st.session_state["api_key"] = api_key_input
@@ -109,8 +108,6 @@ selected_analysis = st.sidebar.selectbox("3. Analysis Tool", ANALYSIS_TYPES)
 default_context = f"Scope in Jubail Industrial City petrochemical complex for {selected_sub}."
 if selected_sub == "Ocean Freight":
     default_context = "Route: Jubail (King Fahd Industrial Port) to India (Mundra Port), 40ft High Cube Container, Petrochemical Polymer Pellets."
-elif "Rotating Equipment" in selected_sub:
-    default_context = "Turnaround (TAM) Rotating Equipment Overhaul: High-pressure multistage feed pumps, turbine rotor inspection, dynamic balancing inside Jubail 1 complex."
 elif "Mechanical Maintenance" in selected_sub:
     default_context = "Turnaround (TAM) Mechanical Overhaul: Heat exchangers, valve overhaul, piping spool fabrication inside Jubail 1 complex."
 
@@ -158,11 +155,98 @@ DEFAULT_DATABASE = {
                 "Enforce LCGPA local content credits for utilizing Jubail-based fabrication workshops."
             ]
         }
+    },
+    "Kraljic Matrix Positioning & Strategic Portfolio": {
+        "analysis_title": "Kraljic Matrix Positioning & Portfolio Strategy",
+        "currency_or_unit": "Score (1-10)",
+        "total_metric_value": 8.5,
+        "total_metric_label": "Kraljic Quadrant",
+        "metric_card_2_label": "Profit / Business Impact",
+        "metric_card_2_value": "8.5 / 10 (High Impact)",
+        "metric_card_3_label": "Supply Market Risk",
+        "metric_card_3_value": "7.5 / 10 (High Risk)",
+        "metric_card_4_label": "Recommended Posture",
+        "metric_card_4_value": "Strategic Partnership",
+        "chart_title": "Kraljic Risk & Value Dimensions",
+        "chart_items": [
+            {"name": "Profit Impact on Asset Uptime", "value": 8.5, "details": "Unplanned shutdown due to mechanical failure costs millions in lost production."},
+            {"name": "Supplier Market Complexity", "value": 7.5, "details": "Limited number of certified Jubail contractors with approved SABIC/Aramco safety passports."},
+            {"name": "Switching Cost Barrier", "value": 8.0, "details": "High mobilization friction inside RCJY-controlled industrial security perimeter."},
+            {"name": "Substitutability Index", "value": 3.0, "details": "Very low substitutability; mechanical maintenance requires on-site physical presence."}
+        ],
+        "kraljic_data": {
+            "quadrant": "Strategic",
+            "profit_impact": 8.5,
+            "supply_risk": 7.5,
+            "contract_horizon": "3 to 5 Years Long-Term Alliance",
+            "supplier_relationship": "Collaborative Value-Sharing & Performance-Linked Gainshare"
+        },
+        "secondary_chart_title": "Strategic Power Balance",
+        "secondary_chart_labels": ["Buyer Leverage", "Supplier Power"],
+        "secondary_chart_values": [45, 55],
+        "strategic_insights": {
+            "summary": "This category falls in the 'STRATEGIC' quadrant due to plant downtime risks and contractor capacity constraints.",
+            "market_benchmark_range": "Strategic Partner Quadrant (High Risk, High Impact)",
+            "key_drivers_or_forces": [
+                "Petrochemical plant uptime is critical; contractor quality directly drives unscheduled trip rates.",
+                "Capacity bottleneck during regional mega-turnaround windows across Jubail 1 & 2.",
+                "Strict HCIS and RCJY security and environmental certification barriers."
+            ],
+            "buyer_actionable_levers": [
+                "Establish 3-year framework agreements with indexation to lock in master crew availability.",
+                "Structure KPI pain-share/gain-share clauses tied to plant restart milestone targets.",
+                "Co-invest in local apprentice programs to boost contractor Saudization (Qiwa/Nitaqat)."
+            ]
+        }
+    },
+    "Risk Assessment Scorecard, Heatmap & Mitigation Plan": {
+        "analysis_title": "Risk Assessment Scorecard & Heatmap Matrix",
+        "currency_or_unit": "Score (1-25)",
+        "total_metric_value": 18,
+        "total_metric_label": "Highest Risk Score",
+        "metric_card_2_label": "Overall Category Risk",
+        "metric_card_2_value": "HIGH (Score: 18/25)",
+        "metric_card_3_label": "Critical Risk Items",
+        "metric_card_3_value": "2 Critical | 3 Moderate",
+        "metric_card_4_label": "Mitigation Coverage",
+        "metric_card_4_value": "100% Planned",
+        "chart_title": "Risk Magnitude Scores (Probability x Impact)",
+        "chart_items": [
+            {"name": "TAM Schedule Overrun Due to Craft Scarcity", "value": 18, "details": "Probability: 4/5 | Impact: 4.5/5. Major plant restart delay costing substantial daily revenue."},
+            {"name": "RCJY / HCIS Security Gate Pass Delay", "value": 15, "details": "Probability: 5/5 | Impact: 3/5. Bureaucratic delays in badging foreign technicians at plant gates."},
+            {"name": "Subcontractor Safety Breach (LTI / PSM Incident)", "value": 16, "details": "Probability: 2/5 | Impact: 5/5. Process safety or hot-work fire incident causing shutdown."},
+            {"name": "Nitaqat / Saudization Compliance Non-Renewal", "value": 12, "details": "Probability: 3/5 | Impact: 4/5. Contractor frozen on Qiwa platform due to falling below quotas."},
+            {"name": "Spare Parts / Consumable Stockout (Flanges/Gaskets)", "value": 9, "details": "Probability: 3/5 | Impact: 3/5. Lead-time delays for specialized alloy fittings."}
+        ],
+        "risk_items": [
+            {"risk_name": "TAM Schedule Overrun (Craft Scarcity)", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Sign binding early reservation agreements 9 months ahead of shutdown with guaranteed slot penalties.", "owner": "Turnaround Procurement Lead"},
+            {"risk_name": "HCIS / RCJY Security Badging Bottleneck", "prob": 5, "impact": 3.0, "score": 15, "severity": "High", "mitigation": "Establish pre-screening protocol and submit badge dossiers 45 days prior via digital portal.", "owner": "Industrial Security Liaison"},
+            {"risk_name": "Subcontractor Safety Breach / PSM Incident", "prob": 2, "impact": 5.0, "score": 10, "severity": "High", "mitigation": "Mandate SABIC/Aramco safety passport audits, on-site safety officers, and stop-work authority.", "owner": "Plant EHSS Department"},
+            {"risk_name": "Contractor Qiwa / Nitaqat Quota Freeze", "prob": 3, "impact": 4.0, "score": 12, "severity": "Medium", "mitigation": "Monthly audit of contractor green-zone status in Qiwa; include contract termination clause for default.", "owner": "Contract Compliance Manager"},
+            {"risk_name": "Specialized Gasket / Flange Stockout", "prob": 3, "impact": 3.0, "score": 9, "severity": "Medium", "mitigation": "Consignment inventory at Jubail central warehouse with 2-year min/max replenishment.", "owner": "Reliability Materials Specialist"}
+        ],
+        "secondary_chart_title": "Risk Severity Distribution",
+        "secondary_chart_labels": ["Critical Risks", "High Risks", "Medium Risks", "Low Risks"],
+        "secondary_chart_values": [1, 2, 2, 0],
+        "strategic_insights": {
+            "summary": "Risk profile is dominated by craft labor scarcity and industrial security access constraints in Jubail.",
+            "market_benchmark_range": "High Exposure Category (Requires Active Mitigation Governance)",
+            "key_drivers_or_forces": [
+                "Overlapping turnaround windows across Jubail 1, Jubail 2, and Ras Al Khair.",
+                "Stringent HCIS Directive-08 access validation requirements for critical industrial assets.",
+                "Saudi Ministry of Human Resources (MHRSD) strict enforcement of technical saudization."
+            ],
+            "buyer_actionable_levers": [
+                "Incorporate liquidated damages tied directly to crew mobilization milestones.",
+                "Maintain secondary backup contractor on call-off framework with pre-badged personnel.",
+                "Audit contractor financial health to avoid mid-turnaround payroll or visa defaults."
+            ]
+        }
     }
 }
 
 # ---------------------------------------------------------
-# GEMINI 3.8 FLASH DIRECT TARGET (FAST 'MINIMAL' THINKING)
+# GEMINI 3.8 FLASH TARGET (FAST LOW-THINKING EXECUTION)
 # ---------------------------------------------------------
 def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key):
     import urllib3
@@ -170,58 +254,74 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
 
     clean_key = str(user_key).strip().strip('"').strip("'")
 
-    prompt = (
-        "You are the Principal Strategic Sourcing & Cost Engineer in Jubail Industrial City, Saudi Arabia for a world-scale Petrochemical Complex.\n"
-        f"Perform an in-depth professional category analysis for:\n"
-        f"- Parent Category: {parent}\n"
-        f"- Subcategory: {sub}\n"
-        f"- Analysis Tool: {analysis_type}\n"
-        f"- Scope Context: {context}\n\n"
-        "CRITICAL INSTRUCTION: Be direct, concise, and generate the final JSON immediately without long reasoning or delay.\n\n"
-        "ADAPT YOUR OUTPUT SPECIFICALLY TO THE REQUESTED ANALYSIS TOOL:\n"
-        "1. If Should-Cost (CBS): Detailed cost breakdown (Direct Labor, KSA Statutory Burden, Overheads, Consumables, Profit) in SAR or USD.\n"
-        "2. If TCO Lifecycle Model: Cost breakdown across lifecycle stages (Acquisition, Mobilization, O&M, Risk Buffer, Demobilization) in SAR or USD.\n"
-        "3. If Kraljic Matrix: Position in 2x2 matrix (Strategic, Leverage, Bottleneck, Routine). Provide profit_impact (1-10), supply_risk (1-10), contract_horizon, and supplier_relationship.\n"
-        "4. If Risk Assessment: 5 specific risks with probability (1-5), impact (1-5), score (prob x impact), severity (Critical/High/Medium/Low), concrete mitigation action, and named owner.\n"
-        "5. If Porter's 5 Forces: Score each force from 0 to 100 with unit 'Index (0-100)'.\n"
-        "6. If Kearney Chessboard: Quantify value potential across strategic levers in SAR or USD.\n\n"
-        "RETURN ONLY A VALID JSON OBJECT MATCHING THIS EXACT SCHEMA (no markdown fences, no commentary):\n"
-        """{
-  "analysis_title": "string",
-  "currency_or_unit": "SAR or USD or Score (1-10) or Score (1-25) or Index (0-100)",
-  "total_metric_value": 450000,
-  "total_metric_label": "string",
-  "metric_card_2_label": "string",
-  "metric_card_2_value": "string",
-  "metric_card_3_label": "string",
-  "metric_card_3_value": "string",
-  "metric_card_4_label": "string",
-  "metric_card_4_value": "string",
-  "chart_title": "string",
-  "chart_items": [
-    {"name": "Item Name", "value": 150000, "details": "Detailed explanation"}
-  ],
+    # Tailored, concise prompts ensure the model finishes in 3-5 seconds
+    if "Kraljic" in analysis_type:
+        specific_inst = """
+  Provide:
+  "total_metric_value": 8.5,
+  "total_metric_label": "Kraljic Quadrant",
+  "metric_card_2_label": "Profit Impact", "metric_card_2_value": "8.5 / 10",
+  "metric_card_3_label": "Supply Risk", "metric_card_3_value": "7.5 / 10",
+  "metric_card_4_label": "Recommended Posture", "metric_card_4_value": "Strategic Alliance",
   "kraljic_data": {
-    "quadrant": "Strategic or Leverage or Bottleneck or Routine",
-    "profit_impact": 8.5,
-    "supply_risk": 7.5,
-    "contract_horizon": "string",
-    "supplier_relationship": "string"
+    "quadrant": "Strategic", "profit_impact": 8.5, "supply_risk": 7.5,
+    "contract_horizon": "3 to 5 Years", "supplier_relationship": "Collaborative Partnership"
   },
+  "chart_title": "Kraljic Dimension Drivers",
+  "chart_items": [{"name": "Profit Impact", "value": 8.5, "details": "Reason"}, {"name": "Market Complexity", "value": 7.5, "details": "Reason"}],
+  "secondary_chart_title": "Leverage Split",
+  "secondary_chart_labels": ["Buyer Leverage", "Supplier Power"], "secondary_chart_values": [45, 55],
+        """
+    elif "Risk" in analysis_type:
+        specific_inst = """
+  Provide:
+  "total_metric_value": 18,
+  "total_metric_label": "Max Risk Score",
+  "metric_card_2_label": "Overall Category Risk", "metric_card_2_value": "HIGH",
+  "metric_card_3_label": "Critical Risks", "metric_card_3_value": "2 Critical",
+  "metric_card_4_label": "Mitigation Coverage", "metric_card_4_value": "100% Planned",
   "risk_items": [
-    {"risk_name": "Specific Risk Name", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Concrete action", "owner": "Role Name"}
+    {"risk_name": "Operational Risk 1", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Mitigation plan", "owner": "Role"}
   ],
-  "secondary_chart_title": "string",
-  "secondary_chart_labels": ["Part A", "Part B"],
-  "secondary_chart_values": [80, 20],
-  "strategic_insights": {
-    "summary": "Executive summary",
-    "market_benchmark_range": "Benchmark description",
+  "chart_title": "Risk Magnitude Scores (P x I)",
+  "chart_items": [{"name": "Risk 1", "value": 18, "details": "Explanation"}],
+  "secondary_chart_title": "Risk Severity Distribution",
+  "secondary_chart_labels": ["Critical", "High", "Medium", "Low"], "secondary_chart_values": [1, 2, 2, 0],
+        """
+    else:
+        specific_inst = """
+  Provide:
+  "currency_or_unit": "SAR",
+  "total_metric_value": 450000,
+  "total_metric_label": "Total Amount",
+  "metric_card_2_label": "Direct Operating Cost", "metric_card_2_value": "SAR 400,000 (89%)",
+  "metric_card_3_label": "Supplier Profit Margin", "metric_card_3_value": "SAR 50,000 (11%)",
+  "metric_card_4_label": "Target Benchmark", "metric_card_4_value": "8.0%",
+  "chart_title": "Cost Breakdown Structure",
+  "chart_items": [{"name": "Component A", "value": 150000, "details": "Explanation"}],
+  "secondary_chart_title": "Direct Cost vs Margin",
+  "secondary_chart_labels": ["Direct Operating Cost", "Supplier Profit"], "secondary_chart_values": [89, 11],
+        """
+
+    prompt = f"""You are a Principal Sourcing & Cost Engineer in Jubail Industrial City, Saudi Arabia for a world-scale Petrochemical Complex.
+Analyze:
+- Parent: {parent}
+- Subcategory: {sub}
+- Tool: {analysis_type}
+- Scope Context: {context}
+
+Return ONLY a valid JSON object with:
+{{
+  "analysis_title": "{analysis_type}",
+  {specific_inst}
+  "strategic_insights": {{
+    "summary": "Executive summary of findings in Jubail context",
+    "market_benchmark_range": "Prevailing benchmark range",
     "key_drivers_or_forces": ["Point 1", "Point 2", "Point 3"],
-    "buyer_actionable_levers": ["Lever 1", "Lever 2", "Lever 3"]
-  }
-}"""
-    )
+    "buyer_actionable_levers": ["Action 1", "Action 2", "Action 3"]
+  }}
+}}
+Do NOT output markdown fences or commentary. Output valid JSON only."""
 
     def parse_json_from_text(raw_text):
         match = re.search(r"\{.*\}", raw_text, re.DOTALL)
@@ -234,7 +334,7 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
         "x-goog-api-key": clean_key
     }
 
-    # 'minimal' thinking ensures the model returns immediately
+    # "LOW" is officially supported and prevents long reasoning delays
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
@@ -242,7 +342,7 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
             "temperature": 0.1,
             "maxOutputTokens": 2500,
             "thinkingConfig": {
-                "thinkingLevel": "minimal"
+                "thinkingLevel": "LOW"
             }
         }
     }
@@ -250,7 +350,7 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent"
 
     try:
-        r = requests.post(url, headers=headers, json=payload, timeout=180)
+        r = requests.post(url, headers=headers, json=payload, timeout=120)
         if r.status_code == 200:
             resp_json = r.json()
             text_out = resp_json["candidates"][0]["content"]["parts"][0]["text"]
@@ -261,6 +361,7 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
             raise Exception(f"HTTP {r.status_code}: {r.text[:200]}")
     except Exception as e:
         raise Exception(f"Gemini 3.8 Flash: {str(e)}")
+
 # ---------------------------------------------------------
 # STATE MANAGEMENT
 # ---------------------------------------------------------
