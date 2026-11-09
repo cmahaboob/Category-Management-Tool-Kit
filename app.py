@@ -300,10 +300,11 @@ DEFAULT_DATABASE = {
 }
 
 # ---------------------------------------------------------
-# GEMINI 3.8 FLASH DIRECT REST ENGINE
+# GEMINI 3.8 FLASH WITH AUTOMATIC 503 RETRY LOGIC
 # ---------------------------------------------------------
 def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key):
     import urllib3
+    import time
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     clean_key = str(user_key).strip().strip('"').strip("'")
@@ -401,20 +402,31 @@ No markdown fences, no conversational text. JSON only."""
     }
 
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent"
+    last_err = None
 
-    try:
-        r = requests.post(url, headers=headers, json=payload, timeout=120)
-        if r.status_code == 200:
-            resp_json = r.json()
-            text_out = resp_json["candidates"][0]["content"]["parts"][0]["text"]
-            parsed = parse_json_from_text(text_out)
-            if parsed:
-                return parsed
-        else:
-            raise Exception(f"HTTP {r.status_code}: {r.text[:200]}")
-    except Exception as e:
-        raise Exception(f"Gemini 3.8 Flash: {str(e)}")
+    # Automated 3-attempt retry loop with exponential backoff for 503 spikes
+    for attempt in range(3):
+        try:
+            r = requests.post(url, headers=headers, json=payload, timeout=120)
+            if r.status_code == 200:
+                resp_json = r.json()
+                text_out = resp_json["candidates"][0]["content"]["parts"][0]["text"]
+                parsed = parse_json_from_text(text_out)
+                if parsed:
+                    return parsed
+            elif r.status_code in [503, 429]:
+                # Server busy spike: pause 2 seconds on attempt 1, 4 seconds on attempt 2
+                time.sleep(2 * (attempt + 1))
+                last_err = f"HTTP {r.status_code} (Temporary Server Demand Spike)"
+                continue
+            else:
+                last_err = f"HTTP {r.status_code}: {r.text[:200]}"
+                break
+        except Exception as e:
+            last_err = str(e)
+            time.sleep(2)
 
+    raise Exception(f"Gemini 3.8 Flash: {last_err}")
 # ---------------------------------------------------------
 # STATE MANAGEMENT
 # ---------------------------------------------------------
