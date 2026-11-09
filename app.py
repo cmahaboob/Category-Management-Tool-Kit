@@ -16,9 +16,115 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------
-# TAXONOMY REPOSITORY (Jubail Petrochemical Complex)
+# COMPREHENSIVE PETROCHEMICAL TRADES REPOSITORY
+# ---------------------------------------------------------
+MANPOWER_CATALOG = {
+    "Supervisory & Inspection": [
+        "Shift Operations Supervisor (Cracker / Polymers / Utilities)",
+        "Mechanical Maintenance Turnaround (TAM) Supervisor",
+        "Electrical & Instrumentation (E&I) Supervisor",
+        "QA/QC Inspector (API 510/570/653 / CSWIP Certified)",
+        "Plant EHSS Safety Inspector (NEBOSH / OSHA Certified)",
+        "Turnaround (TAM) Execution Planner / Scheduler (Primavera P6)",
+        "Scaffolding Supervisor & Inspector (CISRS / CITB Standard)"
+    ],
+    "Operations & Commissioning": [
+        "DCS / Board Console Operator (Cracker / Utilities / Olefins)",
+        "Outside Petrochemical Field Operator (Chemical / Polymers)",
+        "Utilities Outside Operator (Boilers, Desal, Water Treatment)",
+        "Commissioning & Start-Up Specialist"
+    ],
+    "Skilled Mechanical & Static Craft": [
+        "Certified Millwright / Rotating Equipment Specialist (Turbines/Pumps)",
+        "6G Inconel / Alloy / Titanium Welder (TIG/SMAW GTAW)",
+        "High-Pressure Piping Fabricator & Pipefitter",
+        "Valve Lapping, Overhaul & PSV Calibration Technician",
+        "Hydrojetting Blast Operator (10k to 40k PSI Certified)",
+        "Inert Atmosphere Catalyst Handling Technician (Confined Space)",
+        "Aramco / RCJY Certified Rigger (Level I / II / III)"
+    ],
+    "Skilled Electrical, Instrumentation & Inspection": [
+        "Instrumentation Calibration & Online Analyzer Technician",
+        "High Voltage / Substation Relay & Transformer Technician",
+        "DCS / PLC Loop & Logic Maintenance Technician",
+        "NDT Technician (Level II RT, UT, MPI, DPI, Eddy Current)",
+        "Transformer Oil Sampling & Testing Specialist"
+    ],
+    "Semi-Skilled & General Plant Support": [
+        "Certified Scaffolder / Scaffolding Erector",
+        "Industrial Painter / Grit Blaster / Insulator (SIP)",
+        "Mechanical Fitter Assistant / Helper",
+        "Materials Controller / Warehouse Expeditor",
+        "General Industrial Laborer / Site Hand"
+    ]
+}
+
+# ---------------------------------------------------------
+# PETROCHEMICAL INDUSTRIAL RENTAL ASSET CATALOG
+# ---------------------------------------------------------
+RENTAL_CATALOG = {
+    "Heavy Cranes & Rigging": [
+        "Heavy All-Terrain Mobile Crane (100T to 250T Telescopic)",
+        "Heavy All-Terrain Mobile Crane (300T to 500T Telescopic)",
+        "Lattice Boom Heavy Crawler Crane (600T to 1200T Column Lifter)",
+        "Rough Terrain Mobile Crane (30T to 80T)",
+        "Boom Truck / Hiab (10T to 20T with Winch & Basket)",
+        "Self-Propelled Modular Transporter (SPMT Axle Lines)"
+    ],
+    "Industrial Power, Generation & Lighting": [
+        "Prime Diesel Generator (250 kVA to 500 kVA - Sound Attenuated)",
+        "Prime Diesel Generator (750 kVA to 1250 kVA - Synchronized Parallel Set)",
+        "ATEX / Zone-2 Explosion-Proof Generator (Petrochemical Battery Limits)",
+        "Solar / Diesel Hybrid Mobile Light Tower (4x1000W LED)",
+        "Resistive / Reactive Load Bank Skid (500 kW to 2000 kW)",
+        "Step-Up / Step-Down Distribution Transformer (400V to 13.8kV)"
+    ],
+    "Compressed Air, Nitrogen & Process Utilities": [
+        "100% Oil-Free Class-0 Diesel Air Compressor (750 to 1600 CFM, 10-14 Bar)",
+        "Electric Driven Zero-Emission Air Compressor (1000 CFM)",
+        "High-Pressure Instrument Air Desiccant Dryer (-40°C Dewpoint)",
+        "Mobile Membrane Nitrogen Generation Unit (95% to 99.9% Purity)",
+        "Air Receiver Tanks & High-Pressure Manifolds (10,000 Liters)"
+    ],
+    "Specialized Turnaround & In-Situ Tooling": [
+        "Aerial / Truck-Mounted Heat Exchanger Bundle Puller (25T to 45T)",
+        "Ultra-High-Pressure Hydrojetting Unit (15,000 to 40,000 PSI Skid)",
+        "Industrial Vacuum Truck / Super-Sucker (Wet & Dry Sludge)",
+        "On-Site Flange Facing & Pipe Cold-Cutting Clamshell Lathes",
+        "Hydraulic Torque Wrench & Multi-Stud Tensioning Power Pack",
+        "Orbital Pipe Welding System & Tube-to-Tubesheet System",
+        "Post-Weld Heat Treatment (PWHT) 6-Way Induction Console",
+        "High-Pressure Hydrostatic Test Pump & Chart Recorder Skid"
+    ],
+    "Scaffolding, Access & Modular Site Facilities": [
+        "Modular Cuplock Industrial Scaffolding System (Metric Ton Package)",
+        "Articulated 4x4 Rough Terrain Manlift (20m to 43m Boom Lift)",
+        "Electric / Diesel Rough Terrain Scissor Lift (10m to 18m)",
+        "Blast-Resistant Modular Office / Control Cabin (Zone-2 Rated)"
+    ]
+}
+
+# ---------------------------------------------------------
+# PARENT CATEGORY TAXONOMY
 # ---------------------------------------------------------
 CATEGORY_TAXONOMY = {
+    "Manpower Supply": [
+        "Plant & Technical Maintenance Manpower",
+        "Process Control & DCS Operations Technicians",
+        "Supplementary Support Manpower",
+        "Certified Shutdown / TAM Surge Craft Labor",
+        "HCIS Certified Industrial Security Staffing",
+        "Professional Manpower & IT/Cyber Secondment"
+    ],
+    "Rental Services": [
+        "Heavy Mobile Cranes & Heavy Rigging Lifting",
+        "Oil-Free Air Compressors & Nitrogen Systems",
+        "Explosion-Proof & Industrial Power Generators",
+        "In-Situ Machining, Flange Facing & Tooling",
+        "Modular Scaffolding & Site Access Systems",
+        "Earthmoving & Site Civil Construction Fleet",
+        "Modular Blast-Resistant Site Cabins & Offices"
+    ],
     "Logistics Services": [
         "Ocean Freight", "Export Freight Forwarding", "KSA Inland Transportation",
         "Cross-Border Inland (GCC)", "Air Freight & Courier", "Warehousing & Open Yard",
@@ -49,20 +155,10 @@ CATEGORY_TAXONOMY = {
         "Mechanical Piping Tie-ins & Structural Revamp", "Electrical & Instrumentation Installation",
         "Scaffolding & Insulation (SIP Packages)", "Plant Modification Management of Change (MOC)"
     ],
-    "Rental Services": [
-        "Heavy Mobile Cranes (100T to 1200T Telescopic/Crawler)", "Oil-Free Industrial Air Compressors",
-        "Explosion-Proof / ATEX Power Generators", "Earthmoving & Site Civil Fleet",
-        "Modular Blast-Resistant Site Cabins & Offices", "Boom Trucks & Manlifts"
-    ],
     "Professional & Consultancy": [
         "Engineering Design & Licensor TSA (GES/GES+)", "Process Safety & HAZOP / SIL Studies",
         "Legal & Regulatory Advisory (Trade, REACH/KKDIK)", "Financial Audit & Tax Advisory (ZATCA)",
         "Corporate Strategy & Operating Model Optimization", "Petrochemical Feasibility & Market Forecasting"
-    ],
-    "Manpower Supply": [
-        "Plant & Technical Maintenance Manpower", "Process Control & DCS Operations Technicians",
-        "Supplementary Support Manpower", "Professional Manpower & IT/Cyber Secondment",
-        "HCIS Certified Industrial Security Staffing", "Certified Shutdown / TAM Surge Craft Labor"
     ],
     "HSE and Compliance": [
         "HCIS Physical Security Compliance Infrastructure", "Environmental Emissions Testing (RCER 2020)",
@@ -81,19 +177,19 @@ ANALYSIS_TYPES = [
 ]
 
 # ---------------------------------------------------------
-# SIDEBAR
+# SIDEBAR CONTROLS
 # ---------------------------------------------------------
-st.sidebar.title("🏭 Category Management ToolKit Engine")
-st.sidebar.caption("Jubail Industrial City | Services & Projects")
+st.sidebar.title("🏭 Category Management ToolKit")
+st.sidebar.caption("Jubail Industrial City | Petrochemical Services & Projects")
 
-# Read API Key from Streamlit Secrets automatically
+# Read Secret automatically
 secret_key = st.secrets.get("GEMINI_API_KEY", "")
 
 api_key_input = st.sidebar.text_input(
     "Google AI Studio API Key",
     type="password",
     value=secret_key if secret_key else st.session_state.get("api_key", ""),
-    help="Loaded automatically from server Secrets"
+    help="Pre-loaded securely from Streamlit Secrets"
 )
 if api_key_input:
     st.session_state["api_key"] = api_key_input
@@ -105,148 +201,106 @@ sub_options = CATEGORY_TAXONOMY[selected_parent]
 selected_sub = st.sidebar.selectbox("2. Subcategory", sub_options)
 selected_analysis = st.sidebar.selectbox("3. Analysis Tool", ANALYSIS_TYPES)
 
-default_context = f"Scope in Jubail Industrial City petrochemical complex for {selected_sub}."
-if selected_sub == "Ocean Freight":
-    default_context = "Route: Jubail (King Fahd Industrial Port) to India (Mundra Port), 40ft High Cube Container, Petrochemical Polymer Pellets."
-elif "Mechanical Maintenance" in selected_sub:
-    default_context = "Turnaround (TAM) Mechanical Overhaul: Heat exchangers, valve overhaul, piping spool fabrication inside Jubail 1 complex."
+st.sidebar.markdown("---")
+st.sidebar.subheader("⚙️ Technical Sourcing Parameters")
 
-scope_context = st.sidebar.text_area("4. Scope / Route / Project Details", value=default_context, height=85)
+extra_context = ""
+
+# DYNAMIC PARAMETERS: MANPOWER SUPPLY
+if selected_parent == "Manpower Supply":
+    nationality_model = st.sidebar.selectbox(
+        "Nationality Profile",
+        ["Saudi National (Nitaqat / Saudization Target, GOSI 11.75%)",
+         "Expatriate Worker (Maktab Amal Levy, Iqama, Ajeer/Qiwa)",
+         "Blended Crew (30% Saudi / 70% Expat Compliant)"]
+    )
+    job_family = st.sidebar.selectbox("Job Family Grouping", list(MANPOWER_CATALOG.keys()))
+    specific_trade = st.sidebar.selectbox("Specific Job Title / Trade", MANPOWER_CATALOG[job_family])
+    headcount = st.sidebar.slider("Headcount Quantity (Workers)", min_value=1, max_value=300, value=20, step=1)
+    duration_months = st.sidebar.selectbox("Contract Duration", [1, 2, 3, 6, 12, 24, 36], index=4, format_func=lambda x: f"{x} Month(s)")
+    shift_pattern = st.sidebar.radio("Working Shift Pattern", ["8 Hours/Day (Standard Maintenance)", "10 Hours/Day (Extended)", "12 Hours/Day (24/7 TAM Shutdown Shift)"])
+    extra_context = f"Profile: {nationality_model} | Family: {job_family} | Role: {specific_trade} | Qty: {headcount} workers | Duration: {duration_months} Months | Shift: {shift_pattern}."
+
+# DYNAMIC PARAMETERS: RENTAL SERVICES
+elif selected_parent == "Rental Services":
+    eq_category = st.sidebar.selectbox("Equipment Family", list(RENTAL_CATALOG.keys()))
+    specific_eq = st.sidebar.selectbox("Specific Asset / Rig Specification", RENTAL_CATALOG[eq_category])
+    lease_model = st.sidebar.radio("Commercial Lease Model", ["Wet Lease (Equipment + Certified Operator + Fuel/Maint + RCJY Inspection)", "Dry Lease (Bare Equipment Only)"])
+    qty_units = st.sidebar.number_input("Equipment Quantity (Units)", min_value=1, max_value=50, value=2)
+    rental_tenure = st.sidebar.selectbox("Rental Tenure", ["1 Month (Shutdown Window)", "3 Months", "6 Months", "12 Months Long-Term"])
+    extra_context = f"Asset Family: {eq_category} | Asset: {specific_eq} | Qty: {qty_units} units | Model: {lease_model} | Tenure: {rental_tenure}."
+
+# DYNAMIC PARAMETERS: LOGISTICS (OCEAN FREIGHT)
+elif selected_sub == "Ocean Freight":
+    col_a, col_b = st.sidebar.columns(2)
+    with col_a:
+        origin_port = st.text_input("Origin Port", "King Fahd Industrial Port (KFIP - Jubail)")
+    with col_b:
+        dest_port = st.text_input("Destination Port", "Mundra Port, India")
+    container_spec = st.sidebar.selectbox("Container Size / Cargo Type", ["40ft High Cube (Polymer Pellets)", "20ft GP Container", "ISO Tank Container (Liquid Chemicals)"])
+    incoterm = st.sidebar.selectbox("Incoterm", ["FOB Jubail (KFIP)", "CFR Destination Port", "CIF Destination Port"])
+    extra_context = f"Route: {origin_port} to {dest_port} | Container: {container_spec} | Incoterm: {incoterm}."
+
+default_scope = f"Petrochemical manufacturing facility in Jubail Industrial City. {extra_context}"
+scope_context = st.sidebar.text_area("4. Project / Route / Scope Details", value=default_scope, height=80)
 run_btn = st.sidebar.button("🚀 Run Strategic Analysis", use_container_width=True)
 
 # ---------------------------------------------------------
-# DEFAULT BENCHMARKS PER ANALYSIS TYPE
+# DEFAULT BENCHMARKS (GRANULAR MICRO-COSTS & VENDOR MATRIX)
 # ---------------------------------------------------------
 DEFAULT_DATABASE = {
     "Should-Cost & Cost Breakdown Structure (CBS)": {
-        "analysis_title": "Should-Cost & Cost Breakdown Structure (CBS)",
+        "analysis_title": "Granular Should-Cost & Micro-CBS Model",
         "currency_or_unit": "SAR",
-        "total_metric_value": 485000,
+        "total_metric_value": 450000,
         "total_metric_label": "Total Should-Cost",
         "metric_card_2_label": "Direct Operating Cost",
-        "metric_card_2_value": "SAR 436,500 (90%)",
-        "metric_card_3_label": "Supplier Profit Margin",
-        "metric_card_3_value": "SAR 48,500 (10%)",
-        "metric_card_4_label": "Fair Target Counter",
-        "metric_card_4_value": "8.0% (CIPS Benchmark)",
-        "chart_title": "Cost Factor Breakdown",
+        "metric_card_2_value": "SAR 396,000 (88%)",
+        "metric_card_3_label": "Supplier Net Profit",
+        "metric_card_3_value": "SAR 54,000 (12%)",
+        "metric_card_4_label": "Target Benchmark Counter",
+        "metric_card_4_value": "8.5% (CIPS Benchmark)",
+        "chart_title": "Micro-Cost Factor Breakdown (8-12 Line Items)",
         "chart_items": [
-            {"name": "Direct Skilled Craft Labor", "value": 194000, "details": "Certified Pipefitters, 6G Alloy Welders, Millwrights, Riggers."},
-            {"name": "KSA Statutory & Fringe Burden", "value": 97000, "details": "GOSI contributions, Iqama/Maktab Amal fees, CCHI Medical, End of Service."},
-            {"name": "Field Overheads & Accommodation", "value": 63050, "details": "RCJY-approved camp housing in Jubail, daily shuttle bus, catering, badging."},
-            {"name": "Tooling & Consumables", "value": 38800, "details": "Torque wrenches, hydro-testing pumps, blind flanges, welding rods, gaskets."},
-            {"name": "Corporate SG&A Overhead (9%)", "value": 43650, "details": "Head-office QA/QC, Aramco/RCJY safety compliance administration."},
-            {"name": "Contractor Profit Margin (10%)", "value": 48500, "details": "Fair contractor net margin for plant shutdown mechanical scopes."}
+            {"name": "1. Direct Basic Take-Home Wages", "value": 160000, "details": "Core net base monthly wage paid to deployed technicians in Jubail."},
+            {"name": "2. GOSI & Social Insurance (KSA)", "value": 32000, "details": "Mandatory Saudi occupational hazard (2% expat) or social insurance (11.75% Saudi)."},
+            {"name": "3. Maktab Amal & Iqama Fees", "value": 38400, "details": "Ministry of Human Resources expat work permit and levy fees (pass-through)."},
+            {"name": "4. CCHI Health Insurance (Class B/A)", "value": 24000, "details": "Medical insurance coverage compliant with Council of Cooperative Health Insurance."},
+            {"name": "5. RCJY Camp Housing & Utilities", "value": 48000, "details": "Royal Commission approved bachelor camp lodging and utility costs in Jubail."},
+            {"name": "6. Site Transportation & Shuttle Buses", "value": 24000, "details": "Daily bus transport between RCJY camps and plant security gates."},
+            {"name": "7. Industrial Catering (3 Meals/Day)", "value": 33600, "details": "Subsidized industrial food services conforming to Jubail hygiene standards."},
+            {"name": "8. PPE, Safety Gear & Safety Passports", "value": 16000, "details": "Nomex coveralls, safety footwear, H2S monitors, SABIC/Aramco safety badging."},
+            {"name": "9. Statutory Flight Ticket & ESB Accrual", "value": 20000, "details": "Annual leave airfare allowance and Labor Law End-of-Service benefit accrual."},
+            {"name": "10. Contractor Corporate SG&A Overhead (8%)", "value": 36000, "details": "Contractor head-office administration, HR, and HSE management."},
+            {"name": "11. Contractor Net Margin (12%)", "value": 54000, "details": "Contractor profit margin across the project lifecycle."}
         ],
-        "secondary_chart_title": "Direct Operating Cost vs. Supplier Profit Margin",
-        "secondary_chart_labels": ["Direct Operating Cost", "Supplier Profit Margin"],
-        "secondary_chart_values": [436500, 48500],
-        "strategic_insights": {
-            "summary": "Should-Cost clean-sheet model reflecting Eastern Province labor economics and RCJY industrial standards.",
-            "market_benchmark_range": "SAR 470,000 - SAR 540,000",
-            "key_drivers_or_forces": [
-                "Scarcity of certified alloy welders and millwrights during peak winter turnaround windows.",
-                "RCJY industrial housing and gate pass lead times inflate contractor standby costs.",
-                "Subcontractor margin stacking on valve testing and third-party inspection."
-            ],
-            "buyer_actionable_levers": [
-                "Unbundle statutory visa/Iqama fees: require transparent pass-through billing.",
-                "Convert T&M call-outs to unit-rate milestone deliverables (per weld-inch, per valve).",
-                "Enforce LCGPA local content credits for utilizing Jubail-based fabrication workshops."
-            ]
-        }
-    },
-    "Kraljic Matrix Positioning & Strategic Portfolio": {
-        "analysis_title": "Kraljic Matrix Positioning & Portfolio Strategy",
-        "currency_or_unit": "Score (1-10)",
-        "total_metric_value": 8.5,
-        "total_metric_label": "Kraljic Quadrant",
-        "metric_card_2_label": "Profit / Business Impact",
-        "metric_card_2_value": "8.5 / 10 (High Impact)",
-        "metric_card_3_label": "Supply Market Risk",
-        "metric_card_3_value": "7.5 / 10 (High Risk)",
-        "metric_card_4_label": "Recommended Posture",
-        "metric_card_4_value": "Strategic Partnership",
-        "chart_title": "Kraljic Risk & Value Dimensions",
-        "chart_items": [
-            {"name": "Profit Impact on Asset Uptime", "value": 8.5, "details": "Unplanned shutdown due to mechanical failure costs millions in lost production."},
-            {"name": "Supplier Market Complexity", "value": 7.5, "details": "Limited number of certified Jubail contractors with approved SABIC/Aramco safety passports."},
-            {"name": "Switching Cost Barrier", "value": 8.0, "details": "High mobilization friction inside RCJY-controlled industrial security perimeter."},
-            {"name": "Substitutability Index", "value": 3.0, "details": "Very low substitutability; mechanical maintenance requires on-site physical presence."}
-        ],
-        "kraljic_data": {
-            "quadrant": "Strategic",
-            "profit_impact": 8.5,
-            "supply_risk": 7.5,
-            "contract_horizon": "3 to 5 Years Long-Term Alliance",
-            "supplier_relationship": "Collaborative Value-Sharing & Performance-Linked Gainshare"
+        "secondary_chart_title": "Direct Site Cost vs. Contractor Overhead & Profit",
+        "secondary_chart_labels": ["Direct Site Labor & Overheads", "Contractor SG&A & Profit"],
+        "secondary_chart_values": [360000, 90000],
+        "vendor_matrix": {
+            "tier_1_local": ["Al-Yusr Industrial Contracting (AYTB)", "Sendan International", "Nesma & Partners", "Nasser S. Al-Hajri (NSH)"],
+            "tier_2_regional": ["Safari Company", "Tamimi Global", "Rezayat Group", "Expertise Contracting"],
+            "global_oems": ["Yokogawa Middle East", "Emerson Automation Solutions", "Baker Hughes", "Siemens Energy"]
         },
-        "secondary_chart_title": "Strategic Power Balance",
-        "secondary_chart_labels": ["Buyer Leverage", "Supplier Power"],
-        "secondary_chart_values": [45, 55],
         "strategic_insights": {
-            "summary": "This category falls in the 'STRATEGIC' quadrant due to plant downtime risks and contractor capacity constraints.",
-            "market_benchmark_range": "Strategic Partner Quadrant (High Risk, High Impact)",
+            "summary": "High-granularity micro-cost model isolating statutory pass-throughs from addressable contractor labor markups.",
+            "market_benchmark_range": "SAR 440,000 - SAR 490,000 for standard Eastern Province crew packages",
             "key_drivers_or_forces": [
-                "Petrochemical plant uptime is critical; contractor quality directly drives unscheduled trip rates.",
-                "Capacity bottleneck during regional mega-turnaround windows across Jubail 1 & 2.",
-                "Strict HCIS and RCJY security and environmental certification barriers."
+                "Strict enforcement of MHRSD expat levy and Qiwa wage protection compliance.",
+                "RCJY industrial housing availability drives high accommodation costs during turnarounds.",
+                "Contractor margin stacking on insurance and visa statutory pass-through items."
             ],
             "buyer_actionable_levers": [
-                "Establish 3-year framework agreements with indexation to lock in master crew availability.",
-                "Structure KPI pain-share/gain-share clauses tied to plant restart milestone targets.",
-                "Co-invest in local apprentice programs to boost contractor Saudization (Qiwa/Nitaqat)."
-            ]
-        }
-    },
-    "Risk Assessment Scorecard, Heatmap & Mitigation Plan": {
-        "analysis_title": "Risk Assessment Scorecard & Heatmap Matrix",
-        "currency_or_unit": "Score (1-25)",
-        "total_metric_value": 18,
-        "total_metric_label": "Highest Risk Score",
-        "metric_card_2_label": "Overall Category Risk",
-        "metric_card_2_value": "HIGH (Score: 18/25)",
-        "metric_card_3_label": "Critical Risk Items",
-        "metric_card_3_value": "2 Critical | 3 Moderate",
-        "metric_card_4_label": "Mitigation Coverage",
-        "metric_card_4_value": "100% Planned",
-        "chart_title": "Risk Magnitude Scores (Probability x Impact)",
-        "chart_items": [
-            {"name": "TAM Schedule Overrun Due to Craft Scarcity", "value": 18, "details": "Probability: 4/5 | Impact: 4.5/5. Major plant restart delay costing substantial daily revenue."},
-            {"name": "RCJY / HCIS Security Gate Pass Delay", "value": 15, "details": "Probability: 5/5 | Impact: 3/5. Bureaucratic delays in badging foreign technicians at plant gates."},
-            {"name": "Subcontractor Safety Breach (LTI / PSM Incident)", "value": 16, "details": "Probability: 2/5 | Impact: 5/5. Process safety or hot-work fire incident causing shutdown."},
-            {"name": "Nitaqat / Saudization Compliance Non-Renewal", "value": 12, "details": "Probability: 3/5 | Impact: 4/5. Contractor frozen on Qiwa platform due to falling below quotas."},
-            {"name": "Spare Parts / Consumable Stockout (Flanges/Gaskets)", "value": 9, "details": "Probability: 3/5 | Impact: 3/5. Lead-time delays for specialized alloy fittings."}
-        ],
-        "risk_items": [
-            {"risk_name": "TAM Schedule Overrun (Craft Scarcity)", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Sign binding early reservation agreements 9 months ahead of shutdown with guaranteed slot penalties.", "owner": "Turnaround Procurement Lead"},
-            {"risk_name": "HCIS / RCJY Security Badging Bottleneck", "prob": 5, "impact": 3.0, "score": 15, "severity": "High", "mitigation": "Establish pre-screening protocol and submit badge dossiers 45 days prior via digital portal.", "owner": "Industrial Security Liaison"},
-            {"risk_name": "Subcontractor Safety Breach / PSM Incident", "prob": 2, "impact": 5.0, "score": 10, "severity": "High", "mitigation": "Mandate SABIC/Aramco safety passport audits, on-site safety officers, and stop-work authority.", "owner": "Plant EHSS Department"},
-            {"risk_name": "Contractor Qiwa / Nitaqat Quota Freeze", "prob": 3, "impact": 4.0, "score": 12, "severity": "Medium", "mitigation": "Monthly audit of contractor green-zone status in Qiwa; include contract termination clause for default.", "owner": "Contract Compliance Manager"},
-            {"risk_name": "Specialized Gasket / Flange Stockout", "prob": 3, "impact": 3.0, "score": 9, "severity": "Medium", "mitigation": "Consignment inventory at Jubail central warehouse with 2-year min/max replenishment.", "owner": "Reliability Materials Specialist"}
-        ],
-        "secondary_chart_title": "Risk Severity Distribution",
-        "secondary_chart_labels": ["Critical Risks", "High Risks", "Medium Risks", "Low Risks"],
-        "secondary_chart_values": [1, 2, 2, 0],
-        "strategic_insights": {
-            "summary": "Risk profile is dominated by craft labor scarcity and industrial security access constraints in Jubail.",
-            "market_benchmark_range": "High Exposure Category (Requires Active Mitigation Governance)",
-            "key_drivers_or_forces": [
-                "Overlapping turnaround windows across Jubail 1, Jubail 2, and Ras Al Khair.",
-                "Stringent HCIS Directive-08 access validation requirements for critical industrial assets.",
-                "Saudi Ministry of Human Resources (MHRSD) strict enforcement of technical saudization."
-            ],
-            "buyer_actionable_levers": [
-                "Incorporate liquidated damages tied directly to crew mobilization milestones.",
-                "Maintain secondary backup contractor on call-off framework with pre-badged personnel.",
-                "Audit contractor financial health to avoid mid-turnaround payroll or visa defaults."
+                "Audit Maktab Amal fees: require transparent pass-through billing with zero contractor markup.",
+                "Enforce master rate card based on clean basic wages + fixed statutory multiplier.",
+                "Consolidate accommodation booking through company-managed camp agreements."
             ]
         }
     }
 }
 
 # ---------------------------------------------------------
-# GOOGLE INTERACTIONS API NATIVE ENGINE (FAST 3-5 SECOND RESPONSE)
+# GEMINI 3.8 FLASH DIRECT REST ENGINE
 # ---------------------------------------------------------
 def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key):
     import urllib3
@@ -254,33 +308,49 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
 
     clean_key = str(user_key).strip().strip('"').strip("'")
 
-    # Concise, targeted prompt designed for immediate structured JSON generation
     prompt = f"""You are the Principal Sourcing & Cost Engineer in Jubail Industrial City, Saudi Arabia for a world-scale Petrochemical Complex.
-Analyze:
-- Category: {parent} -> {sub}
-- Tool: {analysis_type}
-- Scope Context: {context}
+Analyze the following scope with HIGH GRANULARITY (Break down into 8 to 12 distinct cost items):
+- Parent Category: {parent}
+- Subcategory: {sub}
+- Selected Tool: {analysis_type}
+- Technical Parameters & Scope: {context}
 
-Return ONLY a valid JSON object matching this exact structure:
+CRITICAL RULES:
+1. If Manpower: Reflect exact nationality profile (Saudi GOSI 11.75% vs Expat Maktab Amal fees). Break down: Basic Wages, GOSI, Maktab Amal/Iqama, Medical Insurance, RCJY Camp Housing, Transportation, Catering, PPE/Safety Badging, Flights/ESB, SG&A Overhead, Net Margin.
+2. If Rental Services: Break down: Asset Depreciation, Preventative Maintenance, 3rd Party/CIC Load Test Cert, Certified Operator/Rigger Wage, Mobilization/Float Haulage, Consumables/Lube, Standby Allowance, Insurance, Contractor Margin.
+3. If Logistics / Ocean Freight: Break down: Ocean Base Steaming Slot, Bunker Adjustment Factor (BAF), Emergency/Cape Rerouting Surcharge, Origin THC (KFIP), Destination THC, Equipment Imbalance (EIS), Low Sulfur Fuel (LSS), War Risk (WRS), Bill of Lading (B/L), Export Customs Clearance, Demurrage Buffer.
+4. Populate a verified Vendor Landscape Matrix: Tier-1 Local KSA (IKTVA leaders), Tier-2 Regional, and Global OEMs/Foreign specialists relevant to this exact category in Eastern Province.
+
+Return ONLY a valid JSON object matching this exact schema:
 {{
   "analysis_title": "{analysis_type}",
   "currency_or_unit": "SAR",
   "total_metric_value": 450000,
-  "total_metric_label": "Total Amount / Score",
+  "total_metric_label": "Total Should-Cost / Score",
   "metric_card_2_label": "Direct Operating Cost / Profit Impact",
-  "metric_card_2_value": "SAR 400,000 (89%)",
+  "metric_card_2_value": "SAR 396,000 (88%)",
   "metric_card_3_label": "Supplier Profit / Supply Risk",
-  "metric_card_3_value": "SAR 50,000 (11%)",
+  "metric_card_3_value": "SAR 54,000 (12%)",
   "metric_card_4_label": "Target Benchmark / Posture",
-  "metric_card_4_value": "8.0% / Strategic",
-  "chart_title": "Primary Dimension Breakdown",
+  "metric_card_4_value": "8.5% / Strategic",
+  "chart_title": "Granular Factor Breakdown (8-12 Micro-Items)",
   "chart_items": [
-    {{"name": "Component or Risk or Stage 1", "value": 150000, "details": "Specific technical explanation"}},
-    {{"name": "Component or Risk or Stage 2", "value": 120000, "details": "Specific technical explanation"}},
-    {{"name": "Component or Risk or Stage 3", "value": 90000, "details": "Specific technical explanation"}},
-    {{"name": "Component or Risk or Stage 4", "value": 60000, "details": "Specific technical explanation"}},
-    {{"name": "Component or Risk or Stage 5", "value": 30000, "details": "Specific technical explanation"}}
+    {{"name": "Cost Line 1", "value": 120000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 2", "value": 80000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 3", "value": 60000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 4", "value": 45000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 5", "value": 35000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 6", "value": 30000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 7", "value": 25000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 8", "value": 20000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 9", "value": 18000, "details": "Detailed technical explanation"}},
+    {{"name": "Cost Line 10", "value": 17000, "details": "Detailed technical explanation"}}
   ],
+  "vendor_matrix": {{
+    "tier_1_local": ["Vendor A (KSA/Jubail)", "Vendor B (KSA)", "Vendor C"],
+    "tier_2_regional": ["Regional Contractor 1", "Regional Contractor 2"],
+    "global_oems": ["Global OEM 1", "Global OEM 2"]
+  }},
   "kraljic_data": {{
     "quadrant": "Strategic",
     "profit_impact": 8.5,
@@ -289,15 +359,15 @@ Return ONLY a valid JSON object matching this exact structure:
     "supplier_relationship": "Collaborative Partnership"
   }},
   "risk_items": [
-    {{"risk_name": "Schedule Overrun / Scarcity", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Sign binding early reservation agreements 9 months ahead.", "owner": "Turnaround Procurement Lead"}},
-    {{"risk_name": "HCIS / RCJY Security Gate Pass Delay", "prob": 4, "impact": 3.5, "score": 14, "severity": "High", "mitigation": "Digital pre-screening 45 days prior to mobilization.", "owner": "Security Liaison"}},
-    {{"risk_name": "Process Safety (PSM) Subcontractor Incident", "prob": 2, "impact": 5.0, "score": 10, "severity": "High", "mitigation": "Mandate safety passports and stop-work authority.", "owner": "Plant EHSS"}},
-    {{"risk_name": "Qiwa / Nitaqat Quota Freeze", "prob": 3, "impact": 3.0, "score": 9, "severity": "Medium", "mitigation": "Monthly audit of contractor green-zone status in Qiwa.", "owner": "Contract Compliance"}},
-    {{"risk_name": "Specialized Fitting / Spare Stockout", "prob": 2, "impact": 4.0, "score": 8, "severity": "Medium", "mitigation": "Consignment inventory at Jubail central warehouse.", "owner": "Reliability Specialist"}}
+    {{"risk_name": "Craft Labor Scarcity / Schedule Delay", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Early reservation 9 months ahead.", "owner": "Turnaround Procurement Lead"}},
+    {{"risk_name": "HCIS / RCJY Security Gate Pass Bottleneck", "prob": 4, "impact": 3.5, "score": 14, "severity": "High", "mitigation": "Submit digital dossiers 45 days prior.", "owner": "Security Liaison"}},
+    {{"risk_name": "Process Safety Subcontractor Incident", "prob": 2, "impact": 5.0, "score": 10, "severity": "High", "mitigation": "Safety passport audits & stop-work authority.", "owner": "Plant EHSS"}},
+    {{"risk_name": "Qiwa / Nitaqat Quota Freeze", "prob": 3, "impact": 3.0, "score": 9, "severity": "Medium", "mitigation": "Monthly audit of green-zone status in Qiwa.", "owner": "Contract Compliance"}},
+    {{"risk_name": "Specialized Fitting / Spare Stockout", "prob": 2, "impact": 4.0, "score": 8, "severity": "Medium", "mitigation": "Consignment inventory at Jubail warehouse.", "owner": "Reliability Specialist"}}
   ],
-  "secondary_chart_title": "Financial / Strategic Split",
-  "secondary_chart_labels": ["Direct Cost / Leverage", "Supplier Margin / Risk"],
-  "secondary_chart_values": [85, 15],
+  "secondary_chart_title": "Direct Cost vs. Contractor Overhead & Profit",
+  "secondary_chart_labels": ["Direct Operating Pass-Through", "Contractor SG&A & Margin"],
+  "secondary_chart_values": [88, 12],
   "strategic_insights": {{
     "summary": "Executive summary of findings grounded in Jubail industrial reality",
     "market_benchmark_range": "Prevailing benchmark range in SAR or USD",
@@ -305,63 +375,46 @@ Return ONLY a valid JSON object matching this exact structure:
     "buyer_actionable_levers": ["Action Lever 1", "Action Lever 2", "Action Lever 3"]
   }}
 }}
-No markdown fences, no raw conversational text. JSON only."""
+No markdown fences, no conversational text. JSON only."""
 
-    def extract_text(data):
-        if isinstance(data, dict):
-            if "text" in data and isinstance(data["text"], str) and data["text"].strip():
-                return data["text"]
-            for v in data.values():
-                t = extract_text(v)
-                if t:
-                    return t
-        elif isinstance(data, list):
-            for item in reversed(data):
-                t = extract_text(item)
-                if t:
-                    return t
-        return ""
+    def parse_json_from_text(raw_text):
+        match = re.search(r"\{.*\}", raw_text, re.DOTALL)
+        if match:
+            return json.loads(match.group(0))
+        return None
 
     headers = {
         "Content-Type": "application/json",
         "x-goog-api-key": clean_key
     }
 
-    # 1. Primary: Native Google Interactions API endpoint (fastest for gemini-3.8-flash)
-    interactions_url = "https://generativelanguage.googleapis.com/v1beta/interactions"
-    interactions_payload = {
-        "model": "gemini-3.8-flash",
-        "input": prompt
-    }
-
-    try:
-        r1 = requests.post(interactions_url, headers=headers, json=interactions_payload, timeout=60)
-        if r1.status_code == 200:
-            raw_text = extract_text(r1.json())
-            match = re.search(r"\{.*\}", raw_text, re.DOTALL)
-            if match:
-                return json.loads(match.group(0))
-    except Exception:
-        pass
-
-    # 2. Secondary Failover: Ultra-fast Gemini 3.5 Flash-Lite
-    lite_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent"
-    lite_payload = {
+    payload = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"response_mime_type": "application/json", "temperature": 0.2}
+        "generationConfig": {
+            "response_mime_type": "application/json",
+            "temperature": 0.1,
+            "maxOutputTokens": 3500,
+            "thinkingConfig": {
+                "thinkingLevel": "LOW"
+            }
+        }
     }
 
-    try:
-        r2 = requests.post(lite_url, headers=headers, json=lite_payload, timeout=60)
-        if r2.status_code == 200:
-            text_out = r2.json()["candidates"][0]["content"]["parts"][0]["text"]
-            match = re.search(r"\{.*\}", text_out, re.DOTALL)
-            if match:
-                return json.loads(match.group(0))
-    except Exception as e:
-        raise Exception(f"API Error: {str(e)}")
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent"
 
-    raise Exception(f"Interactions API returned status code {r1.status_code}: {r1.text[:200]}")
+    try:
+        r = requests.post(url, headers=headers, json=payload, timeout=120)
+        if r.status_code == 200:
+            resp_json = r.json()
+            text_out = resp_json["candidates"][0]["content"]["parts"][0]["text"]
+            parsed = parse_json_from_text(text_out)
+            if parsed:
+                return parsed
+        else:
+            raise Exception(f"HTTP {r.status_code}: {r.text[:200]}")
+    except Exception as e:
+        raise Exception(f"Gemini 3.8 Flash: {str(e)}")
+
 # ---------------------------------------------------------
 # STATE MANAGEMENT
 # ---------------------------------------------------------
@@ -374,17 +427,17 @@ if "active_data" not in st.session_state or st.session_state.get("active_tool") 
 if run_btn:
     active_key = st.session_state.get("api_key", "").strip()
     if active_key:
-        with st.spinner(f"Engineering live {selected_analysis} for {selected_sub}..."):
+        with st.spinner(f"Engineering granular micro-breakdown for {selected_sub}..."):
             try:
                 st.session_state["active_data"] = fetch_analysis_via_direct_api(
                     selected_parent, selected_sub, scope_context, selected_analysis, active_key
                 )
                 st.session_state["active_tool"] = selected_analysis
-                st.success(f"✅ Live {selected_analysis} generated successfully via Gemini!")
+                st.success(f"✅ Granular {selected_analysis} generated successfully via Gemini!")
             except Exception as e:
                 st.error(f"Error fetching data from Gemini: {str(e)}")
     else:
-        st.warning("⚠️ Enter your Google AI Studio API Key in the left sidebar to generate custom models for new routes and scopes.")
+        st.warning("⚠️ Enter your Google AI Studio API Key in the left sidebar to generate custom models.")
 
 data = st.session_state["active_data"]
 
@@ -538,7 +591,7 @@ elif "Risk" in selected_analysis:
                 st.markdown(f"**Actionable Mitigation Strategy:** {r['mitigation']}")
 
 # ---------------------------------------------------------
-# STANDARD VIEW: BAR CHART & FACTOR BREAKDOWN
+# STANDARD VIEW: BAR CHART & FACTOR BREAKDOWN (8-12 ITEMS)
 # ---------------------------------------------------------
 else:
     col_chart, col_table = st.columns([1.1, 0.9])
@@ -556,26 +609,26 @@ else:
             fig.update_layout(
                 showlegend=False,
                 yaxis=dict(autorange="reversed"),
-                height=370,
+                height=450,
                 margin=dict(l=10, r=10, t=20, b=20)
             )
             st.plotly_chart(fig, use_container_width=True)
 
     with col_table:
-        st.subheader("📋 Factor Breakdown")
+        st.subheader("📋 Micro-Cost Factor Table")
         if not df_chart.empty:
             tbl = df_chart[["name", "value", "Percentage"]].copy()
-            tbl.columns = ["Factor / Element", f"Value ({unit})", "Share (%)"]
+            tbl.columns = ["Cost Component", f"Amount ({unit})", "Share (%)"]
             if unit in ["SAR", "USD"]:
-                tbl[f"Value ({unit})"] = tbl[f"Value ({unit})"].apply(lambda x: f"{unit} {x:,.2f}")
+                tbl[f"Amount ({unit})"] = tbl[f"Amount ({unit})"].apply(lambda x: f"{unit} {x:,.2f}")
                 tbl["Share (%)"] = tbl["Share (%)"].apply(lambda x: f"{x:.1f}%")
             else:
-                tbl[f"Value ({unit})"] = tbl[f"Value ({unit})"].apply(lambda x: f"{x:,.0f} pts")
+                tbl[f"Amount ({unit})"] = tbl[f"Amount ({unit})"].apply(lambda x: f"{x:,.0f} pts")
                 tbl["Share (%)"] = tbl["Share (%)"].apply(lambda x: f"{x:.1f}%")
-            st.dataframe(tbl, use_container_width=True, height=350)
+            st.dataframe(tbl, use_container_width=True, height=420)
 
     st.markdown("---")
-    st.subheader("📚 Cost Factor Definitions & Technical Explanations")
+    st.subheader("📚 Micro-Cost Factor Definitions & Engineering Basis")
     if not df_chart.empty and "details" in df_chart.columns:
         cols = st.columns(2)
         for idx, row in df_chart.iterrows():
@@ -585,13 +638,13 @@ else:
                     st.write(row.get("details", "-"))
 
 # ---------------------------------------------------------
-# STRATEGIC SPLIT & MARKET BENCHMARK INSIGHTS
+# ROW 4: STRATEGIC SPLIT & MARKET BENCHMARK INSIGHTS
 # ---------------------------------------------------------
 st.markdown("---")
 col_pie, col_ins = st.columns([1, 1])
 
 with col_pie:
-    st.subheader(f"💼 {data.get('secondary_chart_title', 'Strategic Distribution')}")
+    st.subheader(f"💼 {data.get('secondary_chart_title', 'Cost Allocation')}")
     pie_labels = data.get("secondary_chart_labels", ["Direct Costs", "Overhead & Margin"])
     pie_vals = data.get("secondary_chart_values", [85, 15])
     
@@ -622,3 +675,33 @@ with col_ins:
     st.markdown("**🎯 Recommended Buyer Counter-Measures:**")
     for l in insights.get("buyer_actionable_levers", []):
         st.markdown(f"- {l}")
+
+# ---------------------------------------------------------
+# ROW 5: PREFERRED VENDOR & OEM LANDSCAPE (JUBAIL / KSA)
+# ---------------------------------------------------------
+st.markdown("---")
+st.subheader("🏢 Preferred Vendor Landscape & OEM Supplier Matrix")
+st.caption("Prequalified & Accredited Suppliers in Jubail Industrial City & Eastern Province")
+
+vm = data.get("vendor_matrix", {
+    "tier_1_local": ["Al-Yusr Industrial Contracting (AYTB)", "Sendan International", "Nesma & Partners", "Nasser S. Al-Hajri (NSH)"],
+    "tier_2_regional": ["Safari Company", "Tamimi Global", "Rezayat Group", "Expertise Contracting"],
+    "global_oems": ["Yokogawa Middle East", "Emerson Automation Solutions", "Baker Hughes", "Siemens Energy"]
+})
+
+v_col1, v_col2, v_col3 = st.columns(3)
+
+with v_col1:
+    st.markdown("🟢 **Tier-1 Local KSA (High IKTVA Champions):**")
+    for v in vm.get("tier_1_local", []):
+        st.markdown(f"- **{v}**")
+
+with v_col2:
+    st.markdown("🟡 **Tier-2 Regional Specialized Contractors:**")
+    for v in vm.get("tier_2_regional", []):
+        st.markdown(f"- **{v}**")
+
+with v_col3:
+    st.markdown("🌐 **Global OEMs & Technology Providers:**")
+    for v in vm.get("global_oems", []):
+        st.markdown(f"- **{v}**")
