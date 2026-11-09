@@ -63,7 +63,6 @@ st.markdown("""
     .badge-blue { background-color: rgba(37, 99, 235, 0.25); color: #93C5FD; border: 1px solid rgba(37, 99, 235, 0.5); }
     .badge-red { background-color: rgba(220, 38, 38, 0.25); color: #FCA5A5; border: 1px solid rgba(220, 38, 38, 0.5); }
 
-    /* 4 Distinct Colored KPI Metric Cards */
     div[data-testid="column"]:nth-of-type(1) div[data-testid="stMetric"] {
         background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
         border: 1px solid #BFDBFE;
@@ -250,7 +249,6 @@ KSA_LOADING_PORTS = [
 ]
 
 GLOBAL_DESTINATION_PORTS = [
-    # Indian Subcontinent & Asia
     "Mundra Port, India (West Coast Gateway)",
     "Nhava Sheva / JNPT (Mumbai, India)",
     "Karachi Port, Pakistan",
@@ -260,14 +258,12 @@ GLOBAL_DESTINATION_PORTS = [
     "Ningbo-Zhoushan Port, China",
     "Port Klang, Malaysia",
     "Chittagong Port, Bangladesh",
-    # Europe & Mediterranean
     "Mersin Port, Turkey (East Med Hub)",
     "Ambarli / Istanbul Port, Turkey",
     "Aliaga / Izmir Port, Turkey",
     "Antwerp Port, Belgium (ARA Petrochem Hub)",
     "Rotterdam Port, Netherlands",
     "Genoa Port, Italy",
-    # Regional & Americas
     "Jebel Ali Port, UAE",
     "Sohar Port, Oman",
     "Houston Port, USA (Gulf of Mexico)",
@@ -301,9 +297,6 @@ INLAND_TRUCK_FLEET = [
     "Multi-Axle Heavy Lowbed Trailer (Over-Dimensional Cargo)"
 ]
 
-# ---------------------------------------------------------
-# DIRECT MAPPING: RENTAL SUBCATEGORY -> ASSETS
-# ---------------------------------------------------------
 RENTAL_MAP = {
     "Heavy Mobile Cranes & Heavy Rigging Lifting": [
         "Heavy All-Terrain Mobile Crane (100T to 250T Telescopic)",
@@ -357,9 +350,6 @@ RENTAL_MAP = {
     ]
 }
 
-# ---------------------------------------------------------
-# DIRECT MAPPING: MANPOWER SUBCATEGORY -> TRADES
-# ---------------------------------------------------------
 MANPOWER_MAP = {
     "Plant & Technical Maintenance Manpower": [
         "Certified Millwright / Rotating Equipment Specialist (Turbines/Pumps)",
@@ -511,7 +501,7 @@ st.sidebar.subheader("⚙️ Technical Sourcing Parameters")
 extra_context = ""
 param_data = {}
 
-# 1. OCEAN FREIGHT EXTENDED LOGISTICS PARAMETERS
+# 1. OCEAN FREIGHT
 if selected_sub == "Ocean Freight":
     st.sidebar.markdown("🚢 **Maritime Route & Volumes**")
     pol = st.sidebar.selectbox("Port of Loading (POL - Saudi Arabia)", KSA_LOADING_PORTS)
@@ -531,7 +521,7 @@ if selected_sub == "Ocean Freight":
         "hormuz": chokepoint_hormuz, "bab_mandab": chokepoint_bab
     }
 
-# 2. INLAND TRANSPORTATION PARAMETERS
+# 2. INLAND FREIGHT
 elif selected_sub in ["KSA Inland Transportation", "Product Shuttling (Plant to Port)", "Cross-Border Inland (GCC)"]:
     st.sidebar.markdown("🚛 **Inland Freight Route & Fleet**")
     inland_orig = st.sidebar.selectbox("Origin Location (KSA Industrial Hub)", KSA_INLAND_ORIGINS)
@@ -546,7 +536,7 @@ elif selected_sub in ["KSA Inland Transportation", "Product Shuttling (Plant to 
         "fleet": fleet_type, "trips": trip_count, "diesel_index": diesel_index
     }
 
-# 3. RENTAL SERVICES PARAMETERS
+# 3. RENTAL SERVICES
 elif selected_parent == "Rental Services":
     available_assets = RENTAL_MAP.get(selected_sub, ["Heavy Equipment Asset"])
     specific_eq = st.sidebar.selectbox("Specific Asset Specification", available_assets)
@@ -556,7 +546,7 @@ elif selected_parent == "Rental Services":
     extra_context = f"Asset: {specific_eq} | Qty: {qty_units} units | Model: {lease_model} | Tenure: {rental_tenure}."
     param_data = {"type": "rental", "sub": selected_sub, "qty": qty_units, "asset": specific_eq, "model": lease_model, "tenure": rental_tenure}
 
-# 4. MANPOWER SUPPLY PARAMETERS
+# 4. MANPOWER SUPPLY
 elif selected_parent == "Manpower Supply":
     nationality_model = st.sidebar.selectbox(
         "Nationality Profile",
@@ -584,14 +574,12 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
     impact_score = 9.0 if ("Crane" in sub or "Rotating" in sub or "Ocean Freight" in sub or "Shutdown" in sub) else 7.5
     quadrant = "Strategic" if (risk_score > 7 and impact_score > 7.5) else "Leverage"
 
-    # 1. OCEAN FREIGHT ENGINE WITH GEOPOLITICAL FACTORS
     if params.get("type") == "ocean_freight":
         pod = params.get("pod", "Mundra Port, India")
         vol = params.get("volume", 1200)
         has_hormuz = params.get("hormuz", True)
         has_bab = params.get("bab_mandab", False)
         
-        # Determine base steaming rate based on destination geography
         if "India" in pod or "Pakistan" in pod:
             base_slot = 480
             baf = 280
@@ -608,21 +596,20 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             base_slot = 1850
             baf = 560
             is_red_sea_route = True
-        else: # China / Asia
+        else:
             base_slot = 550
             baf = 310
             is_red_sea_route = False
 
-        # Geopolitical Surging
         ecs = (950 if (has_bab and is_red_sea_route) else 0)
         wrs = 65 if has_hormuz else 20
-        othc = 115   # KFIP crane rate
-        dthc = 145   # Discharge port THC
-        eis = 75     # Container repositioning
-        lss = 55     # IMO 2020 low sulfur compliance
-        bl = 40      # Bill of lading fee
-        customs = 45 # Fasah export declaration
-        demurrage = 40 # Contingency buffer
+        othc = 115
+        dthc = 145
+        eis = 75
+        lss = 55
+        bl = 40
+        customs = 45
+        demurrage = 40
         
         subtotal_box = base_slot + baf + ecs + wrs + othc + dthc + eis + lss + bl + customs + demurrage
         margin_box = subtotal_box * 0.10
@@ -676,7 +663,6 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             }
         }
 
-    # 2. INLAND FREIGHT ENGINE
     elif params.get("type") == "inland_freight":
         trips = params.get("trips", 650)
         fleet = params.get("fleet", "40ft Flatbed")
@@ -733,7 +719,6 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             }
         }
 
-    # 3. RENTAL SERVICES ENGINE
     elif params.get("type") == "rental":
         asset_name = params.get("asset", sub)
         qty = params.get("qty", 2)
@@ -810,7 +795,6 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             }
         }
 
-    # 4. MANPOWER SUPPLY ENGINE
     elif params.get("type") == "manpower":
         trade_name = params.get("trade", sub)
         n_workers = params.get("headcount", 20)
@@ -886,7 +870,6 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             }
         }
 
-    # 5. GENERAL DEFAULT INDUSTRIAL FALLBACK
     else:
         return {
             "analysis_title": f"{analysis_type}: {sub}",
@@ -983,7 +966,7 @@ if run_btn:
 data = st.session_state["active_data"]
 
 # ---------------------------------------------------------
-# CONSULTING-GRADE EXECUTIVE HEADER BANNER
+# CONSULTING-GRADE EXECUTIVE HEADER BANNER (NO INDENTATION BUG)
 # ---------------------------------------------------------
 pol_pod_display = ""
 if param_data.get("type") == "ocean_freight":
@@ -991,25 +974,17 @@ if param_data.get("type") == "ocean_freight":
 elif param_data.get("type") == "inland_freight":
     pol_pod_display = f" | Inland Route: <b>{param_data.get('orig', 'Jubail')} ➔ {param_data.get('dest', 'Port')}</b> ({param_data.get('trips', 650)} Trips)"
 
-st.markdown(f"""
-<div class="consulting-banner">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div>
-            <span class="badge-pill badge-amber">Jubail Industrial Complex</span>
-            <span class="badge-pill badge-blue">CIPS & Kearney Methodology</span>
-            {'<span class="badge-pill badge-red">⚠️ Strait of Hormuz Risk Active</span>' if param_data.get('hormuz') else ''}
-            {'<span class="badge-pill badge-red">⚠️ Cape of Good Hope Reroute Active</span>' if param_data.get('bab_mandab') else ''}
-            <h1 style="margin-top: 8px;">🏭 Category Management ToolKit Engine</h1>
-            <p>Petrochemical Strategic Sourcing & Cost Engineering | Active Scope: <b>{selected_parent} ➔ {selected_sub}</b>{pol_pod_display}</p>
-        </div>
-        <div style="text-align: right;">
-            <span style="font-size: 0.85rem; color: #94A3B8;">Primary Tool:</span><br>
-            <span style="font-weight: 800; color: #FBBF24; font-size: 1.05rem;">{selected_analysis}</span><br>
-            <span style="font-weight: 700; color: #10B981; font-size: 0.85rem;">● {'Live AI Model' if data.get('source') == 'AI' else 'Instant Petrochemical Engine'}</span>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+badges_html = '<span class="badge-pill badge-amber">Jubail Industrial Complex</span><span class="badge-pill badge-blue">CIPS & Kearney Methodology</span>'
+if param_data.get('hormuz'):
+    badges_html += '<span class="badge-pill badge-red">⚠️ Strait of Hormuz Risk Active</span>'
+if param_data.get('bab_mandab'):
+    badges_html += '<span class="badge-pill badge-red">⚠️ Cape of Good Hope Reroute Active</span>'
+
+status_label = "Live AI Model" if data.get('source') == 'AI' else "Instant Petrochemical Engine"
+
+# Assembled with zero indentation to guarantee proper HTML rendering
+banner_html = f"""<div class="consulting-banner"><div style="display: flex; justify-content: space-between; align-items: flex-start;"><div>{badges_html}<h1 style="margin-top: 8px;">🏭 Category Management ToolKit Engine</h1><p>Petrochemical Strategic Sourcing & Cost Engineering | Active Scope: <b>{selected_parent} ➔ {selected_sub}</b>{pol_pod_display}</p></div><div style="text-align: right;"><span style="font-size: 0.85rem; color: #94A3B8;">Primary Tool:</span><br><span style="font-weight: 800; color: #FBBF24; font-size: 1.05rem;">{selected_analysis}</span><br><span style="font-weight: 700; color: #10B981; font-size: 0.85rem;">● {status_label}</span></div></div></div>"""
+st.markdown(banner_html, unsafe_allow_html=True)
 
 unit = data.get("currency_or_unit", "SAR")
 total_val = data.get("total_metric_value", 0)
@@ -1120,8 +1095,6 @@ with tab_5forces:
     st.caption("Quantitative Market Power Evaluation for Petrochemical Sourcing in Eastern Province / GCC")
     
     col_pchart, col_ptext = st.columns([1.1, 0.9])
-    
-    # 5 Forces Dynamic Model
     is_logistics = selected_parent == "Logistics Services"
     p_forces = [
         {"force": "1. Supplier Bargaining Power", "score": 82 if is_logistics else 75, "rating": "HIGH", "desc": "Global shipping alliances (2M, Ocean Alliance) control vessel capacity; strict equipment allocation at KFIP."},
@@ -1144,23 +1117,8 @@ with tab_5forces:
         st.plotly_chart(fig_pf, use_container_width=True)
         
     with col_ptext:
-        st.markdown(f"""
-        <div class="card-insight">
-            <h4 style="color:#0369A1; margin-top:0;">📊 Strategic Market Power Balance</h4>
-            <p style="color:#334155; font-size:0.9rem;">
-                <b>Overall Market Regime:</b> <span class="badge-pill badge-amber">Carrier / Supplier Dominated</span><br>
-                Due to maritime chokepoints and carrier consolidation, supplier power remains elevated. 
-                However, <b>Jubail's aggregate export volume</b> enables Procurement to break standard rate cards by structuring multi-year commitments.
-            </p>
-            <hr style="border:0; border-top:1px solid #BAE6FD; margin:10px 0;">
-            <p style="color:#0F172A; font-weight:700; margin-bottom:4px;">Recommended Procurement Counter-Strategy:</p>
-            <ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;">
-                <li>Tender across alliances (2M, Ocean, THE Alliance) to stimulate rivalry.</li>
-                <li>Carve out local terminal handling from ocean base to eliminate hidden margin stacking.</li>
-                <li>Demand index-linked BAF to prevent paying fuel risk premiums during market downturns.</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        forces_summary_html = f"""<div class="card-insight"><h4 style="color:#0369A1; margin-top:0;">📊 Strategic Market Power Balance</h4><p style="color:#334155; font-size:0.9rem;"><b>Overall Market Regime:</b> <span class="badge-pill badge-amber">Carrier / Supplier Dominated</span><br>Due to maritime chokepoints and carrier consolidation, supplier power remains elevated. However, <b>Jubail's aggregate export volume</b> enables Procurement to break standard rate cards by structuring multi-year commitments.</p><hr style="border:0; border-top:1px solid #BAE6FD; margin:10px 0;"><p style="color:#0F172A; font-weight:700; margin-bottom:4px;">Recommended Procurement Counter-Strategy:</p><ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;"><li>Tender across alliances (2M, Ocean, THE Alliance) to stimulate rivalry.</li><li>Carve out local terminal handling from ocean base to eliminate hidden margin stacking.</li><li>Demand index-linked BAF to prevent paying fuel risk premiums during market downturns.</li></ul></div>"""
+        st.markdown(forces_summary_html, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # TAB 3: KRALJIC PORTFOLIO MATRIX
@@ -1211,35 +1169,14 @@ with tab_kraljic:
         
     with col_ktable:
         st.subheader("📋 Kraljic Strategy Positioning Card")
-        k_card_html = f"""
-        <div class="card-kraljic-info">
-            <h3 style="color:#B45309; margin-top:0; font-size:1.3rem;">🎯 Quadrant: {k_data.get('quadrant', 'Strategic')}</h3>
-            <p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Contract Horizon:</b></p>
-            <p style="color:#475569; margin-top:2px;">{k_data.get('contract_horizon', '1-2 Years Framework')}</p>
-            <p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Supplier Governance Model:</b></p>
-            <p style="color:#475569; margin-top:2px;">{k_data.get('supplier_relationship', 'Core Carrier Strategic Alliance')}</p>
-            <hr style="border: 0; border-top: 1px solid #FDE68A; margin: 14px 0;">
-            <p style="color:#334155; margin:0;"><b>Profit Impact Score:</b> {k_data.get('profit_impact', 8.5)} / 10<br>
-            <b>Supply Risk Score:</b> {k_data.get('supply_risk', 7.5)} / 10</p>
-            <p style="color:#92400E; font-size:0.8rem; margin-top:12px;">📌 <i>Buyer Directive: Align contractual volume commitments to secure slot allocation and eliminate spot rate surcharges.</i></p>
-        </div>
-        """
+        k_card_html = f"""<div class="card-kraljic-info"><h3 style="color:#B45309; margin-top:0; font-size:1.3rem;">🎯 Quadrant: {k_data.get('quadrant', 'Strategic')}</h3><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Contract Horizon:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('contract_horizon', '1-2 Years Framework')}</p><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Supplier Governance Model:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('supplier_relationship', 'Core Carrier Strategic Alliance')}</p><hr style="border: 0; border-top: 1px solid #FDE68A; margin: 14px 0;"><p style="color:#334155; margin:0;"><b>Profit Impact Score:</b> {k_data.get('profit_impact', 8.5)} / 10<br><b>Supply Risk Score:</b> {k_data.get('supply_risk', 7.5)} / 10</p><p style="color:#92400E; font-size:0.8rem; margin-top:12px;">📌 <i>Buyer Directive: Align contractual volume commitments to secure slot allocation and eliminate spot rate surcharges.</i></p></div>"""
         st.markdown(k_card_html, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # TAB 4: GEOPOLITICAL RISK HEATMAP & MITIGATION
 # ---------------------------------------------------------
 with tab_risk:
-    # Geopolitical Warning Callout
-    st.markdown("""
-    <div class="card-geopolitics">
-        <h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Geopolitical Maritime Vulnerability Notice (Middle East Corridors)</h4>
-        <p style="color:#7F1D1D; font-size:0.9rem; margin:0;">
-            <b>1. Strait of Hormuz:</b> Mandatory transit for all petrochemical exports originating from KFIP (Jubail) and Dammam. Subject to regional War Risk Surcharges (WRS) and naval escort contingencies.<br>
-            <b>2. Bab al-Mandab & Southern Red Sea:</b> Vessel diversions around the Cape of Good Hope add <b>10–14 days</b> steaming lead-time and <b>+$850 to +$1,100 per container</b> in emergency fuel/operating surcharges.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div class="card-geopolitics"><h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Geopolitical Maritime Vulnerability Notice (Middle East Corridors)</h4><p style="color:#7F1D1D; font-size:0.9rem; margin:0;"><b>1. Strait of Hormuz:</b> Mandatory transit for all petrochemical exports originating from KFIP (Jubail) and Dammam. Subject to regional War Risk Surcharges (WRS) and naval escort contingencies.<br><b>2. Bab al-Mandab & Southern Red Sea:</b> Vessel diversions around the Cape of Good Hope add <b>10–14 days</b> steaming lead-time and <b>+$850 to +$1,100 per container</b> in emergency fuel/operating surcharges.</p></div>""", unsafe_allow_html=True)
 
     col_map, col_score = st.columns([1.1, 0.9])
     risk_list = data.get("risk_items", [])
@@ -1352,44 +1289,10 @@ with tab_kearney:
     
     k_col1, k_col2 = st.columns([1, 1])
     with k_col1:
-        st.markdown("""
-        <div class="card-kraljic-info">
-            <h4 style="color:#B45309; margin-top:0;">🎯 Core Kearney Strategy: Core Partner Alliance & Target Costing</h4>
-            <p style="color:#334155; font-size:0.9rem;">
-                Based on position in the <b>Strategic Quadrant</b> (High Demand, Market Concentration), standard transactional bidding results in margin leakage. 
-                Procurement must deploy <b>Value Chain Restructuring</b> and <b>Formula-Based Pricing</b>.
-            </p>
-            <hr style="border:0; border-top:1px solid #FDE68A; margin:10px 0;">
-            <p style="color:#0F172A; font-weight:700;">Key Kearney Action Levers:</p>
-            <ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;">
-                <li><b>Unbundled Cost Transparency:</b> Separate base operating rates from fuel and pass-throughs.</li>
-                <li><b>Demand Pooling:</b> Aggregate volume across all Jubail manufacturing entities.</li>
-                <li><b>Indexation:</b> Tie variable surcharges to transparent published indices.</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div class="card-kraljic-info"><h4 style="color:#B45309; margin-top:0;">🎯 Core Kearney Strategy: Core Partner Alliance & Target Costing</h4><p style="color:#334155; font-size:0.9rem;">Based on position in the <b>Strategic Quadrant</b> (High Demand, Market Concentration), standard transactional bidding results in margin leakage. Procurement must deploy <b>Value Chain Restructuring</b> and <b>Formula-Based Pricing</b>.</p><hr style="border:0; border-top:1px solid #FDE68A; margin:10px 0;"><p style="color:#0F172A; font-weight:700;">Key Kearney Action Levers:</p><ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;"><li><b>Unbundled Cost Transparency:</b> Separate base operating rates from fuel and pass-throughs.</li><li><b>Demand Pooling:</b> Aggregate volume across all Jubail manufacturing entities.</li><li><b>Indexation:</b> Tie variable surcharges to transparent published indices.</li></ul></div>""", unsafe_allow_html=True)
         
     with k_col2:
-        st.markdown("""
-        <div class="card-insight">
-            <h4 style="color:#0284C7; margin-top:0;">💰 Projected 3-Year Value Capture</h4>
-            <table style="width:100%; border-collapse:collapse; font-size:0.88rem;">
-                <tr style="border-bottom:1px solid #BAE6FD;">
-                    <td style="padding:8px 0; color:#334155;"><b>Type 1 (Hard P&L Savings):</b></td>
-                    <td style="text-align:right; font-weight:700; color:#0F172A;">6.5% - 8.0%</td>
-                </tr>
-                <tr style="border-bottom:1px solid #BAE6FD;">
-                    <td style="padding:8px 0; color:#334155;"><b>Type 2 (Cost Avoidance / Cap):</b></td>
-                    <td style="text-align:right; font-weight:700; color:#0F172A;">12.0% - 15.0%</td>
-                </tr>
-                <tr style="border-bottom:1px solid #BAE6FD;">
-                    <td style="padding:8px 0; color:#334155;"><b>Type 3 (Working Capital / Detention Free-Time):</b></td>
-                    <td style="text-align:right; font-weight:700; color:#0F172A;">21 Days Guaranteed</td>
-                </tr>
-            </table>
-            <p style="color:#0369A1; font-size:0.8rem; margin-top:10px;"><i>Reconciled against CIPS procurement savings standards.</i></p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div class="card-insight"><h4 style="color:#0284C7; margin-top:0;">💰 Projected 3-Year Value Capture</h4><table style="width:100%; border-collapse:collapse; font-size:0.88rem;"><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 1 (Hard P&L Savings):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">6.5% - 8.0%</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 2 (Cost Avoidance / Cap):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">12.0% - 15.0%</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 3 (Working Capital / Detention Free-Time):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">21 Days Guaranteed</td></tr></table><p style="color:#0369A1; font-size:0.8rem; margin-top:10px;"><i>Reconciled against CIPS procurement savings standards.</i></p></div>""", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # TAB 6: VENDOR & OEM ECOSYSTEM
@@ -1547,23 +1450,8 @@ with tab_report:
     </html>
     """
 
-    st.markdown(f"""
-    <div class="card-memo-preview">
-        <h3 style="color:#0F172A; margin-top:0;">📋 CPO Executive Decision Briefing Preview</h3>
-        <p style="color:#334155; font-size:0.95rem; line-height:1.6;">
-            Category review for <b>{selected_sub}</b> ({pol_pod_display}) establishes an audited contract Should-Cost baseline of <b>{unit} {total_val:,.2f}</b>.<br>
-            The contractor break-even operating floor is <b>{data.get('metric_card_2_value', '-')}</b>, with supplier margin / chokepoint surcharges at <b>{data.get('metric_card_3_value', '-')}</b>.
-        </p>
-        <div style="margin: 12px 0;">
-            <span class="badge-pill badge-amber">Kraljic: {k_data.get('quadrant', 'Strategic')}</span>
-            <span class="badge-pill badge-blue">Horizon: {k_data.get('contract_horizon', '1-2 Years Framework')}</span>
-            <span class="badge-pill badge-red">Max Risk Score: {data.get('total_metric_value', 18)}/25</span>
-        </div>
-        <p style="color:#64748B; font-size:0.85rem; margin-bottom:0;">
-            <b>Local Content Route:</b> Priority allocation to Tier-1 leaders (<i>{', '.join(vm.get('tier_1_local', [])[:2])}</i>).
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    memo_preview_html = f"""<div class="card-memo-preview"><h3 style="color:#0F172A; margin-top:0;">📋 CPO Executive Decision Briefing Preview</h3><p style="color:#334155; font-size:0.95rem; line-height:1.6;">Category review for <b>{selected_sub}</b> ({pol_pod_display}) establishes an audited contract Should-Cost baseline of <b>{unit} {total_val:,.2f}</b>.<br>The contractor break-even operating floor is <b>{data.get('metric_card_2_value', '-')}</b>, with supplier margin / chokepoint surcharges at <b>{data.get('metric_card_3_value', '-')}</b>.</p><div style="margin: 12px 0;"><span class="badge-pill badge-amber">Kraljic: {k_data.get('quadrant', 'Strategic')}</span><span class="badge-pill badge-blue">Horizon: {k_data.get('contract_horizon', '1-2 Years Framework')}</span><span class="badge-pill badge-red">Max Risk Score: {data.get('total_metric_value', 18)}/25</span></div><p style="color:#64748B; font-size:0.85rem; margin-bottom:0;"><b>Local Content Route:</b> Priority allocation to Tier-1 leaders (<i>{', '.join(vm.get('tier_1_local', [])[:2])}</i>).</p></div>"""
+    st.markdown(memo_preview_html, unsafe_allow_html=True)
     
     st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
     st.subheader("📥 Export C-Suite Deliverables")
