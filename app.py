@@ -8,7 +8,7 @@ import requests
 import time
 
 # ---------------------------------------------------------
-# PAGE CONFIGURATION & CONSULTING-TIER THEME
+# PAGE CONFIGURATION & EXECUTIVE PALETTE
 # ---------------------------------------------------------
 st.set_page_config(
     page_title="Category Management ToolKit Engine | Petrochemical",
@@ -16,7 +16,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# McKinsey / Kearney Style Custom CSS Injection
+# Custom High-End SaaS & Consulting CSS
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -26,89 +26,102 @@ st.markdown("""
     }
 
     .stApp {
-        background-color: #F8FAFC;
+        background-color: #F1F5F9;
     }
 
-    .consulting-banner {
-        background: linear-gradient(135deg, #0A192F 0%, #0F2A4A 55%, #1E3A8A 100%);
+    /* Executive Top Command Bar */
+    .command-header {
+        background: linear-gradient(135deg, #0A192F 0%, #112240 60%, #1E3A8A 100%);
         color: #FFFFFF;
-        padding: 24px 30px;
+        padding: 20px 26px;
         border-radius: 12px;
-        margin-bottom: 22px;
+        margin-bottom: 20px;
         border-left: 6px solid #D97706;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.12), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
     }
-    .consulting-banner h1 {
+    .breadcrumb-text {
+        font-size: 0.75rem;
+        color: #94A3B8;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 4px;
+    }
+    .command-header h1 {
         color: #F8FAFC;
         margin: 0;
         font-size: 1.85rem;
         font-weight: 800;
         letter-spacing: -0.02em;
     }
-    .consulting-banner p {
-        color: #94A3B8;
-        margin: 6px 0 0 0;
+    .command-header p {
+        color: #CBD5E1;
+        margin: 4px 0 0 0;
         font-size: 0.95rem;
     }
     .badge-pill {
         display: inline-block;
-        padding: 4px 12px;
+        padding: 3px 10px;
         border-radius: 9999px;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
-        margin-right: 8px;
+        margin-right: 6px;
     }
     .badge-amber { background-color: rgba(217, 119, 6, 0.25); color: #FBBF24; border: 1px solid rgba(217, 119, 6, 0.5); }
     .badge-blue { background-color: rgba(37, 99, 235, 0.25); color: #93C5FD; border: 1px solid rgba(37, 99, 235, 0.5); }
     .badge-red { background-color: rgba(220, 38, 38, 0.25); color: #FCA5A5; border: 1px solid rgba(220, 38, 38, 0.5); }
 
-    div[data-testid="column"]:nth-of-type(1) div[data-testid="stMetric"] {
-        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-        border: 1px solid #BFDBFE;
-        border-left: 5px solid #2563EB;
-        border-radius: 10px;
-        padding: 16px 20px;
-        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.08);
+    /* Custom Responsive KPI Metric Cards (No Ellipsis Truncation) */
+    .kpi-card-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 22px;
     }
-    div[data-testid="column"]:nth-of-type(2) div[data-testid="stMetric"] {
-        background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
-        border: 1px solid #CBD5E1;
-        border-left: 5px solid #475569;
+    .kpi-card {
+        background: #FFFFFF;
         border-radius: 10px;
-        padding: 16px 20px;
-        box-shadow: 0 4px 6px -1px rgba(71, 85, 105, 0.08);
+        padding: 16px 18px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    div[data-testid="column"]:nth-of-type(3) div[data-testid="stMetric"] {
-        background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-        border: 1px solid #FDE68A;
-        border-left: 5px solid #D97706;
-        border-radius: 10px;
-        padding: 16px 20px;
-        box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.08);
+    .kpi-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 12px -2px rgba(0,0,0,0.08);
     }
-    div[data-testid="column"]:nth-of-type(4) div[data-testid="stMetric"] {
-        background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-        border: 1px solid #A7F3D0;
-        border-left: 5px solid #059669;
-        border-radius: 10px;
-        padding: 16px 20px;
-        box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.08);
-    }
-    div[data-testid="stMetric"] label {
+    .kpi-blue { border-top: 4px solid #2563EB; background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 35%); }
+    .kpi-slate { border-top: 4px solid #475569; background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 35%); }
+    .kpi-amber { border-top: 4px solid #D97706; background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 35%); }
+    .kpi-emerald { border-top: 4px solid #059669; background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 35%); }
+
+    .kpi-label {
+        font-size: 0.75rem;
         font-weight: 700;
-        color: #334155;
-        font-size: 0.82rem;
+        color: #64748B;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.05em;
+        margin-bottom: 6px;
+        display: block;
     }
-    div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
-        color: #0F172A;
+    .kpi-value {
+        font-size: 1.55rem;
         font-weight: 800;
-        font-size: 1.65rem;
+        color: #0F172A;
         letter-spacing: -0.02em;
+        white-space: nowrap;
+        display: block;
+    }
+    .kpi-sub {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #64748B;
+        margin-top: 4px;
+        display: block;
     }
 
+    /* Section Containers */
     .card-insight {
         background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
         border: 1px solid #BAE6FD;
@@ -170,16 +183,17 @@ st.markdown("""
         box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06);
     }
 
+    /* Stripe-style Segmented Navigation Tabs */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
+        gap: 8px;
         border-bottom: 2px solid #E2E8F0;
         padding-bottom: 6px;
     }
     .stTabs [data-baseweb="tab"] {
-        padding: 12px 20px;
+        padding: 10px 16px;
         border-radius: 8px;
         font-weight: 700;
-        font-size: 0.92rem;
+        font-size: 0.88rem;
         background-color: #FFFFFF;
         border: 1px solid #E2E8F0;
         color: #475569;
@@ -192,6 +206,7 @@ st.markdown("""
         box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.25);
     }
 
+    /* Risk Table */
     .consulting-table {
         width: 100%;
         border-collapse: collapse;
@@ -236,7 +251,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# COMPREHENSIVE LOGISTICS PORTS & HUBS REPOSITORY
+# CATALOGS & TAXONOMY
 # ---------------------------------------------------------
 KSA_LOADING_PORTS = [
     "King Fahd Industrial Port, Jubail (KFIP) [Petrochemical Core]",
@@ -393,71 +408,44 @@ MANPOWER_MAP = {
 
 CATEGORY_TAXONOMY = {
     "Logistics Services": [
-        "Ocean Freight",
-        "KSA Inland Transportation",
-        "Product Shuttling (Plant to Port)",
-        "Cross-Border Inland (GCC)",
-        "Export Freight Forwarding",
-        "Import Freight Forwarding",
-        "Customs Clearance",
-        "Terminal, Port & Hub (KFIP/Dammam)",
-        "Warehousing & Open Yard",
-        "Container / ISO Tank",
-        "Bagging & Packing"
+        "Ocean Freight", "KSA Inland Transportation", "Product Shuttling (Plant to Port)",
+        "Cross-Border Inland (GCC)", "Export Freight Forwarding", "Import Freight Forwarding",
+        "Customs Clearance", "Terminal, Port & Hub (KFIP/Dammam)", "Warehousing & Open Yard",
+        "Container / ISO Tank", "Bagging & Packing"
     ],
     "Rental Services": list(RENTAL_MAP.keys()),
     "Manpower Supply": list(MANPOWER_MAP.keys()),
     "Industrial O&M Services": [
-        "Mechanical Maintenance (Piping, Static, Valves)",
-        "Rotating Equipment Overhaul (Turbines/Compressors)",
-        "Electrical Maintenance (Motors, VFDs, Switchgear)",
-        "Instrumentation & Control (Analyzers, DCS)",
-        "Inspection & Testing (NDT, RBI, Lifting)",
-        "Industrial Cleaning (Hydrojetting 10k-40k PSI)",
-        "Catalyst Handling under Inert Atmosphere",
-        "Building & Civil Maintenance",
-        "Material Handling Equipment Maintenance",
-        "Safety & Fire Protection Systems Maintenance"
+        "Mechanical Maintenance (Piping, Static, Valves)", "Rotating Equipment Overhaul (Turbines/Compressors)",
+        "Electrical Maintenance (Motors, VFDs, Switchgear)", "Instrumentation & Control (Analyzers, DCS)",
+        "Inspection & Testing (NDT, RBI, Lifting)", "Industrial Cleaning (Hydrojetting 10k-40k PSI)",
+        "Catalyst Handling under Inert Atmosphere", "Building & Civil Maintenance",
+        "Material Handling Equipment Maintenance", "Safety & Fire Protection Systems Maintenance"
     ],
     "Soft / Facility Management": [
-        "Workplace Operations (Cleaning & Janitorial)",
-        "Industrial & Camp Catering Services",
-        "Property & Worker Accommodations Lease (RCJY)",
-        "Pest Control & Vector Management",
-        "Potable Water & Bulk Fluid Supply",
-        "Corporate Security & Guard Force",
-        "Office Renovation & Workplace Support",
-        "Waste Management & Hazardous Fluid Handling"
+        "Workplace Operations (Cleaning & Janitorial)", "Industrial & Camp Catering Services",
+        "Property & Worker Accommodations Lease (RCJY)", "Pest Control & Vector Management",
+        "Potable Water & Bulk Fluid Supply", "Corporate Security & Guard Force",
+        "Office Renovation & Workplace Support", "Waste Management & Hazardous Fluid Handling"
     ],
     "IT & Digital Services": [
-        "Enterprise Subscription & Renewal (ERP/Core)",
-        "Strategic Platform Partnership (Cloud/Hyperscalers)",
-        "Managed Services Framework (AMS/Infra)",
-        "Network & Telecom Framework (Plant Connectivity)",
-        "Cybersecurity & OT Risk Model (HCIS/NCA CSCC)",
-        "End-User Computing & Hardware Catalog"
+        "Enterprise Subscription & Renewal (ERP/Core)", "Strategic Platform Partnership (Cloud/Hyperscalers)",
+        "Managed Services Framework (AMS/Infra)", "Network & Telecom Framework (Plant Connectivity)",
+        "Cybersecurity & OT Risk Model (HCIS/NCA CSCC)", "End-User Computing & Hardware Catalog"
     ],
     "Project & Construction": [
-        "Brownfield EPC / EPCM Plant Debottlenecking",
-        "Civil Works & Deep Foundations",
-        "Mechanical Piping Tie-ins & Structural Revamp",
-        "Electrical & Instrumentation Installation",
-        "Scaffolding & Insulation (SIP Packages)",
-        "Plant Modification Management of Change (MOC)"
+        "Brownfield EPC / EPCM Plant Debottlenecking", "Civil Works & Deep Foundations",
+        "Mechanical Piping Tie-ins & Structural Revamp", "Electrical & Instrumentation Installation",
+        "Scaffolding & Insulation (SIP Packages)", "Plant Modification Management of Change (MOC)"
     ],
     "Professional & Consultancy": [
-        "Engineering Design & Licensor TSA (GES/GES+)",
-        "Process Safety & HAZOP / SIL Studies",
-        "Legal & Regulatory Advisory (Trade, REACH/KKDIK)",
-        "Financial Audit & Tax Advisory (ZATCA)",
-        "Corporate Strategy & Operating Model Optimization",
-        "Petrochemical Feasibility & Market Forecasting"
+        "Engineering Design & Licensor TSA (GES/GES+)", "Process Safety & HAZOP / SIL Studies",
+        "Legal & Regulatory Advisory (Trade, REACH/KKDIK)", "Financial Audit & Tax Advisory (ZATCA)",
+        "Corporate Strategy & Operating Model Optimization", "Petrochemical Feasibility & Market Forecasting"
     ],
     "HSE and Compliance": [
-        "HCIS Physical Security Compliance Infrastructure",
-        "Environmental Emissions Testing (RCER 2020)",
-        "Hazardous Petrochemical Waste Incineration",
-        "Fixed Fire Suppression & Deluge Maintenance",
+        "HCIS Physical Security Compliance Infrastructure", "Environmental Emissions Testing (RCER 2020)",
+        "Hazardous Petrochemical Waste Incineration", "Fixed Fire Suppression & Deluge Maintenance",
         "Personal Protective Equipment (PPE) Contracts"
     ]
 }
@@ -501,7 +489,6 @@ st.sidebar.subheader("⚙️ Technical Sourcing Parameters")
 extra_context = ""
 param_data = {}
 
-# 1. OCEAN FREIGHT
 if selected_sub == "Ocean Freight":
     st.sidebar.markdown("🚢 **Maritime Route & Volumes**")
     pol = st.sidebar.selectbox("Port of Loading (POL - Saudi Arabia)", KSA_LOADING_PORTS)
@@ -521,7 +508,6 @@ if selected_sub == "Ocean Freight":
         "hormuz": chokepoint_hormuz, "bab_mandab": chokepoint_bab
     }
 
-# 2. INLAND FREIGHT
 elif selected_sub in ["KSA Inland Transportation", "Product Shuttling (Plant to Port)", "Cross-Border Inland (GCC)"]:
     st.sidebar.markdown("🚛 **Inland Freight Route & Fleet**")
     inland_orig = st.sidebar.selectbox("Origin Location (KSA Industrial Hub)", KSA_INLAND_ORIGINS)
@@ -536,7 +522,6 @@ elif selected_sub in ["KSA Inland Transportation", "Product Shuttling (Plant to 
         "fleet": fleet_type, "trips": trip_count, "diesel_index": diesel_index
     }
 
-# 3. RENTAL SERVICES
 elif selected_parent == "Rental Services":
     available_assets = RENTAL_MAP.get(selected_sub, ["Heavy Equipment Asset"])
     specific_eq = st.sidebar.selectbox("Specific Asset Specification", available_assets)
@@ -546,7 +531,6 @@ elif selected_parent == "Rental Services":
     extra_context = f"Asset: {specific_eq} | Qty: {qty_units} units | Model: {lease_model} | Tenure: {rental_tenure}."
     param_data = {"type": "rental", "sub": selected_sub, "qty": qty_units, "asset": specific_eq, "model": lease_model, "tenure": rental_tenure}
 
-# 4. MANPOWER SUPPLY
 elif selected_parent == "Manpower Supply":
     nationality_model = st.sidebar.selectbox(
         "Nationality Profile",
@@ -581,35 +565,19 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
         has_bab = params.get("bab_mandab", False)
         
         if "India" in pod or "Pakistan" in pod:
-            base_slot = 480
-            baf = 280
-            is_red_sea_route = False
+            base_slot = 480; baf = 280; is_red_sea_route = False
         elif "Turkey" in pod or "Mediterranean" in pod:
-            base_slot = 1150
-            baf = 420
-            is_red_sea_route = True
+            base_slot = 1150; baf = 420; is_red_sea_route = True
         elif "Rotterdam" in pod or "Antwerp" in pod or "Europe" in pod:
-            base_slot = 1350
-            baf = 480
-            is_red_sea_route = True
+            base_slot = 1350; baf = 480; is_red_sea_route = True
         elif "Houston" in pod or "USA" in pod or "Santos" in pod:
-            base_slot = 1850
-            baf = 560
-            is_red_sea_route = True
+            base_slot = 1850; baf = 560; is_red_sea_route = True
         else:
-            base_slot = 550
-            baf = 310
-            is_red_sea_route = False
+            base_slot = 550; baf = 310; is_red_sea_route = False
 
         ecs = (950 if (has_bab and is_red_sea_route) else 0)
         wrs = 65 if has_hormuz else 20
-        othc = 115
-        dthc = 145
-        eis = 75
-        lss = 55
-        bl = 40
-        customs = 45
-        demurrage = 40
+        othc, dthc, eis, lss, bl, customs, demurrage = 115, 145, 75, 55, 40, 45, 40
         
         subtotal_box = base_slot + baf + ecs + wrs + othc + dthc + eis + lss + bl + customs + demurrage
         margin_box = subtotal_box * 0.10
@@ -634,7 +602,7 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             "analysis_title": f"Ocean Freight Should-Cost: {params.get('pol', 'KFIP')} to {pod}",
             "currency_or_unit": "USD",
             "total_metric_value": round(total_annual, 2),
-            "total_metric_label": f"Total Annual Freight Spend ({vol} FEU)",
+            "total_metric_label": "Total Annual Freight Baseline",
             "metric_card_2_label": "Rate per Container (FEU)", "metric_card_2_value": f"USD {total_box:,.2f} / box",
             "metric_card_3_label": "Chokepoint Surcharges (ECS+WRS)", "metric_card_3_value": f"USD {(ecs+wrs):,.2f} ({(ecs+wrs)/total_box*100:.1f}%)",
             "metric_card_4_label": "Target Benchmark Counter", "metric_card_4_value": "8.0% Margin Cap",
@@ -843,7 +811,7 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             "analysis_title": f"Manpower Should-Cost: {trade_name}",
             "currency_or_unit": "SAR",
             "total_metric_value": round(total_cost, 2),
-            "total_metric_label": "Total Contract Baseline",
+            "total_metric_label": "Total Manpower Contract Baseline",
             "metric_card_2_label": "Direct Operating Cost", "metric_card_2_value": f"SAR {subtotal_direct:,.0f} ({subtotal_direct/total_cost*100:.1f}%)",
             "metric_card_3_label": "Contractor Profit Margin", "metric_card_3_value": f"SAR {profit:,.0f} (10.0%)",
             "metric_card_4_label": "Target Benchmark Counter", "metric_card_4_value": "8.0% (CIPS Benchmark)",
@@ -966,7 +934,7 @@ if run_btn:
 data = st.session_state["active_data"]
 
 # ---------------------------------------------------------
-# CONSULTING-GRADE EXECUTIVE HEADER BANNER (NO INDENTATION BUG)
+# EXECUTIVE HEADER BANNER (NO OVERFLOW OR WRAPPING BUGS)
 # ---------------------------------------------------------
 pol_pod_display = ""
 if param_data.get("type") == "ocean_freight":
@@ -980,10 +948,9 @@ if param_data.get('hormuz'):
 if param_data.get('bab_mandab'):
     badges_html += '<span class="badge-pill badge-red">⚠️ Cape of Good Hope Reroute Active</span>'
 
-status_label = "Live AI Model" if data.get('source') == 'AI' else "Instant Petrochemical Engine"
+status_label = "Live AI Model" if data.get('source') == 'AI' else "Instant Petrochem Engine"
 
-# Assembled with zero indentation to guarantee proper HTML rendering
-banner_html = f"""<div class="consulting-banner"><div style="display: flex; justify-content: space-between; align-items: flex-start;"><div>{badges_html}<h1 style="margin-top: 8px;">🏭 Category Management ToolKit Engine</h1><p>Petrochemical Strategic Sourcing & Cost Engineering | Active Scope: <b>{selected_parent} ➔ {selected_sub}</b>{pol_pod_display}</p></div><div style="text-align: right;"><span style="font-size: 0.85rem; color: #94A3B8;">Primary Tool:</span><br><span style="font-weight: 800; color: #FBBF24; font-size: 1.05rem;">{selected_analysis}</span><br><span style="font-weight: 700; color: #10B981; font-size: 0.85rem;">● {status_label}</span></div></div></div>"""
+banner_html = f"""<div class="command-header"><div class="breadcrumb-text">Petrochemical Manufacturing Sourcing & Cost Engineering | Jubail Operations</div><div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;"><div>{badges_html}<h1 style="margin-top: 8px;">🏭 Category Management ToolKit Engine</h1><p>Active Sourcing Scope: <b>{selected_parent} ➔ {selected_sub}</b>{pol_pod_display}</p></div><div style="text-align: right; background: rgba(255,255,255,0.06); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"><span style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; font-weight:700;">Primary Tool:</span><br><span style="font-weight: 800; color: #FBBF24; font-size: 0.95rem;">{selected_analysis}</span><br><span style="font-weight: 700; color: #10B981; font-size: 0.8rem;">● {status_label}</span></div></div></div>"""
 st.markdown(banner_html, unsafe_allow_html=True)
 
 unit = data.get("currency_or_unit", "SAR")
@@ -999,32 +966,47 @@ if not df_chart.empty and "value" in df_chart.columns:
         df_chart["Percentage"] = (df_chart["value"] / df_chart["value"].sum()) * 100
 
 # ---------------------------------------------------------
-# ROW 1: 4 DISTINCT COLORED METRIC CARDS
+# ROW 1: 4 CUSTOM RESPONSIVE KPI CARDS (NO ELLIPSIS TRUNCATION)
 # ---------------------------------------------------------
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    val_disp = f"{unit} {total_val:,.2f}" if unit in ["SAR", "USD"] else f"{total_val}"
-    st.metric(label=data.get("total_metric_label", "Overall Baseline"), value=val_disp)
-with col2:
-    st.metric(label=data.get("metric_card_2_label", "Direct Cost"), value=data.get("metric_card_2_value", "-"))
-with col3:
-    st.metric(label=data.get("metric_card_3_label", "Supplier Margin / Chokepoint"), value=data.get("metric_card_3_value", "-"), delta_color="inverse")
-with col4:
-    st.metric(label=data.get("metric_card_4_label", "Target Benchmark"), value=data.get("metric_card_4_value", "-"), delta_color="off")
+val_disp = f"{unit} {total_val:,.2f}" if unit in ["SAR", "USD"] else f"{total_val}"
 
-st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+kpi_html = f"""
+<div class="kpi-card-grid">
+    <div class="kpi-card kpi-blue">
+        <span class="kpi-label">{data.get("total_metric_label", "Overall Baseline")}</span>
+        <span class="kpi-value">{val_disp}</span>
+        <span class="kpi-sub">Total Audited Should-Cost</span>
+    </div>
+    <div class="kpi-card kpi-slate">
+        <span class="kpi-label">{data.get("metric_card_2_label", "Direct Cost")}</span>
+        <span class="kpi-value">{data.get("metric_card_2_value", "-")}</span>
+        <span class="kpi-sub">Direct Operating Floor (Break-even)</span>
+    </div>
+    <div class="kpi-card kpi-amber">
+        <span class="kpi-label">{data.get("metric_card_3_label", "Supplier Margin / Chokepoint")}</span>
+        <span class="kpi-value">{data.get("metric_card_3_value", "-")}</span>
+        <span class="kpi-sub">Contractor Operating Margin</span>
+    </div>
+    <div class="kpi-card kpi-emerald">
+        <span class="kpi-label">{data.get("metric_card_4_label", "Target Benchmark")}</span>
+        <span class="kpi-value">{data.get("metric_card_4_value", "-")}</span>
+        <span class="kpi-sub">CIPS Target Counter-Offer</span>
+    </div>
+</div>
+"""
+st.markdown(kpi_html, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# TABBED EXECUTIVE INTERFACE (ALL 7 TOOLS FULLY POPULATED)
+# STRIPE-STYLE SEGMENTED NAVIGATION TABS (NO OVERFLOW)
 # ---------------------------------------------------------
 tab_cost, tab_5forces, tab_kraljic, tab_risk, tab_kearney, tab_vendors, tab_report = st.tabs([
-    "📊 Should-Cost & Granular CBS",
-    "🌐 Porter's 5 Forces & Market Intel",
-    "🎯 Kraljic Portfolio Matrix",
-    "🔥 Geopolitical Risk & Heatmap",
-    "♟️ Kearney Chessboard & Levers",
-    "🏢 Vendor Ecosystem (Local/OEMs)",
-    "📑 C-Suite Decision Memo & Exports"
+    "📊 Cost Breakdown",
+    "🌐 5 Forces & Market",
+    "🎯 Kraljic Matrix",
+    "🔥 Geopolitical Risk",
+    "♟️ Kearney Chessboard",
+    "🏢 Vendor Ecosystem",
+    "📑 C-Suite Memo & Export"
 ])
 
 # ---------------------------------------------------------
@@ -1086,6 +1068,16 @@ with tab_cost:
             insight_html += f"<li><b>{l}</b></li>"
         insight_html += "</ul></div>"
         st.markdown(insight_html, unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.subheader("📚 Micro-Cost Factor Technical Basis & Engineering Definitions")
+    if not df_chart.empty and "details" in df_chart.columns:
+        cols = st.columns(2)
+        for idx, row in df_chart.iterrows():
+            with cols[idx % 2]:
+                amt_str = f"{unit} {row['value']:,.2f} ({row['Percentage']:.1f}%)" if unit in ["SAR", "USD"] else f"{row['value']} pts"
+                with st.expander(f"🔹 **{row['name']}** — {amt_str}", expanded=False):
+                    st.write(row.get("details", "-"))
 
 # ---------------------------------------------------------
 # TAB 2: PORTER'S 5 FORCES & INDUSTRY INTEL
