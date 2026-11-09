@@ -8,7 +8,7 @@ import requests
 import time
 
 # ---------------------------------------------------------
-# PAGE CONFIGURATION & EXECUTIVE PALETTE
+# PAGE CONFIGURATION & CONSULTING-TIER THEME
 # ---------------------------------------------------------
 st.set_page_config(
     page_title="Category Management ToolKit Engine | Petrochemical",
@@ -29,7 +29,6 @@ st.markdown("""
         background-color: #F1F5F9;
     }
 
-    /* Executive Top Command Bar */
     .command-header {
         background: linear-gradient(135deg, #0A192F 0%, #112240 60%, #1E3A8A 100%);
         color: #FFFFFF;
@@ -72,7 +71,6 @@ st.markdown("""
     .badge-blue { background-color: rgba(37, 99, 235, 0.25); color: #93C5FD; border: 1px solid rgba(37, 99, 235, 0.5); }
     .badge-red { background-color: rgba(220, 38, 38, 0.25); color: #FCA5A5; border: 1px solid rgba(220, 38, 38, 0.5); }
 
-    /* Custom Responsive KPI Metric Cards (No Ellipsis Truncation) */
     .kpi-card-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -121,7 +119,6 @@ st.markdown("""
         display: block;
     }
 
-    /* Section Containers */
     .card-insight {
         background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
         border: 1px solid #BAE6FD;
@@ -183,7 +180,6 @@ st.markdown("""
         box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06);
     }
 
-    /* Stripe-style Segmented Navigation Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
         border-bottom: 2px solid #E2E8F0;
@@ -206,7 +202,6 @@ st.markdown("""
         box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.25);
     }
 
-    /* Risk Table */
     .consulting-table {
         width: 100%;
         border-collapse: collapse;
@@ -251,7 +246,64 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# CATALOGS & TAXONOMY
+# INLAND TRANSPORTATION (JUBAIL & DAMMAM ONLY FOR POL)
+# ---------------------------------------------------------
+INLAND_ORIGINS_JUBAIL_DAMMAM = [
+    "Jubail Industrial City (Complex Plant Gate / KFIP)",
+    "Dammam (King Abdulaziz Port / 2nd Industrial City)"
+]
+
+INLAND_COMPREHENSIVE_DESTINATIONS = [
+    # KSA Domestic Core Cities
+    "Riyadh (Dry Port & 2nd Industrial City)",
+    "Jeddah (Islamic Port & Industrial Zone)",
+    "Dammam (King Abdulaziz Port - KAPD)",
+    "Hail Regional Industrial Hub",
+    "Qassim / Buraidah Agricultural & Logistics Park",
+    "Al-Hasa / Hofuf Logistics Hub",
+    "Medina Knowledge Economic City",
+    "Mecca Light Industrial Corridor",
+    "Yanbu Industrial City (Petrochemical Complex)",
+    "Tabuk Northern Logistics Hub",
+    "Jizan Industrial City & Port",
+    "Rabigh Refining & Petrochemical Area",
+    # GCC & Regional Commercial Cities
+    "Jebel Ali / Dubai (UAE - Al Batha Border Route)",
+    "Abu Dhabi (ICAD Industrial Zone - UAE)",
+    "Manama (Bahrain - King Fahd Causeway Route)",
+    "Doha (Qatar - Salwa Border Route)",
+    "Kuwait City / Shuaiba (Kuwait - Nuwaiseeb Border)",
+    "Muscat / Sohar Industrial Hub (Oman)",
+    "Amman Industrial Estate (Jordan - Haditha Border)",
+    # Egypt Destinations (Land/Ro-Ro Transit)
+    "Cairo Industrial Corridors (Egypt)",
+    "Alexandria Port & Free Zone (Egypt)",
+    "10th of Ramadan Industrial City (Egypt)",
+    "6th of October Industrial City (Egypt)",
+    "Damietta Logistics Hub (Egypt)",
+    "Port Said & Suez Canal Economic Zone (Egypt)",
+    # Turkey Destinations (Overland / Multimodal Transit)
+    "Mersin Logistics Hub & Port Free Zone (Turkey)",
+    "Istanbul / Ambarli Industrial Region (Turkey)",
+    "Izmir / Aliaga Petrochemical Corridor (Turkey)",
+    "Gaziantep Polymer Processing Hub (Turkey)",
+    "Ankara / Ostim Industrial Area (Turkey)",
+    "Bursa Automotive & Plastics Hub (Turkey)",
+    "Adana Industrial Corridor (Turkey)"
+]
+
+INLAND_TRUCK_FLEET = [
+    "40ft Flatbed Semi-Trailer (Resin Pallets / 26 MT Max)",
+    "ISO Tank Container Chassis (Liquid Hazardous Chemical)",
+    "Box Trailer / Dry Van (Enclosed Weatherproof Resin)",
+    "Curtain-Sider Semi-Trailer (Side-Loading Polymer Bags)",
+    "Bulk Polymer Silo Bulker Truck (Pneumatic Discharge)",
+    "Multi-Axle Heavy Lowbed Trailer (Over-Dimensional Asset)",
+    "Refrigerated Reefer Trailer (Temperature Sensitive Chem)"
+]
+
+# ---------------------------------------------------------
+# MARITIME OCEAN FREIGHT PORTS
 # ---------------------------------------------------------
 KSA_LOADING_PORTS = [
     "King Fahd Industrial Port, Jubail (KFIP) [Petrochemical Core]",
@@ -283,33 +335,6 @@ GLOBAL_DESTINATION_PORTS = [
     "Sohar Port, Oman",
     "Houston Port, USA (Gulf of Mexico)",
     "Santos Port, Brazil"
-]
-
-KSA_INLAND_ORIGINS = [
-    "Jubail 1 Industrial City (Complex Plant Gate)",
-    "Jubail 2 Industrial Area (Plastics Park)",
-    "Ras Al-Khair Industrial City",
-    "Dammam 2nd Industrial City",
-    "Yanbu Industrial City"
-]
-
-KSA_INLAND_DESTINATIONS = [
-    "KFIP Container Terminal (Jubail)",
-    "King Abdulaziz Port, Dammam (KAPD)",
-    "Riyadh Dry Port & Logistics Hub",
-    "King Fahd Causeway (Bahrain Export Border)",
-    "Al Batha Border (UAE Land Freight)",
-    "Salwa Border (Qatar Land Freight)",
-    "Al Nuwaiseeb Border (Kuwait Land Freight)",
-    "Jeddah Islamic Port (Cross-Kingdom Shuttling)"
-]
-
-INLAND_TRUCK_FLEET = [
-    "40ft Flatbed Semi-Trailer (Resin Pallets / 26 MT Max)",
-    "Curtain-Sider Box Trailer (Weather Protected Polymers)",
-    "Bulk Polymer Silo Bulker Truck (Pneumatic Discharge)",
-    "Heavy ISO Tank Container Chassis (Liquid Chemicals)",
-    "Multi-Axle Heavy Lowbed Trailer (Over-Dimensional Cargo)"
 ]
 
 RENTAL_MAP = {
@@ -408,44 +433,71 @@ MANPOWER_MAP = {
 
 CATEGORY_TAXONOMY = {
     "Logistics Services": [
-        "Ocean Freight", "KSA Inland Transportation", "Product Shuttling (Plant to Port)",
-        "Cross-Border Inland (GCC)", "Export Freight Forwarding", "Import Freight Forwarding",
-        "Customs Clearance", "Terminal, Port & Hub (KFIP/Dammam)", "Warehousing & Open Yard",
-        "Container / ISO Tank", "Bagging & Packing"
+        "Ocean Freight",
+        "KSA Inland Transportation",
+        "Product Shuttling (Plant to Port)",
+        "Cross-Border Inland (GCC)",
+        "Export Freight Forwarding",
+        "Import Freight Forwarding",
+        "Customs Clearance",
+        "Terminal, Port & Hub (KFIP/Dammam)",
+        "Warehousing & Open Yard",
+        "Container / ISO Tank",
+        "Bagging & Packing"
     ],
     "Rental Services": list(RENTAL_MAP.keys()),
     "Manpower Supply": list(MANPOWER_MAP.keys()),
     "Industrial O&M Services": [
-        "Mechanical Maintenance (Piping, Static, Valves)", "Rotating Equipment Overhaul (Turbines/Compressors)",
-        "Electrical Maintenance (Motors, VFDs, Switchgear)", "Instrumentation & Control (Analyzers, DCS)",
-        "Inspection & Testing (NDT, RBI, Lifting)", "Industrial Cleaning (Hydrojetting 10k-40k PSI)",
-        "Catalyst Handling under Inert Atmosphere", "Building & Civil Maintenance",
-        "Material Handling Equipment Maintenance", "Safety & Fire Protection Systems Maintenance"
+        "Mechanical Maintenance (Piping, Static, Valves)",
+        "Rotating Equipment Overhaul (Turbines/Compressors)",
+        "Electrical Maintenance (Motors, VFDs, Switchgear)",
+        "Instrumentation & Control (Analyzers, DCS)",
+        "Inspection & Testing (NDT, RBI, Lifting)",
+        "Industrial Cleaning (Hydrojetting 10k-40k PSI)",
+        "Catalyst Handling under Inert Atmosphere",
+        "Building & Civil Maintenance",
+        "Material Handling Equipment Maintenance",
+        "Safety & Fire Protection Systems Maintenance"
     ],
     "Soft / Facility Management": [
-        "Workplace Operations (Cleaning & Janitorial)", "Industrial & Camp Catering Services",
-        "Property & Worker Accommodations Lease (RCJY)", "Pest Control & Vector Management",
-        "Potable Water & Bulk Fluid Supply", "Corporate Security & Guard Force",
-        "Office Renovation & Workplace Support", "Waste Management & Hazardous Fluid Handling"
+        "Workplace Operations (Cleaning & Janitorial)",
+        "Industrial & Camp Catering Services",
+        "Property & Worker Accommodations Lease (RCJY)",
+        "Pest Control & Vector Management",
+        "Potable Water & Bulk Fluid Supply",
+        "Corporate Security & Guard Force",
+        "Office Renovation & Workplace Support",
+        "Waste Management & Hazardous Fluid Handling"
     ],
     "IT & Digital Services": [
-        "Enterprise Subscription & Renewal (ERP/Core)", "Strategic Platform Partnership (Cloud/Hyperscalers)",
-        "Managed Services Framework (AMS/Infra)", "Network & Telecom Framework (Plant Connectivity)",
-        "Cybersecurity & OT Risk Model (HCIS/NCA CSCC)", "End-User Computing & Hardware Catalog"
+        "Enterprise Subscription & Renewal (ERP/Core)",
+        "Strategic Platform Partnership (Cloud/Hyperscalers)",
+        "Managed Services Framework (AMS/Infra)",
+        "Network & Telecom Framework (Plant Connectivity)",
+        "Cybersecurity & OT Risk Model (HCIS/NCA CSCC)",
+        "End-User Computing & Hardware Catalog"
     ],
     "Project & Construction": [
-        "Brownfield EPC / EPCM Plant Debottlenecking", "Civil Works & Deep Foundations",
-        "Mechanical Piping Tie-ins & Structural Revamp", "Electrical & Instrumentation Installation",
-        "Scaffolding & Insulation (SIP Packages)", "Plant Modification Management of Change (MOC)"
+        "Brownfield EPC / EPCM Plant Debottlenecking",
+        "Civil Works & Deep Foundations",
+        "Mechanical Piping Tie-ins & Structural Revamp",
+        "Electrical & Instrumentation Installation",
+        "Scaffolding & Insulation (SIP Packages)",
+        "Plant Modification Management of Change (MOC)"
     ],
     "Professional & Consultancy": [
-        "Engineering Design & Licensor TSA (GES/GES+)", "Process Safety & HAZOP / SIL Studies",
-        "Legal & Regulatory Advisory (Trade, REACH/KKDIK)", "Financial Audit & Tax Advisory (ZATCA)",
-        "Corporate Strategy & Operating Model Optimization", "Petrochemical Feasibility & Market Forecasting"
+        "Engineering Design & Licensor TSA (GES/GES+)",
+        "Process Safety & HAZOP / SIL Studies",
+        "Legal & Regulatory Advisory (Trade, REACH/KKDIK)",
+        "Financial Audit & Tax Advisory (ZATCA)",
+        "Corporate Strategy & Operating Model Optimization",
+        "Petrochemical Feasibility & Market Forecasting"
     ],
     "HSE and Compliance": [
-        "HCIS Physical Security Compliance Infrastructure", "Environmental Emissions Testing (RCER 2020)",
-        "Hazardous Petrochemical Waste Incineration", "Fixed Fire Suppression & Deluge Maintenance",
+        "HCIS Physical Security Compliance Infrastructure",
+        "Environmental Emissions Testing (RCER 2020)",
+        "Hazardous Petrochemical Waste Incineration",
+        "Fixed Fire Suppression & Deluge Maintenance",
         "Personal Protective Equipment (PPE) Contracts"
     ]
 }
@@ -489,11 +541,12 @@ st.sidebar.subheader("⚙️ Technical Sourcing Parameters")
 extra_context = ""
 param_data = {}
 
+# 1. OCEAN FREIGHT
 if selected_sub == "Ocean Freight":
     st.sidebar.markdown("🚢 **Maritime Route & Volumes**")
     pol = st.sidebar.selectbox("Port of Loading (POL - Saudi Arabia)", KSA_LOADING_PORTS)
     pod = st.sidebar.selectbox("Port of Destination (POD - Global)", GLOBAL_DESTINATION_PORTS)
-    container_vol = st.sidebar.number_input("Annual Container Volume (FEU / 40ft HC)", min_value=1, max_value=25000, value=1200, step=50)
+    container_vol = st.sidebar.number_input("Number of Containers (FEU / 40ft HC)", min_value=1, max_value=25000, value=1200, step=50)
     cargo_type = st.sidebar.selectbox("Cargo Specification", ["Polymer Resin Pellets (High Cube 40ft)", "Liquid Bulk Petrochemical (ISO Tank)", "General Chemical Cargo (20ft GP)"])
     incoterm = st.sidebar.selectbox("Commercial Incoterm", ["FOB Loading Port (Saudi Arabia)", "CFR Discharge Port", "CIF Discharge Port"])
     
@@ -508,20 +561,27 @@ if selected_sub == "Ocean Freight":
         "hormuz": chokepoint_hormuz, "bab_mandab": chokepoint_bab
     }
 
+# 2. INLAND FREIGHT (JUBAIL & DAMMAM ONLY FOR POL, FULL GLOBAL DESTINATIONS)
 elif selected_sub in ["KSA Inland Transportation", "Product Shuttling (Plant to Port)", "Cross-Border Inland (GCC)"]:
-    st.sidebar.markdown("🚛 **Inland Freight Route & Fleet**")
-    inland_orig = st.sidebar.selectbox("Origin Location (KSA Industrial Hub)", KSA_INLAND_ORIGINS)
-    inland_dest = st.sidebar.selectbox("Destination Hub / Port", KSA_INLAND_DESTINATIONS)
-    fleet_type = st.sidebar.selectbox("Trailer / Fleet Configuration", INLAND_TRUCK_FLEET)
-    trip_count = st.sidebar.number_input("Annual Trip Count (Truckloads)", min_value=10, max_value=15000, value=650, step=25)
-    diesel_index = st.sidebar.checkbox("Index to Aramco Diesel Price (SAR 1.15/L)", value=True)
+    st.sidebar.markdown("🚛 **Inland Freight Route & Fleet Configuration**")
+    inland_orig = st.sidebar.selectbox("Port / Place of Loading (Origin: Jubail or Dammam)", INLAND_ORIGINS_JUBAIL_DAMMAM)
+    inland_dest = st.sidebar.selectbox("Destination Delivery Hub (KSA, GCC, Egypt, Turkey)", INLAND_COMPREHENSIVE_DESTINATIONS)
+    fleet_type = st.sidebar.selectbox("Trailer / Fleet Type", INLAND_TRUCK_FLEET)
+    trip_count = st.sidebar.number_input("Number of Trucks / Trips", min_value=1, max_value=15000, value=1, step=1)
     
-    extra_context = f"Inland Route: {inland_orig} to {inland_dest} | Fleet: {fleet_type} | Trips: {trip_count} | Diesel Indexed: {diesel_index}."
+    st.sidebar.markdown("🔍 **Inland Market & Cost Pressures**")
+    truck_shortage = st.sidebar.checkbox("Truck Scarcity / Regional Border Congestion Risk", value=True)
+    peak_season = st.sidebar.checkbox("Turnaround & Peak Season Freight Rate Spike (+20%)", value=True)
+    diesel_index = st.sidebar.checkbox("Aramco Domestic Diesel Price Indexation (SAR 1.15/L)", value=True)
+    
+    extra_context = f"Loading: {inland_orig} | Destination: {inland_dest} | Fleet: {fleet_type} | Trucks/Trips: {trip_count} | Truck Shortage Risk: {truck_shortage} | Peak Surcharge: {peak_season} | Diesel Indexed: {diesel_index}."
     param_data = {
         "type": "inland_freight", "sub": selected_sub, "orig": inland_orig, "dest": inland_dest,
-        "fleet": fleet_type, "trips": trip_count, "diesel_index": diesel_index
+        "fleet": fleet_type, "trips": trip_count, "truck_shortage": truck_shortage,
+        "peak_season": peak_season, "diesel_index": diesel_index
     }
 
+# 3. RENTAL SERVICES
 elif selected_parent == "Rental Services":
     available_assets = RENTAL_MAP.get(selected_sub, ["Heavy Equipment Asset"])
     specific_eq = st.sidebar.selectbox("Specific Asset Specification", available_assets)
@@ -531,6 +591,7 @@ elif selected_parent == "Rental Services":
     extra_context = f"Asset: {specific_eq} | Qty: {qty_units} units | Model: {lease_model} | Tenure: {rental_tenure}."
     param_data = {"type": "rental", "sub": selected_sub, "qty": qty_units, "asset": specific_eq, "model": lease_model, "tenure": rental_tenure}
 
+# 4. MANPOWER SUPPLY
 elif selected_parent == "Manpower Supply":
     nationality_model = st.sidebar.selectbox(
         "Nationality Profile",
@@ -546,7 +607,7 @@ elif selected_parent == "Manpower Supply":
     extra_context = f"Profile: {nationality_model} | Role: {specific_trade} | Qty: {headcount} workers | Duration: {duration_months} Months | Shift: {shift_pattern}."
     param_data = {"type": "manpower", "sub": selected_sub, "headcount": headcount, "duration": duration_months, "trade": specific_trade, "nationality": nationality_model, "shift": shift_pattern}
 
-default_scope = f"Petrochemical facility in Jubail Industrial City. {extra_context}"
+default_scope = f"Petrochemical complex in Jubail Industrial City. {extra_context}"
 scope_context = st.sidebar.text_area("4. Project / Route / Scope Details", value=default_scope, height=80)
 run_btn = st.sidebar.button("🚀 Run Strategic Analysis", use_container_width=True)
 
@@ -558,6 +619,7 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
     impact_score = 9.0 if ("Crane" in sub or "Rotating" in sub or "Ocean Freight" in sub or "Shutdown" in sub) else 7.5
     quadrant = "Strategic" if (risk_score > 7 and impact_score > 7.5) else "Leverage"
 
+    # 1. OCEAN FREIGHT
     if params.get("type") == "ocean_freight":
         pod = params.get("pod", "Mundra Port, India")
         vol = params.get("volume", 1200)
@@ -602,7 +664,7 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             "analysis_title": f"Ocean Freight Should-Cost: {params.get('pol', 'KFIP')} to {pod}",
             "currency_or_unit": "USD",
             "total_metric_value": round(total_annual, 2),
-            "total_metric_label": "Total Annual Freight Baseline",
+            "total_metric_label": f"Total Freight Commitment ({vol} FEU)",
             "metric_card_2_label": "Rate per Container (FEU)", "metric_card_2_value": f"USD {total_box:,.2f} / box",
             "metric_card_3_label": "Chokepoint Surcharges (ECS+WRS)", "metric_card_3_value": f"USD {(ecs+wrs):,.2f} ({(ecs+wrs)/total_box*100:.1f}%)",
             "metric_card_4_label": "Target Benchmark Counter", "metric_card_4_value": "8.0% Margin Cap",
@@ -624,69 +686,111 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
                 "global_oems": ["Maersk Line (2M Alliance)", "MSC (Mediterranean Shipping Co)", "CMA CGM (Ocean Alliance)", "Hapag-Lloyd"]
             },
             "strategic_insights": {
-                "summary": f"Audited freight model for {vol} containers from {params.get('pol', 'KFIP')} to {pod}. {'Route exposed to Southern Red Sea Cape rerouting' if is_red_sea_route else 'Route remains within direct Arabian Sea lanes.'}",
+                "summary": f"Audited freight model for {vol} containers from {params.get('pol', 'KFIP')} to {pod}.",
                 "market_benchmark_range": f"USD {total_box*0.93:,.0f} - USD {total_box*1.08:,.0f} per container",
                 "key_drivers_or_forces": ["Strait of Hormuz war risk insurance surcharges", "Suez Canal bypass lead-time extensions (+12-14 days)", "Platts Fujairah VLSFO marine bunker indices"],
                 "buyer_actionable_levers": ["Demand floating index-linked BAF mechanism", "Unbundle and audit Cape rerouting ECS surcharges", "Commit baseline quarterly allocations in exchange for free-time detention (21 days)"]
             }
         }
 
+    # 2. INLAND FREIGHT ENGINE
     elif params.get("type") == "inland_freight":
-        trips = params.get("trips", 650)
+        trips = params.get("trips", 1)
         fleet = params.get("fleet", "40ft Flatbed")
+        orig = params.get("orig", "Jubail Industrial City")
+        dest = params.get("dest", "Riyadh")
+        has_shortage = params.get("truck_shortage", True)
+        has_peak = params.get("peak_season", True)
         is_indexed = params.get("diesel_index", True)
-        
-        base_trip = 1850 if "Riyadh" in params.get("dest", "") else (850 if "KFIP" in params.get("dest", "") or "Dammam" in params.get("dest", "") else 2400)
+
+        if "Riyadh" in dest or "Hofuf" in dest or "Al-Hasa" in dest:
+            base_trip = 1850; transit_days = "1 Day"; is_cross_border = False
+        elif "Dammam" in dest or "KFIP" in dest:
+            base_trip = 850; transit_days = "Same Day"; is_cross_border = False
+        elif "Jeddah" in dest or "Yanbu" in dest or "Rabigh" in dest or "Medina" in dest or "Mecca" in dest:
+            base_trip = 4200; transit_days = "2 Days"; is_cross_border = False
+        elif "Hail" in dest or "Qassim" in dest or "Tabuk" in dest or "Jizan" in dest:
+            base_trip = 3600; transit_days = "2 Days"; is_cross_border = False
+        elif "Bahrain" in dest or "Manama" in dest:
+            base_trip = 2400; transit_days = "1-2 Days"; is_cross_border = True
+        elif "UAE" in dest or "Dubai" in dest or "Jebel Ali" in dest or "Abu Dhabi" in dest:
+            base_trip = 5800; transit_days = "3-4 Days"; is_cross_border = True
+        elif "Kuwait" in dest or "Qatar" in dest or "Doha" in dest:
+            base_trip = 4800; transit_days = "2-3 Days"; is_cross_border = True
+        elif "Oman" in dest or "Muscat" in dest or "Sohar" in dest:
+            base_trip = 7200; transit_days = "4-5 Days"; is_cross_border = True
+        elif "Amman" in dest or "Jordan" in dest:
+            base_trip = 7800; transit_days = "4-5 Days"; is_cross_border = True
+        elif "Egypt" in dest or "Cairo" in dest or "Alexandria" in dest:
+            base_trip = 13500; transit_days = "6-8 Days (Ro-Ro Land-Bridge)"; is_cross_border = True
+        elif "Turkey" in dest or "Mersin" in dest or "Istanbul" in dest or "Gaziantep" in dest:
+            base_trip = 19500; transit_days = "8-10 Days (Overland Convoy)"; is_cross_border = True
+        else:
+            base_trip = 2200; transit_days = "1-2 Days"; is_cross_border = False
+
+        if "ISO Tank" in fleet:
+            base_trip *= 1.30
+        elif "Lowbed" in fleet:
+            base_trip *= 1.45
+
         fuel_cost = base_trip * 0.32
         driver_wage = base_trip * 0.22
-        maint_tires = base_trip * 0.14
-        truck_amortization = base_trip * 0.16
-        gate_fees = 120
-        subtotal_trip = fuel_cost + driver_wage + maint_tires + truck_amortization + gate_fees
+        maint_tires = base_trip * 0.12
+        truck_amort = base_trip * 0.14
+        border_customs = (base_trip * 0.10) if is_cross_border else 120
+        shortage_surcharge = (base_trip * 0.10) if has_shortage else 0
+        peak_surcharge = (base_trip * 0.12) if has_peak else 0
+        
+        subtotal_trip = fuel_cost + driver_wage + maint_tires + truck_amort + border_customs + shortage_surcharge + peak_surcharge
         margin_trip = subtotal_trip * 0.11
-        total_trip = subtotal_trip + margin_trip
-        total_annual = total_trip * trips
-        
+        total_per_trip = subtotal_trip + margin_trip
+        total_spend = total_per_trip * trips
+
         items = [
-            {"name": "1. Diesel Fuel (Aramco SAR 1.15/L)", "value": round(fuel_cost * trips, 2), "details": f"Fuel consumption over route ({'Indexed to Aramco baseline' if is_indexed else 'Fixed quote'})."},
-            {"name": "2. Certified Heavy Driver Wage & GOSI", "value": round(driver_wage * trips, 2), "details": "TGA certified commercial heavy vehicle driver wage, per-diem, and social insurance."},
-            {"name": "3. Truck Capital Depreciation / Lease", "value": round(truck_amortization * trips, 2), "details": f"Asset amortization for {fleet}."},
-            {"name": "4. Preventative Maintenance, Tires & Fluids", "value": round(maint_tires * trips, 2), "details": "Scheduled mechanical servicing and tire wear allocation per kilometer."},
-            {"name": "5. Port / Industrial Gate Access & Tolls", "value": round(gate_fees * trips, 2), "details": "ZATCA electronic gate pass, port entry fees, and weighbridge charges."},
-            {"name": "6. Transporter SG&A & Operating Margin", "value": round(margin_trip * trips, 2), "details": "Contractor dispatch overhead and net profit margin (11%)."}
+            {"name": "1. Diesel Fuel (Aramco SAR 1.15/L Indexed)", "value": round(fuel_cost * trips, 2), "details": f"Fuel consumption over {transit_days} route ({'Indexed to Aramco baseline' if is_indexed else 'Fixed quote'})."},
+            {"name": "2. Certified Commercial Driver Wage & Per-Diem", "value": round(driver_wage * trips, 2), "details": "TGA certified driver basic wage, trip allowance, cross-border per-diem, and GOSI."},
+            {"name": "3. Truck & Trailer Capital Depreciation", "value": round(truck_amort * trips, 2), "details": f"Asset amortization recovery for {fleet}."},
+            {"name": "4. Preventative Maintenance & Tire Wear", "value": round(maint_tires * trips, 2), "details": "Scheduled mechanical servicing, brake pad, and tire wear allocation per kilometer."},
+            {"name": "5. Customs Border Clearance & Port Gate Tolls", "value": round(border_customs * trips, 2), "details": f"{'ZATCA/Bayan export manifest, transit carnets, and border crossing fees' if is_cross_border else 'ZATCA electronic port gate pass and industrial weighbridge charges'}."},
+            {"name": "6. Truck Scarcity & Border Dwell Contingency", "value": round(shortage_surcharge * trips, 2), "details": f"{'Active: Buffer for regional border delays and fleet shortages (+10%)' if shortage_surcharge > 0 else 'Zero shortage buffer'}."},
+            {"name": "7. Turnaround / Peak Season Surcharge", "value": round(peak_surcharge * trips, 2), "details": f"{'Active: Peak petrochemical turnaround & harvest surge markup (+12%)' if peak_surcharge > 0 else 'Standard baseline'}."},
+            {"name": "8. Transporter Operating Margin (11%)", "value": round(margin_trip * trips, 2), "details": "Transporter operating margin and dispatch overhead."}
         ]
-        
+
         return {
-            "analysis_title": f"Inland Transport Should-Cost: {params.get('orig', 'Jubail')} to {params.get('dest', 'Port')}",
+            "analysis_title": f"Inland Transport Should-Cost: {orig} to {dest}",
             "currency_or_unit": "SAR",
-            "total_metric_value": round(total_annual, 2),
-            "total_metric_label": f"Annual Transport Spend ({trips} Trips)",
-            "metric_card_2_label": "Rate per Trip", "metric_card_2_value": f"SAR {total_trip:,.2f} / trip",
+            "total_metric_value": round(total_spend, 2),
+            "total_metric_label": f"Total Transport Spend ({trips} Truckload{'s' if trips > 1 else ''})",
+            "metric_card_2_label": "Rate per Truckload", "metric_card_2_value": f"SAR {total_per_trip:,.2f} / truck",
             "metric_card_3_label": "Fuel Share (Aramco Diesel)", "metric_card_3_value": f"SAR {fuel_cost:,.2f} (32.0%)",
             "metric_card_4_label": "Target Benchmark Counter", "metric_card_4_value": "8.5% Margin Cap",
-            "chart_title": f"Annual Cost Distribution: {trips} Trips of {fleet}",
+            "chart_title": f"Cost Breakdown: {trips} Truckload(s) of {fleet}",
             "chart_items": items,
-            "secondary_chart_title": "Fuel & Operating Costs vs Transporter Margin",
-            "secondary_chart_labels": ["Fuel & Driver Pass-Through", "Asset Wear & Contractor Margin"],
-            "secondary_chart_values": [round((fuel_cost + driver_wage) * trips, 2), round((maint_tires + truck_amortization + margin_trip) * trips, 2)],
-            "kraljic_data": {"quadrant": "Leverage", "profit_impact": 7.0, "supply_risk": 5.5, "contract_horizon": "2 Years Master Rate Card", "supplier_relationship": "Competitive Sourcing"},
+            "secondary_chart_title": "Direct Fleet Operations vs Contractor Margin",
+            "secondary_chart_labels": ["Fuel, Driver & Fleet Wear", "Border Clearance & Transporter Margin"],
+            "secondary_chart_values": [round((fuel_cost + driver_wage + maint_tires + truck_amort) * trips, 2), round((border_customs + shortage_surcharge + peak_surcharge + margin_trip) * trips, 2)],
+            "kraljic_data": {"quadrant": "Leverage" if not is_cross_border else "Strategic", "profit_impact": 7.5, "supply_risk": 7.0 if is_cross_border else 5.5, "contract_horizon": "2 Years Master Rate Card", "supplier_relationship": "Preferred Transporter Framework"},
             "risk_items": [
-                {"risk_name": "Aramco Domestic Diesel Price Adjustment", "prob": 4, "impact": 3.5, "score": 14, "severity": "High", "mitigation": "Establish mathematical fuel indexation formula tied directly to Ministry of Energy announcements.", "owner": "Logistics Sourcing Lead"},
-                {"risk_name": "Port Gate Dwell & Demurrage Congestion", "prob": 3, "impact": 4.0, "score": 12, "severity": "Medium", "mitigation": "Implement pre-booked truck appointment system (Fasah) 24 hours prior.", "owner": "Dispatch Supervisor"}
+                {"risk_name": "Regional Fleet Scarcity / Truck Shortage", "prob": 4 if has_shortage else 2, "impact": 4.2, "score": 17 if has_shortage else 8, "severity": "High" if has_shortage else "Medium", "mitigation": "Establish 3-carrier dedicated allocation with guaranteed daily truck availability SLAs.", "owner": "Logistics Category Manager"},
+                {"risk_name": "Aramco Domestic Diesel Price Adjustment", "prob": 4, "impact": 3.8, "score": 15, "severity": "High", "mitigation": "Incorporate mathematical fuel adjustment formula tied directly to Ministry of Energy announcements.", "owner": "Logistics Sourcing Lead"},
+                {"risk_name": "Cross-Border Customs Dwell & Demurrage", "prob": 4 if is_cross_border else 2, "impact": 4.0, "score": 16 if is_cross_border else 6, "severity": "High" if is_cross_border else "Low", "mitigation": "Pre-clearance documentation filing on Fasah / Bayan platforms 48 hours prior to border arrival.", "owner": "Cross-Border Customs Agent"},
+                {"risk_name": "Turnaround Peak Season Spot Rate Surging", "prob": 4 if has_peak else 2, "impact": 3.5, "score": 14 if has_peak else 7, "severity": "Medium", "mitigation": "Lock annual contracted volume commitments with agreed surge caps (+5% max).", "owner": "Contract Administrator"}
             ],
             "vendor_matrix": {
                 "tier_1_local": ["Almajdouie Logistics", "Bahri Logistics", "Bin Quraya Transport", "Hala Supply Chain"],
-                "tier_2_regional": ["Mubarrad Transport", "Kanoo Logistics", "Al-Falak Transport"],
-                "global_oems": ["Mercedes-Benz Actros (Juffali)", "Volvo Trucks (Zahid Tractor)", "MAN Truck & Bus"]
+                "tier_2_regional": ["Mubarrad Transport", "Kanoo Logistics", "Al-Falak Transport", "GWC Logistics"],
+                "global_oems": ["Mercedes-Benz Actros (Juffali Commercial)", "Volvo Trucks (Zahid Tractor)", "MAN Truck & Bus", "Scania Trucks"]
             },
             "strategic_insights": {
-                "summary": f"Inland freight clean-sheet model for {trips} trips using {fleet}.",
-                "market_benchmark_range": f"SAR {total_trip*0.94:,.0f} - SAR {total_trip*1.08:,.0f} per trip",
-                "key_drivers_or_forces": ["Aramco domestic diesel price stability", "TGA driver work hour compliance regulations", "Port terminal turn-times"],
-                "buyer_actionable_levers": ["Incorporate mathematical fuel adjustment formula", "Consolidate backhaul routes from Riyadh/Dammam to eliminate empty running", "Benchmark against TGA standard tariff schedules"]
+                "summary": f"Inland freight clean-sheet model from {orig} to {dest} ({transit_days}) using {fleet}.",
+                "market_benchmark_range": f"SAR {total_per_trip*0.93:,.0f} - SAR {total_per_trip*1.08:,.0f} per truckload",
+                "key_drivers_or_forces": ["Aramco domestic diesel price stability", f"{'Border crossing dwell times and transit carnets' if is_cross_border else 'Domestic highway weight scale enforcement by TGA'}", "Jubail polymer export loading schedules"],
+                "buyer_actionable_levers": ["Mandate diesel indexation formula to prevent unearned carrier windfall", "Consolidate return loads (backhaul) from Riyadh/Western Province to lower empty running", "Benchmark against official Transport General Authority (TGA) freight indices"]
             }
         }
 
+    # 3. RENTAL SERVICES
     elif params.get("type") == "rental":
         asset_name = params.get("asset", sub)
         qty = params.get("qty", 2)
@@ -763,6 +867,7 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             }
         }
 
+    # 4. MANPOWER SUPPLY
     elif params.get("type") == "manpower":
         trade_name = params.get("trade", sub)
         n_workers = params.get("headcount", 20)
@@ -811,7 +916,7 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             "analysis_title": f"Manpower Should-Cost: {trade_name}",
             "currency_or_unit": "SAR",
             "total_metric_value": round(total_cost, 2),
-            "total_metric_label": "Total Manpower Contract Baseline",
+            "total_metric_label": "Total Contract Baseline",
             "metric_card_2_label": "Direct Operating Cost", "metric_card_2_value": f"SAR {subtotal_direct:,.0f} ({subtotal_direct/total_cost*100:.1f}%)",
             "metric_card_3_label": "Contractor Profit Margin", "metric_card_3_value": f"SAR {profit:,.0f} (10.0%)",
             "metric_card_4_label": "Target Benchmark Counter", "metric_card_4_value": "8.0% (CIPS Benchmark)",
@@ -838,6 +943,7 @@ def generate_instant_petrochemical_model(parent, sub, analysis_type, params):
             }
         }
 
+    # 5. GENERAL DEFAULT INDUSTRIAL
     else:
         return {
             "analysis_title": f"{analysis_type}: {sub}",
@@ -934,19 +1040,21 @@ if run_btn:
 data = st.session_state["active_data"]
 
 # ---------------------------------------------------------
-# EXECUTIVE HEADER BANNER (NO OVERFLOW OR WRAPPING BUGS)
+# EXECUTIVE HEADER BANNER
 # ---------------------------------------------------------
 pol_pod_display = ""
 if param_data.get("type") == "ocean_freight":
-    pol_pod_display = f" | Route: <b>{param_data.get('pol', 'KFIP')} ➔ {param_data.get('pod', 'Global Port')}</b> ({param_data.get('volume', 1200)} FEU)"
+    pol_pod_display = f" | Maritime Corridor: <b>{param_data.get('pol', 'KFIP')} ➔ {param_data.get('pod', 'Global Port')}</b> ({param_data.get('volume', 1200)} Containers)"
 elif param_data.get("type") == "inland_freight":
-    pol_pod_display = f" | Inland Route: <b>{param_data.get('orig', 'Jubail')} ➔ {param_data.get('dest', 'Port')}</b> ({param_data.get('trips', 650)} Trips)"
+    pol_pod_display = f" | Inland Route: <b>{param_data.get('orig', 'Jubail')} ➔ {param_data.get('dest', 'Port')}</b> ({param_data.get('trips', 1)} Truck{'s' if param_data.get('trips', 1) > 1 else ''})"
 
 badges_html = '<span class="badge-pill badge-amber">Jubail Industrial Complex</span><span class="badge-pill badge-blue">CIPS & Kearney Methodology</span>'
 if param_data.get('hormuz'):
     badges_html += '<span class="badge-pill badge-red">⚠️ Strait of Hormuz Risk Active</span>'
 if param_data.get('bab_mandab'):
     badges_html += '<span class="badge-pill badge-red">⚠️ Cape of Good Hope Reroute Active</span>'
+if param_data.get('truck_shortage'):
+    badges_html += '<span class="badge-pill badge-red">🚛 Truck Scarcity Factor Active</span>'
 
 status_label = "Live AI Model" if data.get('source') == 'AI' else "Instant Petrochem Engine"
 
@@ -956,7 +1064,6 @@ st.markdown(banner_html, unsafe_allow_html=True)
 unit = data.get("currency_or_unit", "SAR")
 total_val = data.get("total_metric_value", 0)
 
-# Process chart items
 df_chart = pd.DataFrame(data.get("chart_items", []))
 if not df_chart.empty and "value" in df_chart.columns:
     df_chart = df_chart.sort_values(by="value", ascending=False)
@@ -983,9 +1090,9 @@ kpi_html = f"""
         <span class="kpi-sub">Direct Operating Floor (Break-even)</span>
     </div>
     <div class="kpi-card kpi-amber">
-        <span class="kpi-label">{data.get("metric_card_3_label", "Supplier Margin / Chokepoint")}</span>
+        <span class="kpi-label">{data.get("metric_card_3_label", "Margin / Surcharges")}</span>
         <span class="kpi-value">{data.get("metric_card_3_value", "-")}</span>
-        <span class="kpi-sub">Contractor Operating Margin</span>
+        <span class="kpi-sub">Contractor Markup / Premium</span>
     </div>
     <div class="kpi-card kpi-emerald">
         <span class="kpi-label">{data.get("metric_card_4_label", "Target Benchmark")}</span>
@@ -1069,16 +1176,6 @@ with tab_cost:
         insight_html += "</ul></div>"
         st.markdown(insight_html, unsafe_allow_html=True)
 
-    st.markdown("---")
-    st.subheader("📚 Micro-Cost Factor Technical Basis & Engineering Definitions")
-    if not df_chart.empty and "details" in df_chart.columns:
-        cols = st.columns(2)
-        for idx, row in df_chart.iterrows():
-            with cols[idx % 2]:
-                amt_str = f"{unit} {row['value']:,.2f} ({row['Percentage']:.1f}%)" if unit in ["SAR", "USD"] else f"{row['value']} pts"
-                with st.expander(f"🔹 **{row['name']}** — {amt_str}", expanded=False):
-                    st.write(row.get("details", "-"))
-
 # ---------------------------------------------------------
 # TAB 2: PORTER'S 5 FORCES & INDUSTRY INTEL
 # ---------------------------------------------------------
@@ -1089,11 +1186,11 @@ with tab_5forces:
     col_pchart, col_ptext = st.columns([1.1, 0.9])
     is_logistics = selected_parent == "Logistics Services"
     p_forces = [
-        {"force": "1. Supplier Bargaining Power", "score": 82 if is_logistics else 75, "rating": "HIGH", "desc": "Global shipping alliances (2M, Ocean Alliance) control vessel capacity; strict equipment allocation at KFIP."},
-        {"force": "2. Buyer Bargaining Power", "score": 68 if is_logistics else 72, "rating": "MODERATE-HIGH", "desc": "High annual export volume from Jubail petrochemical complex provides anchor customer leverage."},
-        {"force": "3. Threat of New Entrants", "score": 28, "rating": "LOW", "desc": "Massive capital expenditure required for mega-containerships, heavy crawler cranes, and port terminal concessions."},
-        {"force": "4. Threat of Substitutes", "score": 35, "rating": "LOW-MODERATE", "desc": "Limited substitution; ocean freight is irreplaceable for high-tonnage polymer exports to Asia/Europe."},
-        {"force": "5. Competitive Rivalry", "score": 74, "rating": "HIGH", "desc": "Fierce competition on non-chokepoint trade lanes; carriers compete aggressively on long-term annual contracts."}
+        {"force": "1. Supplier Bargaining Power", "score": 82 if is_logistics else 75, "rating": "HIGH", "desc": "Fleet scarcity, carrier alliances, and cross-border customs regulations increase supplier power."},
+        {"force": "2. Buyer Bargaining Power", "score": 68 if is_logistics else 72, "rating": "MODERATE-HIGH", "desc": "High annual volume from Jubail petrochemical plants provides anchor customer leverage."},
+        {"force": "3. Threat of New Entrants", "score": 28, "rating": "LOW", "desc": "High capex required for heavy transport fleets, TGA commercial licenses, and border transport permits."},
+        {"force": "4. Threat of Substitutes", "score": 35, "rating": "LOW-MODERATE", "desc": "Limited substitution; bulk polymer pellets and ISO chemicals require dedicated trailers and container vessels."},
+        {"force": "5. Competitive Rivalry", "score": 74, "rating": "HIGH", "desc": "High carrier rivalry on domestic lanes; competition shifts to fleet reliability and transit lead-time."}
     ]
     df_pf = pd.DataFrame(p_forces)
     
@@ -1109,7 +1206,7 @@ with tab_5forces:
         st.plotly_chart(fig_pf, use_container_width=True)
         
     with col_ptext:
-        forces_summary_html = f"""<div class="card-insight"><h4 style="color:#0369A1; margin-top:0;">📊 Strategic Market Power Balance</h4><p style="color:#334155; font-size:0.9rem;"><b>Overall Market Regime:</b> <span class="badge-pill badge-amber">Carrier / Supplier Dominated</span><br>Due to maritime chokepoints and carrier consolidation, supplier power remains elevated. However, <b>Jubail's aggregate export volume</b> enables Procurement to break standard rate cards by structuring multi-year commitments.</p><hr style="border:0; border-top:1px solid #BAE6FD; margin:10px 0;"><p style="color:#0F172A; font-weight:700; margin-bottom:4px;">Recommended Procurement Counter-Strategy:</p><ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;"><li>Tender across alliances (2M, Ocean, THE Alliance) to stimulate rivalry.</li><li>Carve out local terminal handling from ocean base to eliminate hidden margin stacking.</li><li>Demand index-linked BAF to prevent paying fuel risk premiums during market downturns.</li></ul></div>"""
+        forces_summary_html = f"""<div class="card-insight"><h4 style="color:#0369A1; margin-top:0;">📊 Strategic Market Power Balance</h4><p style="color:#334155; font-size:0.9rem;"><b>Overall Market Regime:</b> <span class="badge-pill badge-amber">Carrier / Transporter Dominated</span><br>Due to fleet demand and border customs inspections, transporter power remains high. However, <b>committing predictable annual volume</b> allows Procurement to secure contracted master tariffs below spot market quotes.</p><hr style="border:0; border-top:1px solid #BAE6FD; margin:10px 0;"><p style="color:#0F172A; font-weight:700; margin-bottom:4px;">Recommended Procurement Counter-Strategy:</p><ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;"><li>Tender across primary and secondary transporters to maintain competitive tension.</li><li>Carve out diesel fuel cost and link to official Aramco announcements to prevent unearned markups.</li><li>Consolidate return loads (backhaul) from Riyadh/Jeddah to reduce empty running charges.</li></ul></div>"""
         st.markdown(forces_summary_html, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
@@ -1150,8 +1247,8 @@ with tab_kraljic:
         ))
         
         fig_k.update_layout(
-            xaxis=dict(title="<b>Supply Market Risk (Complexity / Scarcity / Chokepoints) →</b>", range=[0, 10], showgrid=False, zeroline=False),
-            yaxis=dict(title="<b>Profit & Business Impact (Downtime / Export Revenue) →</b>", range=[0, 10], showgrid=False, zeroline=False),
+            xaxis=dict(title="<b>Supply Market Risk (Scarcity / Border Friction / Regulations) →</b>", range=[0, 10], showgrid=False, zeroline=False),
+            yaxis=dict(title="<b>Profit & Business Impact (Downtime / Export Commitments) →</b>", range=[0, 10], showgrid=False, zeroline=False),
             height=430,
             margin=dict(l=20, r=20, t=20, b=20),
             showlegend=False,
@@ -1161,20 +1258,23 @@ with tab_kraljic:
         
     with col_ktable:
         st.subheader("📋 Kraljic Strategy Positioning Card")
-        k_card_html = f"""<div class="card-kraljic-info"><h3 style="color:#B45309; margin-top:0; font-size:1.3rem;">🎯 Quadrant: {k_data.get('quadrant', 'Strategic')}</h3><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Contract Horizon:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('contract_horizon', '1-2 Years Framework')}</p><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Supplier Governance Model:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('supplier_relationship', 'Core Carrier Strategic Alliance')}</p><hr style="border: 0; border-top: 1px solid #FDE68A; margin: 14px 0;"><p style="color:#334155; margin:0;"><b>Profit Impact Score:</b> {k_data.get('profit_impact', 8.5)} / 10<br><b>Supply Risk Score:</b> {k_data.get('supply_risk', 7.5)} / 10</p><p style="color:#92400E; font-size:0.8rem; margin-top:12px;">📌 <i>Buyer Directive: Align contractual volume commitments to secure slot allocation and eliminate spot rate surcharges.</i></p></div>"""
+        k_card_html = f"""<div class="card-kraljic-info"><h3 style="color:#B45309; margin-top:0; font-size:1.3rem;">🎯 Quadrant: {k_data.get('quadrant', 'Strategic')}</h3><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Contract Horizon:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('contract_horizon', '1-2 Years Framework')}</p><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Supplier Governance Model:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('supplier_relationship', 'Core Fleet Strategic Alliance')}</p><hr style="border: 0; border-top: 1px solid #FDE68A; margin: 14px 0;"><p style="color:#334155; margin:0;"><b>Profit Impact Score:</b> {k_data.get('profit_impact', 8.5)} / 10<br><b>Supply Risk Score:</b> {k_data.get('supply_risk', 7.5)} / 10</p><p style="color:#92400E; font-size:0.8rem; margin-top:12px;">📌 <i>Buyer Directive: Establish dedicated master rate agreements with committed vehicle availability SLAs.</i></p></div>"""
         st.markdown(k_card_html, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# TAB 4: GEOPOLITICAL RISK HEATMAP & MITIGATION
+# TAB 4: RISK HEATMAP & MITIGATION
 # ---------------------------------------------------------
 with tab_risk:
-    st.markdown("""<div class="card-geopolitics"><h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Geopolitical Maritime Vulnerability Notice (Middle East Corridors)</h4><p style="color:#7F1D1D; font-size:0.9rem; margin:0;"><b>1. Strait of Hormuz:</b> Mandatory transit for all petrochemical exports originating from KFIP (Jubail) and Dammam. Subject to regional War Risk Surcharges (WRS) and naval escort contingencies.<br><b>2. Bab al-Mandab & Southern Red Sea:</b> Vessel diversions around the Cape of Good Hope add <b>10–14 days</b> steaming lead-time and <b>+$850 to +$1,100 per container</b> in emergency fuel/operating surcharges.</p></div>""", unsafe_allow_html=True)
+    if param_data.get("type") == "ocean_freight":
+        st.markdown("""<div class="card-geopolitics"><h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Geopolitical Maritime Vulnerability Notice (Middle East Corridors)</h4><p style="color:#7F1D1D; font-size:0.9rem; margin:0;"><b>1. Strait of Hormuz:</b> Mandatory transit for all petrochemical exports originating from KFIP (Jubail) and Dammam. Subject to regional War Risk Surcharges (WRS) and naval escort contingencies.<br><b>2. Bab al-Mandab & Southern Red Sea:</b> Vessel diversions around the Cape of Good Hope add <b>10–14 days</b> steaming lead-time and <b>+$850 to +$1,100 per container</b> in emergency fuel/operating surcharges.</p></div>""", unsafe_allow_html=True)
+    elif param_data.get("type") == "inland_freight":
+        st.markdown("""<div class="card-geopolitics"><h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Inland Freight & Cross-Border Logistics Vulnerability Notice</h4><p style="color:#7F1D1D; font-size:0.9rem; margin:0;"><b>1. Regional Truck Scarcity:</b> Fleet reallocations to national infrastructure projects and cross-border delays trigger sudden spot freight capacity shortages.<br><b>2. Fuel & Seasonality:</b> Aramco domestic diesel adjustments directly impact 32% of trip cost. Turnaround and harvest windows cause 20% to 35% spot tariff surges.</p></div>""", unsafe_allow_html=True)
 
     col_map, col_score = st.columns([1.1, 0.9])
     risk_list = data.get("risk_items", [])
     
     with col_map:
-        st.subheader("🔥 5x5 Geopolitical & Category Risk Heatmap")
+        st.subheader("🔥 5x5 Specific Risk Heatmap Matrix")
         
         impact_labels = ["1. Negligible", "2. Minor", "3. Moderate", "4. Major", "5. Catastrophic"]
         prob_labels = ["1. Rare", "2. Unlikely", "3. Possible", "4. Likely", "5. Almost Certain"]
@@ -1245,7 +1345,7 @@ with tab_risk:
             ))
             
         fig_h.update_layout(
-            xaxis=dict(title="<b>Impact Severity (Asset / Supply / Cost) →</b>", tickfont=dict(size=10, family="Plus Jakarta Sans"), categoryorder="array", categoryarray=impact_labels),
+            xaxis=dict(title="<b>Impact Severity (Asset / Delivery / Cost) →</b>", tickfont=dict(size=10, family="Plus Jakarta Sans"), categoryorder="array", categoryarray=impact_labels),
             yaxis=dict(title="<b>Probability (Likelihood) →</b>", tickfont=dict(size=10, family="Plus Jakarta Sans"), categoryorder="array", categoryarray=prob_labels),
             height=430,
             margin=dict(l=20, r=20, t=20, b=20),
@@ -1281,22 +1381,22 @@ with tab_kearney:
     
     k_col1, k_col2 = st.columns([1, 1])
     with k_col1:
-        st.markdown("""<div class="card-kraljic-info"><h4 style="color:#B45309; margin-top:0;">🎯 Core Kearney Strategy: Core Partner Alliance & Target Costing</h4><p style="color:#334155; font-size:0.9rem;">Based on position in the <b>Strategic Quadrant</b> (High Demand, Market Concentration), standard transactional bidding results in margin leakage. Procurement must deploy <b>Value Chain Restructuring</b> and <b>Formula-Based Pricing</b>.</p><hr style="border:0; border-top:1px solid #FDE68A; margin:10px 0;"><p style="color:#0F172A; font-weight:700;">Key Kearney Action Levers:</p><ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;"><li><b>Unbundled Cost Transparency:</b> Separate base operating rates from fuel and pass-throughs.</li><li><b>Demand Pooling:</b> Aggregate volume across all Jubail manufacturing entities.</li><li><b>Indexation:</b> Tie variable surcharges to transparent published indices.</li></ul></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="card-kraljic-info"><h4 style="color:#B45309; margin-top:0;">🎯 Core Kearney Strategy: Core Partner Alliance & Target Costing</h4><p style="color:#334155; font-size:0.9rem;">Based on position in the <b>Strategic / Leverage Quadrant</b>, transactional bidding results in rate volatility and trailer scarcity. Procurement must deploy <b>Formula-Based Pricing</b> and <b>Core Transporter Programs</b>.</p><hr style="border:0; border-top:1px solid #FDE68A; margin:10px 0;"><p style="color:#0F172A; font-weight:700;">Key Kearney Action Levers:</p><ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;"><li><b>Unbundled Fuel Mechanism:</b> Separate base operating rates from Aramco diesel price adjustments.</li><li><b>Demand Pooling:</b> Aggregate outbound resin shuttling volume across Jubail complex entities.</li><li><b>Backhaul Optimization:</b> Negotiate discounted backhaul rates from Riyadh/Jeddah.</li></ul></div>""", unsafe_allow_html=True)
         
     with k_col2:
-        st.markdown("""<div class="card-insight"><h4 style="color:#0284C7; margin-top:0;">💰 Projected 3-Year Value Capture</h4><table style="width:100%; border-collapse:collapse; font-size:0.88rem;"><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 1 (Hard P&L Savings):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">6.5% - 8.0%</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 2 (Cost Avoidance / Cap):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">12.0% - 15.0%</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 3 (Working Capital / Detention Free-Time):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">21 Days Guaranteed</td></tr></table><p style="color:#0369A1; font-size:0.8rem; margin-top:10px;"><i>Reconciled against CIPS procurement savings standards.</i></p></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="card-insight"><h4 style="color:#0284C7; margin-top:0;">💰 Projected 3-Year Value Capture</h4><table style="width:100%; border-collapse:collapse; font-size:0.88rem;"><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 1 (Hard P&L Savings):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">6.5% - 8.5%</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 2 (Peak Surcharge Avoidance):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">12.0% - 15.0%</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Guaranteed Fleet Availability SLA:</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">98.5% On-Time</td></tr></table><p style="color:#0369A1; font-size:0.8rem; margin-top:10px;"><i>Reconciled against CIPS strategic sourcing standards.</i></p></div>""", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # TAB 6: VENDOR & OEM ECOSYSTEM
 # ---------------------------------------------------------
 with tab_vendors:
-    st.subheader("🏢 Preferred Supplier & Carrier Ecosystem (Jubail & Global)")
-    st.caption("Prequalified & Accredited Industrial Contractors compliant with RCJY, HCIS, and IKTVA standards.")
+    st.subheader("🏢 Preferred Supplier, Fleet & Carrier Ecosystem")
+    st.caption("Prequalified & Accredited Transportation & Logistics Contractors compliant with TGA, RCJY, and IKTVA standards.")
     
     vm = data.get("vendor_matrix", {
-        "tier_1_local": ["Bahri (National Shipping Company of Saudi Arabia)", "Almajdouie Logistics", "Kanoo Logistics"],
-        "tier_2_regional": ["BDP International Saudi Arabia", "Agility Logistics / DSV", "DHL Global Forwarding"],
-        "global_oems": ["Maersk Line", "MSC (Mediterranean Shipping Company)", "Hapag-Lloyd", "CMA CGM"]
+        "tier_1_local": ["Almajdouie Logistics", "Bahri Logistics", "Bin Quraya Transport", "Hala Supply Chain"],
+        "tier_2_regional": ["Mubarrad Transport", "Kanoo Logistics", "Al-Falak Transport", "GWC Logistics"],
+        "global_oems": ["Mercedes-Benz Actros (Juffali Commercial)", "Volvo Trucks (Zahid Tractor)", "MAN Truck & Bus", "Scania Trucks"]
     })
     
     v_col1, v_col2, v_col3 = st.columns(3)
@@ -1320,8 +1420,8 @@ with tab_vendors:
             
     with v_col3:
         v3_html = "<div class='vendor-card-oem'>"
-        v3_html += "<h4 style='color:#1D4ED8; margin-top:0; font-weight:800;'>🌐 Global Shipping Alliances & OEMs</h4>"
-        v3_html += "<p style='color:#1E40AF; font-size:0.8rem; margin-top:-6px;'>Global Container Lines & Asset Licensors</p><hr style='border:0; border-top:1px solid #BFDBFE; margin:10px 0;'><ul style='padding-left:18px; color:#1E3A8A; margin:0;'>"
+        v3_html += "<h4 style='color:#1D4ED8; margin-top:0; font-weight:800;'>🌐 Truck OEMs & Global Lines</h4>"
+        v3_html += "<p style='color:#1E40AF; font-size:0.8rem; margin-top:-6px;'>Heavy Vehicle Manufacturers & Asset Alliances</p><hr style='border:0; border-top:1px solid #BFDBFE; margin:10px 0;'><ul style='padding-left:18px; color:#1E3A8A; margin:0;'>"
         for v in vm.get("global_oems", []):
             v3_html += f"<li style='margin-bottom:6px;'><b>{v}</b></li>"
         v3_html += "</ul></div>"
@@ -1400,9 +1500,9 @@ with tab_report:
         <h2>3. KRALJIC PORTFOLIO POSITIONING & STRATEGY</h2>
         <p><b>Quadrant:</b> {k_data.get('quadrant', 'Strategic')} | <b>Profit Impact:</b> {k_data.get('profit_impact', 8.5)}/10 | <b>Supply Risk:</b> {k_data.get('supply_risk', 7.5)}/10<br>
         <b>Recommended Contract Horizon:</b> {k_data.get('contract_horizon', '1-2 Years Framework')}<br>
-        <b>Supplier Governance Model:</b> {k_data.get('supplier_relationship', 'Core Carrier Strategic Alliance')}</p>
+        <b>Supplier Governance Model:</b> {k_data.get('supplier_relationship', 'Core Fleet Strategic Alliance')}</p>
 
-        <h2>4. TOP GEOPOLITICAL & CATEGORY RISKS</h2>
+        <h2>4. TOP SPECIFIC & REGIONAL RISKS</h2>
         <table>
             <tr>
                 <th>Risk Factor</th>
@@ -1431,10 +1531,10 @@ with tab_report:
     memo_text += f"""
         </ul>
 
-        <h2>6. PREFERRED CARRIER & SUPPLIER ECOSYSTEM</h2>
+        <h2>6. PREFERRED CARRIER & TRANSPORTER ECOSYSTEM</h2>
         <p><b>Tier-1 Local KSA (IKTVA Champions):</b> {', '.join(vm.get('tier_1_local', []))}<br>
         <b>Regional Specialized Contractors:</b> {', '.join(vm.get('tier_2_regional', []))}<br>
-        <b>Global Shipping Alliances & OEMs:</b> {', '.join(vm.get('global_oems', []))}</p>
+        <b>Global OEMs & Fleet Partners:</b> {', '.join(vm.get('global_oems', []))}</p>
         <br><br>
         <p><b>Submitted By:</b> Principal Strategic Sourcing & Category Lead, Jubail Petrochemical Complex<br>
         <b>Approved By:</b> Chief Procurement Officer (CPO) / Executive Committee</p>
@@ -1442,7 +1542,7 @@ with tab_report:
     </html>
     """
 
-    memo_preview_html = f"""<div class="card-memo-preview"><h3 style="color:#0F172A; margin-top:0;">📋 CPO Executive Decision Briefing Preview</h3><p style="color:#334155; font-size:0.95rem; line-height:1.6;">Category review for <b>{selected_sub}</b> ({pol_pod_display}) establishes an audited contract Should-Cost baseline of <b>{unit} {total_val:,.2f}</b>.<br>The contractor break-even operating floor is <b>{data.get('metric_card_2_value', '-')}</b>, with supplier margin / chokepoint surcharges at <b>{data.get('metric_card_3_value', '-')}</b>.</p><div style="margin: 12px 0;"><span class="badge-pill badge-amber">Kraljic: {k_data.get('quadrant', 'Strategic')}</span><span class="badge-pill badge-blue">Horizon: {k_data.get('contract_horizon', '1-2 Years Framework')}</span><span class="badge-pill badge-red">Max Risk Score: {data.get('total_metric_value', 18)}/25</span></div><p style="color:#64748B; font-size:0.85rem; margin-bottom:0;"><b>Local Content Route:</b> Priority allocation to Tier-1 leaders (<i>{', '.join(vm.get('tier_1_local', [])[:2])}</i>).</p></div>"""
+    memo_preview_html = f"""<div class="card-memo-preview"><h3 style="color:#0F172A; margin-top:0;">📋 CPO Executive Decision Briefing Preview</h3><p style="color:#334155; font-size:0.95rem; line-height:1.6;">Category review for <b>{selected_sub}</b> ({pol_pod_display}) establishes an audited contract Should-Cost baseline of <b>{unit} {total_val:,.2f}</b>.<br>The contractor break-even operating floor is <b>{data.get('metric_card_2_value', '-')}</b>, with supplier markup and surcharges at <b>{data.get('metric_card_3_value', '-')}</b>.</p><div style="margin: 12px 0;"><span class="badge-pill badge-amber">Kraljic: {k_data.get('quadrant', 'Strategic')}</span><span class="badge-pill badge-blue">Horizon: {k_data.get('contract_horizon', '1-2 Years Framework')}</span><span class="badge-pill badge-red">Max Risk Score: {data.get('total_metric_value', 18)}/25</span></div><p style="color:#64748B; font-size:0.85rem; margin-bottom:0;"><b>Local Content Route:</b> Priority allocation to Tier-1 leaders (<i>{', '.join(vm.get('tier_1_local', [])[:2])}</i>).</p></div>"""
     st.markdown(memo_preview_html, unsafe_allow_html=True)
     
     st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
