@@ -246,7 +246,7 @@ DEFAULT_DATABASE = {
 }
 
 # ---------------------------------------------------------
-# GEMINI 3.8 FLASH TARGET (FAST LOW-THINKING EXECUTION)
+# GOOGLE INTERACTIONS API NATIVE ENGINE (FAST 3-5 SECOND RESPONSE)
 # ---------------------------------------------------------
 def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key):
     import urllib3
@@ -254,114 +254,114 @@ def fetch_analysis_via_direct_api(parent, sub, context, analysis_type, user_key)
 
     clean_key = str(user_key).strip().strip('"').strip("'")
 
-    # Tailored, concise prompts ensure the model finishes in 3-5 seconds
-    if "Kraljic" in analysis_type:
-        specific_inst = """
-  Provide:
-  "total_metric_value": 8.5,
-  "total_metric_label": "Kraljic Quadrant",
-  "metric_card_2_label": "Profit Impact", "metric_card_2_value": "8.5 / 10",
-  "metric_card_3_label": "Supply Risk", "metric_card_3_value": "7.5 / 10",
-  "metric_card_4_label": "Recommended Posture", "metric_card_4_value": "Strategic Alliance",
-  "kraljic_data": {
-    "quadrant": "Strategic", "profit_impact": 8.5, "supply_risk": 7.5,
-    "contract_horizon": "3 to 5 Years", "supplier_relationship": "Collaborative Partnership"
-  },
-  "chart_title": "Kraljic Dimension Drivers",
-  "chart_items": [{"name": "Profit Impact", "value": 8.5, "details": "Reason"}, {"name": "Market Complexity", "value": 7.5, "details": "Reason"}],
-  "secondary_chart_title": "Leverage Split",
-  "secondary_chart_labels": ["Buyer Leverage", "Supplier Power"], "secondary_chart_values": [45, 55],
-        """
-    elif "Risk" in analysis_type:
-        specific_inst = """
-  Provide:
-  "total_metric_value": 18,
-  "total_metric_label": "Max Risk Score",
-  "metric_card_2_label": "Overall Category Risk", "metric_card_2_value": "HIGH",
-  "metric_card_3_label": "Critical Risks", "metric_card_3_value": "2 Critical",
-  "metric_card_4_label": "Mitigation Coverage", "metric_card_4_value": "100% Planned",
-  "risk_items": [
-    {"risk_name": "Operational Risk 1", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Mitigation plan", "owner": "Role"}
-  ],
-  "chart_title": "Risk Magnitude Scores (P x I)",
-  "chart_items": [{"name": "Risk 1", "value": 18, "details": "Explanation"}],
-  "secondary_chart_title": "Risk Severity Distribution",
-  "secondary_chart_labels": ["Critical", "High", "Medium", "Low"], "secondary_chart_values": [1, 2, 2, 0],
-        """
-    else:
-        specific_inst = """
-  Provide:
-  "currency_or_unit": "SAR",
-  "total_metric_value": 450000,
-  "total_metric_label": "Total Amount",
-  "metric_card_2_label": "Direct Operating Cost", "metric_card_2_value": "SAR 400,000 (89%)",
-  "metric_card_3_label": "Supplier Profit Margin", "metric_card_3_value": "SAR 50,000 (11%)",
-  "metric_card_4_label": "Target Benchmark", "metric_card_4_value": "8.0%",
-  "chart_title": "Cost Breakdown Structure",
-  "chart_items": [{"name": "Component A", "value": 150000, "details": "Explanation"}],
-  "secondary_chart_title": "Direct Cost vs Margin",
-  "secondary_chart_labels": ["Direct Operating Cost", "Supplier Profit"], "secondary_chart_values": [89, 11],
-        """
-
-    prompt = f"""You are a Principal Sourcing & Cost Engineer in Jubail Industrial City, Saudi Arabia for a world-scale Petrochemical Complex.
+    # Concise, targeted prompt designed for immediate structured JSON generation
+    prompt = f"""You are the Principal Sourcing & Cost Engineer in Jubail Industrial City, Saudi Arabia for a world-scale Petrochemical Complex.
 Analyze:
-- Parent: {parent}
-- Subcategory: {sub}
+- Category: {parent} -> {sub}
 - Tool: {analysis_type}
 - Scope Context: {context}
 
-Return ONLY a valid JSON object with:
+Return ONLY a valid JSON object matching this exact structure:
 {{
   "analysis_title": "{analysis_type}",
-  {specific_inst}
+  "currency_or_unit": "SAR",
+  "total_metric_value": 450000,
+  "total_metric_label": "Total Amount / Score",
+  "metric_card_2_label": "Direct Operating Cost / Profit Impact",
+  "metric_card_2_value": "SAR 400,000 (89%)",
+  "metric_card_3_label": "Supplier Profit / Supply Risk",
+  "metric_card_3_value": "SAR 50,000 (11%)",
+  "metric_card_4_label": "Target Benchmark / Posture",
+  "metric_card_4_value": "8.0% / Strategic",
+  "chart_title": "Primary Dimension Breakdown",
+  "chart_items": [
+    {{"name": "Component or Risk or Stage 1", "value": 150000, "details": "Specific technical explanation"}},
+    {{"name": "Component or Risk or Stage 2", "value": 120000, "details": "Specific technical explanation"}},
+    {{"name": "Component or Risk or Stage 3", "value": 90000, "details": "Specific technical explanation"}},
+    {{"name": "Component or Risk or Stage 4", "value": 60000, "details": "Specific technical explanation"}},
+    {{"name": "Component or Risk or Stage 5", "value": 30000, "details": "Specific technical explanation"}}
+  ],
+  "kraljic_data": {{
+    "quadrant": "Strategic",
+    "profit_impact": 8.5,
+    "supply_risk": 7.5,
+    "contract_horizon": "3 to 5 Years Alliance",
+    "supplier_relationship": "Collaborative Partnership"
+  }},
+  "risk_items": [
+    {{"risk_name": "Schedule Overrun / Scarcity", "prob": 4, "impact": 4.5, "score": 18, "severity": "Critical", "mitigation": "Sign binding early reservation agreements 9 months ahead.", "owner": "Turnaround Procurement Lead"}},
+    {{"risk_name": "HCIS / RCJY Security Gate Pass Delay", "prob": 4, "impact": 3.5, "score": 14, "severity": "High", "mitigation": "Digital pre-screening 45 days prior to mobilization.", "owner": "Security Liaison"}},
+    {{"risk_name": "Process Safety (PSM) Subcontractor Incident", "prob": 2, "impact": 5.0, "score": 10, "severity": "High", "mitigation": "Mandate safety passports and stop-work authority.", "owner": "Plant EHSS"}},
+    {{"risk_name": "Qiwa / Nitaqat Quota Freeze", "prob": 3, "impact": 3.0, "score": 9, "severity": "Medium", "mitigation": "Monthly audit of contractor green-zone status in Qiwa.", "owner": "Contract Compliance"}},
+    {{"risk_name": "Specialized Fitting / Spare Stockout", "prob": 2, "impact": 4.0, "score": 8, "severity": "Medium", "mitigation": "Consignment inventory at Jubail central warehouse.", "owner": "Reliability Specialist"}}
+  ],
+  "secondary_chart_title": "Financial / Strategic Split",
+  "secondary_chart_labels": ["Direct Cost / Leverage", "Supplier Margin / Risk"],
+  "secondary_chart_values": [85, 15],
   "strategic_insights": {{
-    "summary": "Executive summary of findings in Jubail context",
-    "market_benchmark_range": "Prevailing benchmark range",
-    "key_drivers_or_forces": ["Point 1", "Point 2", "Point 3"],
-    "buyer_actionable_levers": ["Action 1", "Action 2", "Action 3"]
+    "summary": "Executive summary of findings grounded in Jubail industrial reality",
+    "market_benchmark_range": "Prevailing benchmark range in SAR or USD",
+    "key_drivers_or_forces": ["Key Driver 1", "Key Driver 2", "Key Driver 3"],
+    "buyer_actionable_levers": ["Action Lever 1", "Action Lever 2", "Action Lever 3"]
   }}
 }}
-Do NOT output markdown fences or commentary. Output valid JSON only."""
+No markdown fences, no raw conversational text. JSON only."""
 
-    def parse_json_from_text(raw_text):
-        match = re.search(r"\{.*\}", raw_text, re.DOTALL)
-        if match:
-            return json.loads(match.group(0))
-        return None
+    def extract_text(data):
+        if isinstance(data, dict):
+            if "text" in data and isinstance(data["text"], str) and data["text"].strip():
+                return data["text"]
+            for v in data.values():
+                t = extract_text(v)
+                if t:
+                    return t
+        elif isinstance(data, list):
+            for item in reversed(data):
+                t = extract_text(item)
+                if t:
+                    return t
+        return ""
 
     headers = {
         "Content-Type": "application/json",
         "x-goog-api-key": clean_key
     }
 
-    # "LOW" is officially supported and prevents long reasoning delays
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {
-            "response_mime_type": "application/json",
-            "temperature": 0.1,
-            "maxOutputTokens": 2500,
-            "thinkingConfig": {
-                "thinkingLevel": "LOW"
-            }
-        }
+    # 1. Primary: Native Google Interactions API endpoint (fastest for gemini-3.8-flash)
+    interactions_url = "https://generativelanguage.googleapis.com/v1beta/interactions"
+    interactions_payload = {
+        "model": "gemini-3.8-flash",
+        "input": prompt
     }
 
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent"
+    try:
+        r1 = requests.post(interactions_url, headers=headers, json=interactions_payload, timeout=60)
+        if r1.status_code == 200:
+            raw_text = extract_text(r1.json())
+            match = re.search(r"\{.*\}", raw_text, re.DOTALL)
+            if match:
+                return json.loads(match.group(0))
+    except Exception:
+        pass
+
+    # 2. Secondary Failover: Ultra-fast Gemini 3.5 Flash-Lite
+    lite_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent"
+    lite_payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"response_mime_type": "application/json", "temperature": 0.2}
+    }
 
     try:
-        r = requests.post(url, headers=headers, json=payload, timeout=120)
-        if r.status_code == 200:
-            resp_json = r.json()
-            text_out = resp_json["candidates"][0]["content"]["parts"][0]["text"]
-            parsed = parse_json_from_text(text_out)
-            if parsed:
-                return parsed
-        else:
-            raise Exception(f"HTTP {r.status_code}: {r.text[:200]}")
+        r2 = requests.post(lite_url, headers=headers, json=lite_payload, timeout=60)
+        if r2.status_code == 200:
+            text_out = r2.json()["candidates"][0]["content"]["parts"][0]["text"]
+            match = re.search(r"\{.*\}", text_out, re.DOTALL)
+            if match:
+                return json.loads(match.group(0))
     except Exception as e:
-        raise Exception(f"Gemini 3.8 Flash: {str(e)}")
+        raise Exception(f"API Error: {str(e)}")
 
+    raise Exception(f"Interactions API returned status code {r1.status_code}: {r1.text[:200]}")
 # ---------------------------------------------------------
 # STATE MANAGEMENT
 # ---------------------------------------------------------
