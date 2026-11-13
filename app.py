@@ -15,386 +15,391 @@ st.set_page_config(
     layout="wide"
 )
 
+def render_html(raw_html: str):
+    """Strip leading indentation & blank lines so CommonMark never renders HTML as a code block."""
+    cleaned = "\n".join(line.lstrip() for line in raw_html.splitlines() if line.strip())
+    st.markdown(cleaned, unsafe_allow_html=True)
+
 # Custom High-End SaaS & Consulting CSS
-st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-    
-    html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
+st.markdown("""<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+html, body, [class*="css"] {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.stApp {
+    background-color: #F1F5F9;
+}
+.command-header {
+    background: linear-gradient(135deg, #0A192F 0%, #112240 60%, #1E3A8A 100%);
+    color: #FFFFFF;
+    padding: 20px 26px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border-left: 6px solid #D97706;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+}
+.breadcrumb-text {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+}
+.command-header h1 {
+    color: #F8FAFC;
+    margin: 0;
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.command-header p {
+    color: #CBD5E1;
+    margin: 4px 0 0 0;
+    font-size: 0.95rem;
+}
+.badge-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-right: 6px;
+    margin-bottom: 4px;
+}
+.badge-amber { background-color: rgba(217, 119, 6, 0.25); color: #FBBF24; border: 1px solid rgba(217, 119, 6, 0.5); }
+.badge-blue { background-color: rgba(37, 99, 235, 0.25); color: #93C5FD; border: 1px solid rgba(37, 99, 235, 0.5); }
+.badge-red { background-color: rgba(220, 38, 38, 0.25); color: #FCA5A5; border: 1px solid rgba(220, 38, 38, 0.5); }
+.badge-green { background-color: rgba(5, 150, 105, 0.22); color: #6EE7B7; border: 1px solid rgba(16, 185, 129, 0.5); }
 
-    .stApp {
-        background-color: #F1F5F9;
-    }
+.kpi-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+.kpi-card {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 12px -2px rgba(0,0,0,0.08);
+}
+.kpi-blue { border-top: 4px solid #2563EB; background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 35%); }
+.kpi-slate { border-top: 4px solid #475569; background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 35%); }
+.kpi-amber { border-top: 4px solid #D97706; background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 35%); }
+.kpi-emerald { border-top: 4px solid #059669; background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 35%); }
 
-    .command-header {
-        background: linear-gradient(135deg, #0A192F 0%, #112240 60%, #1E3A8A 100%);
-        color: #FFFFFF;
-        padding: 20px 26px;
-        border-radius: 12px;
-        margin-bottom: 18px;
-        border-left: 6px solid #D97706;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
-    }
-    .breadcrumb-text {
-        font-size: 0.75rem;
-        color: #94A3B8;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 4px;
-    }
-    .command-header h1 {
-        color: #F8FAFC;
-        margin: 0;
-        font-size: 1.85rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-    }
-    .command-header p {
-        color: #CBD5E1;
-        margin: 4px 0 0 0;
-        font-size: 0.95rem;
-    }
-    .badge-pill {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 9999px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        margin-right: 6px;
-        margin-bottom: 4px;
-    }
-    .badge-amber { background-color: rgba(217, 119, 6, 0.25); color: #FBBF24; border: 1px solid rgba(217, 119, 6, 0.5); }
-    .badge-blue { background-color: rgba(37, 99, 235, 0.25); color: #93C5FD; border: 1px solid rgba(37, 99, 235, 0.5); }
-    .badge-red { background-color: rgba(220, 38, 38, 0.25); color: #FCA5A5; border: 1px solid rgba(220, 38, 38, 0.5); }
-    .badge-green { background-color: rgba(5, 150, 105, 0.22); color: #6EE7B7; border: 1px solid rgba(16, 185, 129, 0.5); }
+.kpi-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    display: block;
+}
+.kpi-value {
+    font-size: 1.48rem;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    display: block;
+}
+.kpi-sub {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #64748B;
+    margin-top: 4px;
+    display: block;
+}
 
-    .kpi-card-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 14px;
-        margin-bottom: 16px;
-    }
-    .kpi-card {
-        background: #FFFFFF;
-        border-radius: 10px;
-        padding: 16px 18px;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .kpi-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 12px -2px rgba(0,0,0,0.08);
-    }
-    .kpi-blue { border-top: 4px solid #2563EB; background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 35%); }
-    .kpi-slate { border-top: 4px solid #475569; background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 35%); }
-    .kpi-amber { border-top: 4px solid #D97706; background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 35%); }
-    .kpi-emerald { border-top: 4px solid #059669; background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 35%); }
+.provenance-bar {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-left: 5px solid #059669;
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+}
+.acc-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    background: #ECFDF5;
+    color: #047857;
+    border: 1px solid #A7F3D0;
+}
+.acc-pill-amber {
+    background: #FFFBEB;
+    color: #B45309;
+    border: 1px solid #FDE68A;
+}
 
-    .kpi-label {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: #64748B;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 6px;
-        display: block;
-    }
-    .kpi-value {
-        font-size: 1.48rem;
-        font-weight: 800;
-        color: #0F172A;
-        letter-spacing: -0.02em;
-        white-space: nowrap;
-        display: block;
-    }
-    .kpi-sub {
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #64748B;
-        margin-top: 4px;
-        display: block;
-    }
+/* Porter's 5-Force 5-Box Cross / Quadrant Architecture */
+.porter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto auto auto;
+    gap: 14px;
+    margin: 14px 0 20px 0;
+}
+.porter-top { grid-column: 2; grid-row: 1; }
+.porter-left { grid-column: 1; grid-row: 2; }
+.porter-center { grid-column: 2; grid-row: 2; }
+.porter-right { grid-column: 3; grid-row: 2; }
+.porter-bottom { grid-column: 2; grid-row: 3; }
 
-    /* Source & Accuracy Provenance Bar */
-    .provenance-bar {
-        background: #FFFFFF;
-        border: 1px solid #CBD5E1;
-        border-left: 5px solid #059669;
-        border-radius: 10px;
-        padding: 12px 18px;
-        margin-bottom: 18px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 12px;
-        box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
-    }
-    .acc-pill {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 9999px;
-        font-size: 0.78rem;
-        font-weight: 800;
-        background: #ECFDF5;
-        color: #047857;
-        border: 1px solid #A7F3D0;
-    }
-    .acc-pill-amber {
-        background: #FFFBEB;
-        color: #B45309;
-        border: 1px solid #FDE68A;
-    }
+.porter-corner-tl { grid-column: 1; grid-row: 1; }
+.porter-corner-tr { grid-column: 3; grid-row: 1; }
+.porter-corner-bl { grid-column: 1; grid-row: 3; }
+.porter-corner-br { grid-column: 3; grid-row: 3; }
 
-    /* Porter's 5-Force 5-Box Cross / Quadrant Architecture */
+@media (max-width: 1024px) {
     .porter-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: auto auto auto;
-        gap: 14px;
-        margin: 14px 0 20px 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
     }
-    .porter-top { grid-column: 2; grid-row: 1; }
-    .porter-left { grid-column: 1; grid-row: 2; }
-    .porter-center { grid-column: 2; grid-row: 2; }
-    .porter-right { grid-column: 3; grid-row: 2; }
-    .porter-bottom { grid-column: 2; grid-row: 3; }
+    .porter-top, .porter-left, .porter-center, .porter-right, .porter-bottom,
+    .porter-corner-tl, .porter-corner-tr, .porter-corner-bl, .porter-corner-br {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
+    .kpi-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
 
-    .porter-corner-tl { grid-column: 1; grid-row: 1; }
-    .porter-corner-tr { grid-column: 3; grid-row: 1; }
-    .porter-corner-bl { grid-column: 1; grid-row: 3; }
-    .porter-corner-br { grid-column: 3; grid-row: 3; }
+.porter-box {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1px solid #CBD5E1;
+    box-shadow: 0 4px 8px -2px rgba(15, 23, 42, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+}
+.porter-box-high { border-top: 5px solid #DC2626; background: linear-gradient(180deg, #FEF2F2 0%, #FFFFFF 28%); }
+.porter-box-med { border-top: 5px solid #D97706; background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 28%); }
+.porter-box-low { border-top: 5px solid #059669; background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 28%); }
+.porter-box-center {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color: #F8FAFC;
+    border: 2px solid #D97706;
+    box-shadow: 0 10px 18px -4px rgba(15, 23, 42, 0.3);
+}
+.porter-corner-note {
+    background: #F8FAFC;
+    border: 1px dashed #CBD5E1;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.82rem;
+    color: #475569;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+}
+.porter-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.porter-title {
+    font-size: 0.94rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+}
+.porter-box-center .porter-title {
+    color: #FBBF24;
+}
+.porter-example-tag {
+    background: #F1F5F9;
+    border-left: 3px solid #0284C7;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 0.79rem;
+    color: #1E293B;
+    margin-top: 8px;
+}
+.porter-box-center .porter-example-tag {
+    background: rgba(255, 255, 255, 0.08);
+    border-left: 3px solid #FBBF24;
+    color: #E2E8F0;
+}
+.porter-source-foot {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #E2E8F0;
+    font-size: 0.72rem;
+    color: #64748B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.porter-box-center .porter-source-foot {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    color: #94A3B8;
+}
 
-    @media (max-width: 1024px) {
-        .porter-grid {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto;
-        }
-        .porter-top, .porter-left, .porter-center, .porter-right, .porter-bottom,
-        .porter-corner-tl, .porter-corner-tr, .porter-corner-bl, .porter-corner-br {
-            grid-column: 1 !important;
-            grid-row: auto !important;
-        }
-    }
+.card-insight {
+    background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-left: 6px solid #0284C7;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.08);
+}
+.card-kraljic-info {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border: 1px solid #FDE68A;
+    border-left: 6px solid #D97706;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.08);
+}
+.card-geopolitics {
+    background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+    border: 1px solid #FECACA;
+    border-left: 6px solid #DC2626;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.08);
+    margin-bottom: 18px;
+}
+.card-example-spotlight {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+    border-left: 6px solid #059669;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-top: 14px;
+    box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.08);
+}
+.vendor-card-tier1 {
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+    border: 1px solid #BBF7D0;
+    border-top: 5px solid #16A34A;
+    border-radius: 10px;
+    padding: 18px 20px;
+    height: 100%;
+    box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.08);
+}
+.vendor-card-tier2 {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border: 1px solid #FDE68A;
+    border-top: 5px solid #D97706;
+    border-radius: 10px;
+    padding: 18px 20px;
+    height: 100%;
+    box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.08);
+}
+.vendor-card-oem {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-top: 5px solid #2563EB;
+    border-radius: 10px;
+    padding: 18px 20px;
+    height: 100%;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.08);
+}
+.card-memo-preview {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-top: 6px solid #0F172A;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06);
+}
 
-    .porter-box {
-        background: #FFFFFF;
-        border-radius: 12px;
-        padding: 16px 18px;
-        border: 1px solid #CBD5E1;
-        box-shadow: 0 4px 8px -2px rgba(15, 23, 42, 0.06);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-    }
-    .porter-box-high { border-top: 5px solid #DC2626; background: linear-gradient(180deg, #FEF2F2 0%, #FFFFFF 28%); }
-    .porter-box-med { border-top: 5px solid #D97706; background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 28%); }
-    .porter-box-low { border-top: 5px solid #059669; background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 28%); }
-    .porter-box-center {
-        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-        color: #F8FAFC;
-        border: 2px solid #D97706;
-        box-shadow: 0 10px 18px -4px rgba(15, 23, 42, 0.3);
-    }
-    .porter-corner-note {
-        background: #F8FAFC;
-        border: 1px dashed #CBD5E1;
-        border-radius: 10px;
-        padding: 14px 16px;
-        font-size: 0.82rem;
-        color: #475569;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .porter-box-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 8px;
-        margin-bottom: 8px;
-    }
-    .porter-title {
-        font-size: 0.94rem;
-        font-weight: 800;
-        color: #0F172A;
-        margin: 0;
-    }
-    .porter-box-center .porter-title {
-        color: #FBBF24;
-    }
-    .porter-example-tag {
-        background: #F1F5F9;
-        border-left: 3px solid #0284C7;
-        padding: 7px 10px;
-        border-radius: 6px;
-        font-size: 0.79rem;
-        color: #1E293B;
-        margin-top: 8px;
-    }
-    .porter-box-center .porter-example-tag {
-        background: rgba(255, 255, 255, 0.08);
-        border-left: 3px solid #FBBF24;
-        color: #E2E8F0;
-    }
-    .porter-source-foot {
-        margin-top: 10px;
-        padding-top: 8px;
-        border-top: 1px solid #E2E8F0;
-        font-size: 0.72rem;
-        color: #64748B;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 6px;
-        flex-wrap: wrap;
-    }
-    .porter-box-center .porter-source-foot {
-        border-top: 1px solid rgba(255,255,255,0.15);
-        color: #94A3B8;
-    }
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+    border-bottom: 2px solid #E2E8F0;
+    padding-bottom: 6px;
+}
+.stTabs [data-baseweb="tab"] {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: #475569;
+    transition: all 0.2s ease;
+}
+.stTabs [aria-selected="true"] {
+    background-color: #0F172A !important;
+    color: #FFFFFF !important;
+    border-color: #0F172A !important;
+    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.25);
+}
 
-    .card-insight {
-        background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
-        border: 1px solid #BAE6FD;
-        border-left: 6px solid #0284C7;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.08);
-    }
-    .card-kraljic-info {
-        background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-        border: 1px solid #FDE68A;
-        border-left: 6px solid #D97706;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.08);
-    }
-    .card-geopolitics {
-        background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
-        border: 1px solid #FECACA;
-        border-left: 6px solid #DC2626;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.08);
-        margin-bottom: 18px;
-    }
-    .card-example-spotlight {
-        background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-        border: 1px solid #A7F3D0;
-        border-left: 6px solid #059669;
-        border-radius: 10px;
-        padding: 18px 20px;
-        margin-top: 14px;
-        box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.08);
-    }
-    .vendor-card-tier1 {
-        background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
-        border: 1px solid #BBF7D0;
-        border-top: 5px solid #16A34A;
-        border-radius: 10px;
-        padding: 18px 20px;
-        height: 100%;
-        box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.08);
-    }
-    .vendor-card-tier2 {
-        background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-        border: 1px solid #FDE68A;
-        border-top: 5px solid #D97706;
-        border-radius: 10px;
-        padding: 18px 20px;
-        height: 100%;
-        box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.08);
-    }
-    .vendor-card-oem {
-        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-        border: 1px solid #BFDBFE;
-        border-top: 5px solid #2563EB;
-        border-radius: 10px;
-        padding: 18px 20px;
-        height: 100%;
-        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.08);
-    }
-    .card-memo-preview {
-        background: #FFFFFF;
-        border: 1px solid #CBD5E1;
-        border-top: 6px solid #0F172A;
-        border-radius: 10px;
-        padding: 24px;
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06);
-    }
-
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        border-bottom: 2px solid #E2E8F0;
-        padding-bottom: 6px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        padding: 10px 16px;
-        border-radius: 8px;
-        font-weight: 700;
-        font-size: 0.88rem;
-        background-color: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        color: #475569;
-        transition: all 0.2s ease;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #0F172A !important;
-        color: #FFFFFF !important;
-        border-color: #0F172A !important;
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.25);
-    }
-
-    .consulting-table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 1px solid #CBD5E1;
-        border-radius: 8px;
-        overflow: hidden;
-        background: #FFFFFF;
-        margin-top: 8px;
-    }
-    .consulting-table th {
-        background-color: #0F172A;
-        color: #FFFFFF;
-        font-weight: 700;
-        font-size: 0.82rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        padding: 12px 14px;
-        text-align: left;
-    }
-    .consulting-table td {
-        padding: 12px 14px;
-        font-size: 0.88rem;
-        border-bottom: 1px solid #E2E8F0;
-        color: #334155;
-    }
-    .consulting-table tr:hover {
-        background-color: #F8FAFC;
-    }
-    .sev-badge {
-        padding: 4px 10px;
-        border-radius: 4px;
-        font-size: 0.72rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        display: inline-block;
-        white-space: nowrap;
-    }
-    .sev-critical { background-color: #FEE2E2; color: #DC2626; border: 1px solid #FCA5A5; }
-    .sev-high { background-color: #FFEDD5; color: #EA580C; border: 1px solid #FDBA74; }
-    .sev-medium { background-color: #FEF9C3; color: #CA8A04; border: 1px solid #FDE047; }
-    .sev-low { background-color: #DCFCE7; color: #16A34A; border: 1px solid #86EFAC; }
-</style>
-""", unsafe_allow_html=True)
+.consulting-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #FFFFFF;
+    margin-top: 8px;
+}
+.consulting-table th {
+    background-color: #0F172A;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 12px 14px;
+    text-align: left;
+}
+.consulting-table td {
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    border-bottom: 1px solid #E2E8F0;
+    color: #334155;
+}
+.consulting-table tr:hover {
+    background-color: #F8FAFC;
+}
+.sev-badge {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    white-space: nowrap;
+}
+.sev-critical { background-color: #FEE2E2; color: #DC2626; border: 1px solid #FCA5A5; }
+.sev-high { background-color: #FFEDD5; color: #EA580C; border: 1px solid #FDBA74; }
+.sev-medium { background-color: #FEF9C3; color: #CA8A04; border: 1px solid #FDE047; }
+.sev-low { background-color: #DCFCE7; color: #16A34A; border: 1px solid #86EFAC; }
+</style>""", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # INLAND TRANSPORTATION (JUBAIL & DAMMAM ONLY FOR POL)
@@ -816,22 +821,15 @@ def build_provenance_metadata(parent, sub, params, engine_source="Petrochemical 
 
 def render_provenance_strip(title, accuracy_pct, sources_text, margin_error="±4.0%"):
     pill_cls = "acc-pill" if accuracy_pct >= 90 else "acc-pill acc-pill-amber"
-    html = f"""
-    <div class="provenance-bar">
-        <div style="flex: 1; min-width: 260px;">
-            <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: #0F172A; letter-spacing: 0.05em;">
-                📚 {title} — Source Attribution
-            </span>
-            <div style="font-size: 0.80rem; color: #475569; margin-top: 3px; line-height: 1.4;">
-                {sources_text}
-            </div>
-        </div>
-        <div style="text-align: right; white-space: nowrap;">
-            <span class="{pill_cls}">✓ Analysis Accuracy: {accuracy_pct:.1f}% ({margin_error})</span>
-        </div>
-    </div>
-    """
-    st.markdown(html, unsafe_allow_html=True)
+    render_html(f"""<div class="provenance-bar">
+<div style="flex: 1; min-width: 260px;">
+<span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: #0F172A; letter-spacing: 0.05em;">📚 {title} — Source Attribution</span>
+<div style="font-size: 0.80rem; color: #475569; margin-top: 3px; line-height: 1.4;">{sources_text}</div>
+</div>
+<div style="text-align: right; white-space: nowrap;">
+<span class="{pill_cls}">✓ Analysis Accuracy: {accuracy_pct:.1f}% ({margin_error})</span>
+</div>
+</div>""")
 
 # ---------------------------------------------------------
 # DYNAMIC PORTER'S 5 FORCES + 5 QUADRANT BOXES & EXAMPLES
@@ -1601,10 +1599,20 @@ JSON ONLY."""
     return res
 
 # ---------------------------------------------------------
-# STATE MANAGEMENT
+# STATE MANAGEMENT (AUTO-SYNC PARAMETERS + RUN BUTTON)
 # ---------------------------------------------------------
-if "active_data" not in st.session_state:
-    st.session_state["active_data"] = generate_instant_petrochemical_model(selected_parent, selected_sub, selected_analysis, param_data)
+current_sig = json.dumps(
+    {"parent": selected_parent, "sub": selected_sub, "tool": selected_analysis, "params": param_data},
+    sort_keys=True
+)
+
+if "active_data" not in st.session_state or (
+    st.session_state.get("last_param_sig") != current_sig and not run_btn
+):
+    st.session_state["active_data"] = generate_instant_petrochemical_model(
+        selected_parent, selected_sub, selected_analysis, param_data
+    )
+    st.session_state["last_param_sig"] = current_sig
 
 if run_btn:
     active_key = st.session_state.get("api_key", "").strip()
@@ -1612,6 +1620,7 @@ if run_btn:
         st.session_state["active_data"] = fetch_analysis_hybrid(
             selected_parent, selected_sub, scope_context, selected_analysis, active_key, param_data
         )
+        st.session_state["last_param_sig"] = current_sig
 
 data = st.session_state["active_data"]
 provenance = data.get("provenance") or build_provenance_metadata(selected_parent, selected_sub, param_data, data.get("source", "Petrochemical Engine"))
@@ -1637,8 +1646,13 @@ if param_data.get('truck_shortage'):
 
 status_label = "Live AI Model" if data.get('source') == 'AI' else "Instant Petrochem Engine"
 
-banner_html = f"""<div class="command-header"><div class="breadcrumb-text">Petrochemical Manufacturing Sourcing & Cost Engineering | Jubail Operations | Calibrated {provenance["last_calibrated"]}</div><div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;"><div>{badges_html}<h1 style="margin-top: 8px;">🏭 Category Management ToolKit Engine</h1><p>Active Sourcing Scope: <b>{selected_parent} ➔ {selected_sub}</b>{pol_pod_display}</p></div><div style="text-align: right; background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"><span style="font-size: 0.72rem; color: #94A3B8; text-transform: uppercase; font-weight:700;">Primary Tool & Calibration:</span><br><span style="font-weight: 800; color: #FBBF24; font-size: 0.95rem;">{selected_analysis}</span><br><span style="font-weight: 700; color: #10B981; font-size: 0.8rem;">● {status_label} | {provenance["overall_accuracy_pct"]}% Confidence</span></div></div></div>"""
-st.markdown(banner_html, unsafe_allow_html=True)
+render_html(f"""<div class="command-header">
+<div class="breadcrumb-text">Petrochemical Manufacturing Sourcing &amp; Cost Engineering | Jubail Operations | Calibrated {provenance["last_calibrated"]}</div>
+<div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+<div>{badges_html}<h1 style="margin-top: 8px;">🏭 Category Management ToolKit Engine</h1><p>Active Sourcing Scope: <b>{selected_parent} ➔ {selected_sub}</b>{pol_pod_display}</p></div>
+<div style="text-align: right; background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"><span style="font-size: 0.72rem; color: #94A3B8; text-transform: uppercase; font-weight:700;">Primary Tool &amp; Calibration:</span><br><span style="font-weight: 800; color: #FBBF24; font-size: 0.95rem;">{selected_analysis}</span><br><span style="font-weight: 700; color: #10B981; font-size: 0.8rem;">● {status_label} | {provenance["overall_accuracy_pct"]}% Confidence</span></div>
+</div>
+</div>""")
 
 unit = data.get("currency_or_unit", "SAR")
 total_val = data.get("total_metric_value", 0)
@@ -1656,33 +1670,30 @@ if not df_chart.empty and "value" in df_chart.columns:
 # ---------------------------------------------------------
 val_disp = f"{unit} {total_val:,.2f}" if unit in ["SAR", "USD"] else f"{total_val}"
 
-kpi_html = f"""
-<div class="kpi-card-grid">
-    <div class="kpi-card kpi-blue">
-        <span class="kpi-label">{data.get("total_metric_label", "Overall Baseline")}</span>
-        <span class="kpi-value">{val_disp}</span>
-        <span class="kpi-sub">Total Audited Should-Cost</span>
-    </div>
-    <div class="kpi-card kpi-slate">
-        <span class="kpi-label">{data.get("metric_card_2_label", "Direct Cost")}</span>
-        <span class="kpi-value">{data.get("metric_card_2_value", "-")}</span>
-        <span class="kpi-sub">Direct Operating Floor (Break-even)</span>
-    </div>
-    <div class="kpi-card kpi-amber">
-        <span class="kpi-label">{data.get("metric_card_3_label", "Margin / Surcharges")}</span>
-        <span class="kpi-value">{data.get("metric_card_3_value", "-")}</span>
-        <span class="kpi-sub">Contractor Markup / Premium</span>
-    </div>
-    <div class="kpi-card kpi-emerald">
-        <span class="kpi-label">{data.get("metric_card_4_label", "Target Benchmark")}</span>
-        <span class="kpi-value">{data.get("metric_card_4_value", "-")}</span>
-        <span class="kpi-sub">CIPS Target Counter-Offer</span>
-    </div>
+render_html(f"""<div class="kpi-card-grid">
+<div class="kpi-card kpi-blue">
+<span class="kpi-label">{data.get("total_metric_label", "Overall Baseline")}</span>
+<span class="kpi-value">{val_disp}</span>
+<span class="kpi-sub">Total Audited Should-Cost</span>
 </div>
-"""
-st.markdown(kpi_html, unsafe_allow_html=True)
+<div class="kpi-card kpi-slate">
+<span class="kpi-label">{data.get("metric_card_2_label", "Direct Cost")}</span>
+<span class="kpi-value">{data.get("metric_card_2_value", "-")}</span>
+<span class="kpi-sub">Direct Operating Floor (Break-even)</span>
+</div>
+<div class="kpi-card kpi-amber">
+<span class="kpi-label">{data.get("metric_card_3_label", "Margin / Surcharges")}</span>
+<span class="kpi-value">{data.get("metric_card_3_value", "-")}</span>
+<span class="kpi-sub">Contractor Markup / Premium</span>
+</div>
+<div class="kpi-card kpi-emerald">
+<span class="kpi-label">{data.get("metric_card_4_label", "Target Benchmark")}</span>
+<span class="kpi-value">{data.get("metric_card_4_value", "-")}</span>
+<span class="kpi-sub">CIPS Target Counter-Offer</span>
+</div>
+</div>""")
 
-# Pre-extract shared analytical blocks so all tabs (Kraljic, Risk, Kearney, Vendors, Memo) access consistent state
+# Pre-extract shared analytical blocks so all tabs access consistent state
 k_data = data.get("kraljic_data", {"quadrant": "Strategic", "profit_impact": 8.5, "supply_risk": 7.5, "contract_horizon": "1-2 Years Framework", "supplier_relationship": "Core Fleet Strategic Alliance"})
 risk_list = data.get("risk_items", [])
 vm = data.get("vendor_matrix", {
@@ -1779,7 +1790,7 @@ with tab_cost:
         for l in insights.get("buyer_actionable_levers", []):
             insight_html += f"<li><b>{l}</b></li>"
         insight_html += "</ul></div>"
-        st.markdown(insight_html, unsafe_allow_html=True)
+        render_html(insight_html)
 
 # ---------------------------------------------------------
 # TAB 2: PORTER'S 5 FORCES (5 QUADRANT BOXES + EXAMPLES + ACCURACY)
@@ -1798,96 +1809,82 @@ with tab_5forces:
 
     f_map = pf["forces"]
 
-    def render_force_box(f_obj, grid_cls, icon):
+    def build_force_box(f_obj, grid_cls, icon):
         lvl = f_obj["level"]
         box_cls = f"porter-box porter-box-{lvl}"
         sev_cls = "sev-critical" if lvl == "high" else ("sev-medium" if lvl == "med" else "sev-low")
-        return f"""
-        <div class="{grid_cls}">
-            <div class="{box_cls}">
-                <div>
-                    <div class="porter-box-header">
-                        <h4 class="porter-title">{icon} {f_obj['title']}</h4>
-                        <span class="sev-badge {sev_cls}">{f_obj['score']}/100 • {f_obj['rating']}</span>
-                    </div>
-                    <p style="font-size:0.83rem; color:#334155; margin:4px 0 0 0; line-height:1.45;">
-                        {f_obj['driver']}
-                    </p>
-                    <div class="porter-example-tag">
-                        {f_obj['example']}
-                    </div>
-                </div>
-                <div class="porter-source-foot">
-                    <span><b>Source:</b> {f_obj['source']}</span>
-                    <span style="font-weight:800; color:#047857;">Accuracy: {f_obj['accuracy']}</span>
-                </div>
-            </div>
-        </div>
-        """
+        return f"""<div class="{grid_cls}">
+<div class="{box_cls}">
+<div>
+<div class="porter-box-header">
+<h4 class="porter-title">{icon} {f_obj['title']}</h4>
+<span class="sev-badge {sev_cls}">{f_obj['score']}/100 • {f_obj['rating']}</span>
+</div>
+<p style="font-size:0.83rem; color:#334155; margin:4px 0 0 0; line-height:1.45;">{f_obj['driver']}</p>
+<div class="porter-example-tag">{f_obj['example']}</div>
+</div>
+<div class="porter-source-foot">
+<span><b>Source:</b> {f_obj['source']}</span>
+<span style="font-weight:800; color:#047857;">Accuracy: {f_obj['accuracy']}</span>
+</div>
+</div>
+</div>"""
 
-    center_box_html = f"""
-    <div class="porter-center">
-        <div class="porter-box porter-box-center">
-            <div>
-                <div class="porter-box-header">
-                    <h4 class="porter-title">⚔️ {f_map['rivalry']['title']}</h4>
-                    <span class="badge-pill badge-amber" style="margin:0;">{f_map['rivalry']['score']}/100 • {f_map['rivalry']['rating']}</span>
-                </div>
-                <div style="margin:6px 0 8px 0;">
-                    <span style="font-size:0.72rem; color:#94A3B8; text-transform:uppercase; font-weight:700;">Market Regime:</span><br>
-                    <span class="badge-pill {pf['regime_badge']}" style="margin-top:4px;">{pf['overall_regime']}</span>
-                    <span style="font-size:0.78rem; color:#CBD5E1; font-weight:700;">Composite Intensity: {pf['composite_intensity']}/100</span>
-                </div>
-                <p style="font-size:0.82rem; color:#E2E8F0; margin:4px 0 0 0; line-height:1.45;">
-                    {f_map['rivalry']['driver']}
-                </p>
-                <div class="porter-example-tag">
-                    {f_map['rivalry']['example']}
-                </div>
-            </div>
-            <div class="porter-source-foot">
-                <span><b>Source:</b> {f_map['rivalry']['source']}</span>
-                <span style="font-weight:800; color:#6EE7B7;">Accuracy: {f_map['rivalry']['accuracy']}</span>
-            </div>
-        </div>
-    </div>
-    """
+    center_box_html = f"""<div class="porter-center">
+<div class="porter-box porter-box-center">
+<div>
+<div class="porter-box-header">
+<h4 class="porter-title">⚔️ {f_map['rivalry']['title']}</h4>
+<span class="badge-pill badge-amber" style="margin:0;">{f_map['rivalry']['score']}/100 • {f_map['rivalry']['rating']}</span>
+</div>
+<div style="margin:6px 0 8px 0;">
+<span style="font-size:0.72rem; color:#94A3B8; text-transform:uppercase; font-weight:700;">Market Regime:</span><br>
+<span class="badge-pill {pf['regime_badge']}" style="margin-top:4px;">{pf['overall_regime']}</span>
+<span style="font-size:0.78rem; color:#CBD5E1; font-weight:700;">Composite Intensity: {pf['composite_intensity']}/100</span>
+</div>
+<p style="font-size:0.82rem; color:#E2E8F0; margin:4px 0 0 0; line-height:1.45;">{f_map['rivalry']['driver']}</p>
+<div class="porter-example-tag">{f_map['rivalry']['example']}</div>
+</div>
+<div class="porter-source-foot">
+<span><b>Source:</b> {f_map['rivalry']['source']}</span>
+<span style="font-weight:800; color:#6EE7B7;">Accuracy: {f_map['rivalry']['accuracy']}</span>
+</div>
+</div>
+</div>"""
 
-    porter_cross_html = f"""
-    <div class="porter-grid">
-        <div class="porter-corner-tl">
-            <div class="porter-corner-note">
-                <b style="color:#0F172A; font-size:0.84rem;">🧭 How to Read the 5-Box Model</b>
-                <span style="margin-top:4px;">Top &amp; Bottom boxes govern <b>structural entry &amp; substitution threats</b>; Left &amp; Right boxes govern <b>commercial pricing leverage</b> around the central rivalry hub.</span>
-            </div>
-        </div>
-        {render_force_box(f_map["entrants"], "porter-top", "🚧")}
-        <div class="porter-corner-tr">
-            <div class="porter-corner-note">
-                <b style="color:#0F172A; font-size:0.84rem;">📊 Composite Market Score</b>
-                <span style="font-size:1.35rem; font-weight:800; color:#0F172A; margin:4px 0;">{pf['composite_intensity']} / 100</span>
-                <span>Calibrated for <b>Jubail Industrial City</b> ({provenance['last_calibrated']}) with <b>{pf['accuracy_pct']}%</b> confidence.</span>
-            </div>
-        </div>
-        {render_force_box(f_map["supplier"], "porter-left", "🏭")}
-        {center_box_html}
-        {render_force_box(f_map["buyer"], "porter-right", "🛒")}
-        <div class="porter-corner-bl">
-            <div class="porter-corner-note">
-                <b style="color:#B45309; font-size:0.84rem;">⚠️ Value Leakage Watch</b>
-                <span style="margin-top:4px;">When Supplier Power &gt; 75, prime vendors stack pass-through markups (15–22%) unless contracts mandate open-book unbundling.</span>
-            </div>
-        </div>
-        {render_force_box(f_map["substitutes"], "porter-bottom", "🔄")}
-        <div class="porter-corner-br">
-            <div class="porter-corner-note">
-                <b style="color:#047857; font-size:0.84rem;">🎯 Buyer Advantage Lever</b>
-                <span style="margin-top:4px;">Exploit high Rivalry ({f_map['rivalry']['score']}/100) via split-award tenders (60/40 or 40/35/25) to preserve pricing tension.</span>
-            </div>
-        </div>
-    </div>
-    """
-    st.markdown(porter_cross_html, unsafe_allow_html=True)
+    porter_cross_html = f"""<div class="porter-grid">
+<div class="porter-corner-tl">
+<div class="porter-corner-note">
+<b style="color:#0F172A; font-size:0.84rem;">🧭 How to Read the 5-Box Model</b>
+<span style="margin-top:4px;">Top &amp; Bottom boxes govern <b>structural entry &amp; substitution threats</b>; Left &amp; Right boxes govern <b>commercial pricing leverage</b> around the central rivalry hub.</span>
+</div>
+</div>
+{build_force_box(f_map["entrants"], "porter-top", "🚧")}
+<div class="porter-corner-tr">
+<div class="porter-corner-note">
+<b style="color:#0F172A; font-size:0.84rem;">📊 Composite Market Score</b>
+<span style="font-size:1.35rem; font-weight:800; color:#0F172A; margin:4px 0;">{pf['composite_intensity']} / 100</span>
+<span>Calibrated for <b>Jubail Industrial City</b> ({provenance['last_calibrated']}) with <b>{pf['accuracy_pct']}%</b> confidence.</span>
+</div>
+</div>
+{build_force_box(f_map["supplier"], "porter-left", "🏭")}
+{center_box_html}
+{build_force_box(f_map["buyer"], "porter-right", "🛒")}
+<div class="porter-corner-bl">
+<div class="porter-corner-note">
+<b style="color:#B45309; font-size:0.84rem;">⚠️ Value Leakage Watch</b>
+<span style="margin-top:4px;">When Supplier Power &gt; 75, prime vendors stack pass-through markups (15–22%) unless contracts mandate open-book unbundling.</span>
+</div>
+</div>
+{build_force_box(f_map["substitutes"], "porter-bottom", "🔄")}
+<div class="porter-corner-br">
+<div class="porter-corner-note">
+<b style="color:#047857; font-size:0.84rem;">🎯 Buyer Advantage Lever</b>
+<span style="margin-top:4px;">Exploit high Rivalry ({f_map['rivalry']['score']}/100) via split-award tenders (60/40 or 40/35/25) to preserve pricing tension.</span>
+</div>
+</div>
+</div>"""
+    render_html(porter_cross_html)
 
     # Quantitative Bar Chart + Business Insights & Real-World Examples
     col_pchart, col_ptext = st.columns([1.0, 1.0])
@@ -1925,23 +1922,15 @@ with tab_5forces:
             f"<li style='margin-bottom:8px;'><b>{ins['title']}</b> <span class='acc-pill' style='padding:2px 8px; font-size:0.72rem;'>{ins['impact']}</span><br><span style='font-size:0.85rem; color:#334155;'>{ins['detail']}</span></li>"
             for ins in pf["insights"]
         ])
-        forces_summary_html = f"""
-        <div class="card-insight">
-            <h4 style="color:#0369A1; margin-top:0;">🚀 Executive Counter-Strategy ({selected_sub})</h4>
-            <ul style="padding-left:18px; margin:8px 0 0 0; color:#0F172A;">
-                {ins_cards}
-            </ul>
-        </div>
-        <div class="card-example-spotlight">
-            <span style="font-size:0.74rem; font-weight:800; text-transform:uppercase; color:#047857; letter-spacing:0.04em;">
-                🏆 Applied Business Case Example
-            </span>
-            <p style="color:#064E3B; font-size:0.87rem; margin:6px 0 0 0; line-height:1.45;">
-                {pf['case_example']}
-            </p>
-        </div>
-        """
-        st.markdown(forces_summary_html, unsafe_allow_html=True)
+        forces_summary_html = f"""<div class="card-insight">
+<h4 style="color:#0369A1; margin-top:0;">🚀 Executive Counter-Strategy ({selected_sub})</h4>
+<ul style="padding-left:18px; margin:8px 0 0 0; color:#0F172A;">{ins_cards}</ul>
+</div>
+<div class="card-example-spotlight">
+<span style="font-size:0.74rem; font-weight:800; text-transform:uppercase; color:#047857; letter-spacing:0.04em;">🏆 Applied Business Case Example</span>
+<p style="color:#064E3B; font-size:0.87rem; margin:6px 0 0 0; line-height:1.45;">{pf['case_example']}</p>
+</div>"""
+        render_html(forces_summary_html)
 
 # ---------------------------------------------------------
 # TAB 3: KRALJIC PORTFOLIO MATRIX
@@ -1997,8 +1986,7 @@ with tab_kraljic:
         
     with col_ktable:
         st.subheader("📋 Kraljic Strategy Positioning Card")
-        k_card_html = f"""<div class="card-kraljic-info"><h3 style="color:#B45309; margin-top:0; font-size:1.3rem;">🎯 Quadrant: {k_data.get('quadrant', 'Strategic')}</h3><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Contract Horizon:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('contract_horizon', '1-2 Years Framework')}</p><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Supplier Governance Model:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('supplier_relationship', 'Core Fleet Strategic Alliance')}</p><hr style="border: 0; border-top: 1px solid #FDE68A; margin: 14px 0;"><p style="color:#334155; margin:0;"><b>Profit Impact Score:</b> {k_data.get('profit_impact', 8.5)} / 10<br><b>Supply Risk Score:</b> {k_data.get('supply_risk', 7.5)} / 10</p><div class="porter-example-tag" style="margin-top:12px;"><b>Practical Example:</b> In Jubail petrochemical plants, positioning <i>{selected_sub}</i> in the <b>{k_data.get('quadrant', 'Strategic')}</b> quadrant means avoiding short-term spot RFQs in favor of multi-year SLA-backed frameworks with 60/40 volume split.</div></div>"""
-        st.markdown(k_card_html, unsafe_allow_html=True)
+        render_html(f"""<div class="card-kraljic-info"><h3 style="color:#B45309; margin-top:0; font-size:1.3rem;">🎯 Quadrant: {k_data.get('quadrant', 'Strategic')}</h3><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Contract Horizon:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('contract_horizon', '1-2 Years Framework')}</p><p style="color:#0F172A; font-weight:700; margin:10px 0 4px 0;"><b>Supplier Governance Model:</b></p><p style="color:#475569; margin-top:2px;">{k_data.get('supplier_relationship', 'Core Fleet Strategic Alliance')}</p><hr style="border: 0; border-top: 1px solid #FDE68A; margin: 14px 0;"><p style="color:#334155; margin:0;"><b>Profit Impact Score:</b> {k_data.get('profit_impact', 8.5)} / 10<br><b>Supply Risk Score:</b> {k_data.get('supply_risk', 7.5)} / 10</p><div class="porter-example-tag" style="margin-top:12px;"><b>Practical Example:</b> In Jubail petrochemical plants, positioning <i>{selected_sub}</i> in the <b>{k_data.get('quadrant', 'Strategic')}</b> quadrant means avoiding short-term spot RFQs in favor of multi-year SLA-backed frameworks with 60/40 volume split.</div></div>""")
 
 # ---------------------------------------------------------
 # TAB 4: RISK HEATMAP & MITIGATION
@@ -2011,9 +1999,9 @@ with tab_risk:
         "±5.0%"
     )
     if param_data.get("type") == "ocean_freight":
-        st.markdown("""<div class="card-geopolitics"><h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Geopolitical Maritime Vulnerability Notice (Middle East Corridors)</h4><p style="color:#7F1D1D; font-size:0.9rem; margin:0;"><b>1. Strait of Hormuz:</b> Mandatory transit for all petrochemical exports originating from KFIP (Jubail) and Dammam. Subject to regional War Risk Surcharges (WRS) and naval escort contingencies.<br><b>2. Bab al-Mandab & Southern Red Sea:</b> Vessel diversions around the Cape of Good Hope add <b>10–14 days</b> steaming lead-time and <b>+$850 to +$1,100 per container</b> in emergency fuel/operating surcharges.</p></div>""", unsafe_allow_html=True)
+        render_html("""<div class="card-geopolitics"><h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Geopolitical Maritime Vulnerability Notice (Middle East Corridors)</h4><p style="color:#7F1D1D; font-size:0.9rem; margin:0;"><b>1. Strait of Hormuz:</b> Mandatory transit for all petrochemical exports originating from KFIP (Jubail) and Dammam. Subject to regional War Risk Surcharges (WRS) and naval escort contingencies.<br><b>2. Bab al-Mandab &amp; Southern Red Sea:</b> Vessel diversions around the Cape of Good Hope add <b>10–14 days</b> steaming lead-time and <b>+$850 to +$1,100 per container</b> in emergency fuel/operating surcharges.</p></div>""")
     elif param_data.get("type") == "inland_freight":
-        st.markdown("""<div class="card-geopolitics"><h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Inland Freight & Cross-Border Logistics Vulnerability Notice</h4><p style="color:#7F1D1D; font-size:0.9rem; margin:0;"><b>1. Regional Truck Scarcity:</b> Fleet reallocations to national infrastructure projects and cross-border delays trigger sudden spot freight capacity shortages.<br><b>2. Fuel & Seasonality:</b> Aramco domestic diesel adjustments directly impact 32% of trip cost. Turnaround and harvest windows cause 20% to 35% spot tariff surges.</p></div>""", unsafe_allow_html=True)
+        render_html("""<div class="card-geopolitics"><h4 style="color:#B91C1C; margin-top:0; font-weight:800;">🚨 Inland Freight &amp; Cross-Border Logistics Vulnerability Notice</h4><p style="color:#7F1D1D; font-size:0.9rem; margin:0;"><b>1. Regional Truck Scarcity:</b> Fleet reallocations to national infrastructure projects and cross-border delays trigger sudden spot freight capacity shortages.<br><b>2. Fuel &amp; Seasonality:</b> Aramco domestic diesel adjustments directly impact 32% of trip cost. Turnaround and harvest windows cause 20% to 35% spot tariff surges.</p></div>""")
 
     col_map, col_score = st.columns([1.1, 0.9])
     
@@ -2073,8 +2061,7 @@ with tab_risk:
                 f'<tr><td><b>R{i+1}</b></td><td>{r["risk_name"]}</td><td><b>{r["score"]}</b>/25</td><td><span class="sev-badge sev-{r.get("severity", "Medium").lower()}">{r.get("severity", "Medium")}</span></td></tr>'
                 for i, r in enumerate(risk_list)
             ])
-            table_html = f'<table class="consulting-table"><thead><tr><th style="width: 12%;">ID</th><th style="width: 58%;">Risk Factor</th><th style="width: 15%;">Score</th><th style="width: 15%;">Severity</th></tr></thead><tbody>{rows_html}</tbody></table>'
-            st.markdown(table_html, unsafe_allow_html=True)
+            render_html(f'<table class="consulting-table"><thead><tr><th style="width: 12%;">ID</th><th style="width: 58%;">Risk Factor</th><th style="width: 15%;">Score</th><th style="width: 15%;">Severity</th></tr></thead><tbody>{rows_html}</tbody></table>')
             
     st.markdown("---")
     st.subheader("🛡️ Category Risk Mitigation Plan & Governance")
@@ -2141,10 +2128,10 @@ with tab_kearney:
 
     k_col1, k_col2 = st.columns([1, 1])
     with k_col1:
-        st.markdown(f"""<div class="card-kraljic-info"><h4 style="color:#B45309; margin-top:0;">🎯 Core Kearney Strategy: {kearney_method}</h4><p style="color:#334155; font-size:0.9rem;">Based on position in the <b>{k_data.get('quadrant', 'Strategic')} Quadrant</b>, passive transactional bidding creates margin stacking and supply bottlenecks. Procurement must deploy structured cost-transparency levers:</p><hr style="border:0; border-top:1px solid #FDE68A; margin:10px 0;"><p style="color:#0F172A; font-weight:700;">Key Kearney Action Levers:</p><ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;">{''.join([f'<li style="margin-bottom:6px;">{b}</li>' for b in k_bullets])}</ul></div>""", unsafe_allow_html=True)
+        render_html(f"""<div class="card-kraljic-info"><h4 style="color:#B45309; margin-top:0;">🎯 Core Kearney Strategy: {kearney_method}</h4><p style="color:#334155; font-size:0.9rem;">Based on position in the <b>{k_data.get('quadrant', 'Strategic')} Quadrant</b>, passive transactional bidding creates margin stacking and supply bottlenecks. Procurement must deploy structured cost-transparency levers:</p><hr style="border:0; border-top:1px solid #FDE68A; margin:10px 0;"><p style="color:#0F172A; font-weight:700;">Key Kearney Action Levers:</p><ul style="padding-left:18px; color:#334155; font-size:0.88rem; margin:0;">{''.join([f'<li style="margin-bottom:6px;">{b}</li>' for b in k_bullets])}</ul></div>""")
         
     with k_col2:
-        st.markdown(f"""<div class="card-insight"><h4 style="color:#0284C7; margin-top:0;">💰 Projected 3-Year Value Capture</h4><table style="width:100%; border-collapse:collapse; font-size:0.88rem;"><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 1 (Hard P&amp;L Budget Savings):</b></td><td style="text-align:right; font-weight:700; color:#059669;">{hard_pct}</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 2 (Peak Surcharge Avoidance):</b></td><td style="text-align:right; font-weight:700; color:#0284C7;">{avoid_pct}</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 3 (Operational SLA Performance):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">{sla_kpi}</td></tr></table><p style="color:#0369A1; font-size:0.8rem; margin-top:12px;"><i>Reconciled against CIPS Type 1/2/3 savings governance • Model Accuracy: {mod_prov['kearney_chessboard']['accuracy']}%.</i></p></div>""", unsafe_allow_html=True)
+        render_html(f"""<div class="card-insight"><h4 style="color:#0284C7; margin-top:0;">💰 Projected 3-Year Value Capture</h4><table style="width:100%; border-collapse:collapse; font-size:0.88rem;"><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 1 (Hard P&amp;L Budget Savings):</b></td><td style="text-align:right; font-weight:700; color:#059669;">{hard_pct}</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 2 (Peak Surcharge Avoidance):</b></td><td style="text-align:right; font-weight:700; color:#0284C7;">{avoid_pct}</td></tr><tr style="border-bottom:1px solid #BAE6FD;"><td style="padding:8px 0; color:#334155;"><b>Type 3 (Operational SLA Performance):</b></td><td style="text-align:right; font-weight:700; color:#0F172A;">{sla_kpi}</td></tr></table><p style="color:#0369A1; font-size:0.8rem; margin-top:12px;"><i>Reconciled against CIPS Type 1/2/3 savings governance • Model Accuracy: {mod_prov['kearney_chessboard']['accuracy']}%.</i></p></div>""")
 
 # ---------------------------------------------------------
 # TAB 6: VENDOR & OEM ECOSYSTEM
@@ -2161,31 +2148,16 @@ with tab_vendors:
     
     v_col1, v_col2, v_col3 = st.columns(3)
     with v_col1:
-        v1_html = "<div class='vendor-card-tier1'>"
-        v1_html += "<h4 style='color:#15803D; margin-top:0; font-weight:800;'>🟢 Tier-1 Local KSA</h4>"
-        v1_html += "<p style='color:#166534; font-size:0.8rem; margin-top:-6px;'>High IKTVA Champions & Prime Fleet</p><hr style='border:0; border-top:1px solid #BBF7D0; margin:10px 0;'><ul style='padding-left:18px; color:#14532D; margin:0;'>"
-        for v in vm.get("tier_1_local", []):
-            v1_html += f"<li style='margin-bottom:6px;'><b>{v}</b></li>"
-        v1_html += "</ul></div>"
-        st.markdown(v1_html, unsafe_allow_html=True)
+        v1_items = "".join([f"<li style='margin-bottom:6px;'><b>{v}</b></li>" for v in vm.get("tier_1_local", [])])
+        render_html(f"<div class='vendor-card-tier1'><h4 style='color:#15803D; margin-top:0; font-weight:800;'>🟢 Tier-1 Local KSA</h4><p style='color:#166534; font-size:0.8rem; margin-top:-6px;'>High IKTVA Champions &amp; Prime Fleet</p><hr style='border:0; border-top:1px solid #BBF7D0; margin:10px 0;'><ul style='padding-left:18px; color:#14532D; margin:0;'>{v1_items}</ul></div>")
             
     with v_col2:
-        v2_html = "<div class='vendor-card-tier2'>"
-        v2_html += "<h4 style='color:#B45309; margin-top:0; font-weight:800;'>🟡 Tier-2 Regional</h4>"
-        v2_html += "<p style='color:#92400E; font-size:0.8rem; margin-top:-6px;'>Specialized Contractors & Forwarders</p><hr style='border:0; border-top:1px solid #FDE68A; margin:10px 0;'><ul style='padding-left:18px; color:#78350F; margin:0;'>"
-        for v in vm.get("tier_2_regional", []):
-            v2_html += f"<li style='margin-bottom:6px;'><b>{v}</b></li>"
-        v2_html += "</ul></div>"
-        st.markdown(v2_html, unsafe_allow_html=True)
+        v2_items = "".join([f"<li style='margin-bottom:6px;'><b>{v}</b></li>" for v in vm.get("tier_2_regional", [])])
+        render_html(f"<div class='vendor-card-tier2'><h4 style='color:#B45309; margin-top:0; font-weight:800;'>🟡 Tier-2 Regional</h4><p style='color:#92400E; font-size:0.8rem; margin-top:-6px;'>Specialized Contractors &amp; Forwarders</p><hr style='border:0; border-top:1px solid #FDE68A; margin:10px 0;'><ul style='padding-left:18px; color:#78350F; margin:0;'>{v2_items}</ul></div>")
             
     with v_col3:
-        v3_html = "<div class='vendor-card-oem'>"
-        v3_html += "<h4 style='color:#1D4ED8; margin-top:0; font-weight:800;'>🌐 Global OEMs & Alliances</h4>"
-        v3_html += "<p style='color:#1E40AF; font-size:0.8rem; margin-top:-6px;'>Global Licensors, Carriers & Asset OEMs</p><hr style='border:0; border-top:1px solid #BFDBFE; margin:10px 0;'><ul style='padding-left:18px; color:#1E3A8A; margin:0;'>"
-        for v in vm.get("global_oems", []):
-            v3_html += f"<li style='margin-bottom:6px;'><b>{v}</b></li>"
-        v3_html += "</ul></div>"
-        st.markdown(v3_html, unsafe_allow_html=True)
+        v3_items = "".join([f"<li style='margin-bottom:6px;'><b>{v}</b></li>" for v in vm.get("global_oems", [])])
+        render_html(f"<div class='vendor-card-oem'><h4 style='color:#1D4ED8; margin-top:0; font-weight:800;'>🌐 Global OEMs &amp; Alliances</h4><p style='color:#1E40AF; font-size:0.8rem; margin-top:-6px;'>Global Licensors, Carriers &amp; Asset OEMs</p><hr style='border:0; border-top:1px solid #BFDBFE; margin:10px 0;'><ul style='padding-left:18px; color:#1E3A8A; margin:0;'>{v3_items}</ul></div>")
 
 # ---------------------------------------------------------
 # TAB 7: CPO & C-SUITE EXECUTIVE MEMO & DOWNLOADS
@@ -2348,8 +2320,7 @@ with tab_report:
     </html>
     """
 
-    memo_preview_html = f"""<div class="card-memo-preview"><h3 style="color:#0F172A; margin-top:0;">📋 CPO Executive Decision Briefing Preview</h3><p style="color:#334155; font-size:0.95rem; line-height:1.6;">Category review for <b>{selected_sub}</b>{pol_pod_display} establishes an audited contract Should-Cost baseline of <b>{unit} {total_val:,.2f}</b>.<br>The contractor break-even operating floor is <b>{data.get('metric_card_2_value', '-')}</b>, with supplier markup and surcharges at <b>{data.get('metric_card_3_value', '-')}</b>.</p><div style="margin: 12px 0;"><span class="badge-pill badge-amber">Kraljic: {k_data.get('quadrant', 'Strategic')}</span><span class="badge-pill badge-blue">Horizon: {k_data.get('contract_horizon', '1-2 Years Framework')}</span><span class="badge-pill badge-red">Max Risk Score: {max_risk_score}/25</span><span class="badge-pill badge-green">Accuracy: {provenance['overall_accuracy_pct']}% ({provenance['margin_of_error']})</span></div><p style="color:#64748B; font-size:0.85rem; margin-bottom:0;"><b>Local Content Route:</b> Priority allocation to Tier-1 leaders (<i>{', '.join(vm.get('tier_1_local', [])[:2])}</i>).</p></div>"""
-    st.markdown(memo_preview_html, unsafe_allow_html=True)
+    render_html(f"""<div class="card-memo-preview"><h3 style="color:#0F172A; margin-top:0;">📋 CPO Executive Decision Briefing Preview</h3><p style="color:#334155; font-size:0.95rem; line-height:1.6;">Category review for <b>{selected_sub}</b>{pol_pod_display} establishes an audited contract Should-Cost baseline of <b>{unit} {total_val:,.2f}</b>.<br>The contractor break-even operating floor is <b>{data.get('metric_card_2_value', '-')}</b>, with supplier markup and surcharges at <b>{data.get('metric_card_3_value', '-')}</b>.</p><div style="margin: 12px 0;"><span class="badge-pill badge-amber">Kraljic: {k_data.get('quadrant', 'Strategic')}</span><span class="badge-pill badge-blue">Horizon: {k_data.get('contract_horizon', '1-2 Years Framework')}</span><span class="badge-pill badge-red">Max Risk Score: {max_risk_score}/25</span><span class="badge-pill badge-green">Accuracy: {provenance['overall_accuracy_pct']}% ({provenance['margin_of_error']})</span></div><p style="color:#64748B; font-size:0.85rem; margin-bottom:0;"><b>Local Content Route:</b> Priority allocation to Tier-1 leaders (<i>{', '.join(vm.get('tier_1_local', [])[:2])}</i>).</p></div>""")
 
     st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
     st.subheader("📚 Module-by-Module Source & Accuracy Ledger")
